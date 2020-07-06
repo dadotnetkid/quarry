@@ -1,0 +1,158 @@
+@Html.DevExpress().WebDocumentViewer(settings =>
+{
+    settings.Name = "DocumentViewer";
+    settings.Width = Unit.Percentage(100);
+
+}).Bind(Model??new SummaryLedgerReport()).GetHtml()
+
+
+
+
+
+@*@{
+        var grid = Html.DevExpress().GridView(settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            settings.Name = "ProductionLedgerGridView";
+            settings.CallbackRouteValues = new { Controller = "Reports", Action = "ProductionLedgerGridViewPartial", permitteeId = ViewBag.PermitteeId };
+
+            settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Reports", Action = "ProductionLedgerGridViewPartialAddNew" };
+            settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Reports", Action = "ProductionLedgerGridViewPartialUpdate" };
+            settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Reports", Action = "ProductionLedgerGridViewPartialDelete" };
+            settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+            settings.SettingsBehavior.ConfirmDelete = true;
+
+            settings.SettingsExport.EnableClientSideExportAPI = true;
+            settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+            settings.Toolbars.Add(t => {
+
+                                           t.Items.Add(GridViewToolbarCommand.ExportToPdf);
+                                           t.Items.Add(GridViewToolbarCommand.ExportToXls);
+                                           t.Items.Add(GridViewToolbarCommand.ExportToXlsx);
+                                           t.Items.Add(GridViewToolbarCommand.ExportToDocx);
+                                           t.Items.Add(GridViewToolbarCommand.ExportToRtf);
+                                           t.Items.Add(GridViewToolbarCommand.ExportToCsv);
+            });
+
+            settings.CommandColumn.Visible = false;
+            settings.CommandColumn.ShowNewButton = true;
+            settings.CommandColumn.ShowDeleteButton = true;
+            settings.CommandColumn.ShowEditButton = true;
+
+            settings.KeyFieldName = "Id";
+
+            settings.SettingsPager.Visible = true;
+            settings.Settings.ShowGroupPanel = false;
+            settings.Settings.ShowFilterRow = false;
+            settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+            settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+            settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+            settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+            settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+            settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+
+            settings.Columns.Add("Quarries.QuarryName");
+            settings.Columns.Add("OrdinaryEarth").Caption = "Earth";
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "OrdinaryEarthAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("Mixed");
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "MixedAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("Fined");
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "FinedAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("Coarse");
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "CoarseAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("Boulders");
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "BouldersAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("Crushed");
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "CrushedAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("ProductionOrdinaryEarth").Caption = "Prod Earth";
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionOrdinaryEarthAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+
+            });
+            settings.Columns.Add("ProductionMixed").Caption = "Prod Mixed";
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionMixedAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+
+            });
+            settings.Columns.Add(col =>
+                {
+                    col.FieldName = "ProductionFined";
+                    col.Caption = "Prod Fine";
+                    col.Width = 50;
+                });
+
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionFinedAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("ProductionCoarse").Caption = "Prod Coarse";
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionCoarseAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionBoulders";
+                col.Caption = "Prod Boulder";
+            });
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionBouldersAmount";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+                col.Caption = "Php";
+            });
+            settings.Columns.Add("ProductionCrushed").Caption = "Prod Crushed";
+            settings.Columns.Add(col =>
+            {
+                col.FieldName = "ProductionCrushedAmount";
+                col.Caption = "Php";
+                col.PropertiesEdit.DisplayFormatString = "#.#0";
+            });
+        });
+        if (ViewData["EditError"] != null)
+        {
+            grid.SetEditErrorText((string)ViewData["EditError"]);
+        }
+    }
+    @grid.Bind(Model).GetHtml()*@

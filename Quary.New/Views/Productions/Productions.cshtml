@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "Productions";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script type="text/javascript">
+    var filterText;
+    function OnSelectedIndexChanged(s, e) {
+        $.ajax({
+            url: "@Url.Action("ProductionsGridViewPartial")",
+            data: { filterText: s.GetValue() },
+            success: function (obj) {
+                $('#grid-container').html(obj);
+            }
+        });
+    }
+    function OnBeginCallback(s, e) {
+    }
+</script>
+
+<div id="grid-container">
+    @Html.Action("ProductionsGridViewPartial")
+</div>
+
+<script>
+    document.onkeydown = function (e) {
+        console.log(e.keyCode)
+
+        if (e.keyCode == 81 && e.ctrlKey) {
+            ProductionGridView.AddNewRow();
+        }
+        else (e.keyCode == 88 )
+        {
+            console.log(ProductionGridView.focusedRowIndex);
+
+        }
+
+
+    };
+    var templateColumn;
+    var vehicleColumn;
+    var vehicleInfo;
+    function Grid_BatchEditStartEditing(s, e) {
+        templateColumn = s.GetColumnByField("PermiteeId");
+        // vehicleColumn = s.GetColumnByField("VehicleId");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+        var cellInfo = e.rowValues[templateColumn.index];
+        //  vehicleInfo = e.rowValues[vehicleColumn.index];
+        //        C1spinEdit.SetValue(cellInfo.value);
+        console.log(cellInfo.value);
+        //  VehicleId.PerformCallback({ PermitteeId: cellInfo.value });
+
+        cboVehicleCallback(cellInfo.value);
+        cboDeliveryReceiptCallback(cellInfo.value);
+        cboQuarryCallback(cellInfo.value);
+    }
+    //method to callback vehicle
+    function cboVehicleCallback(value) {
+        $.ajax({
+            url: '@Url.Action("cboVehiclesPartial")',
+            data: { PermitteeId: value},
+            success: function(obj) {
+                $('#vehicle-container').html(obj);
+                VehicleId.SetFocus();
+            }
+        });
+    }
+    //method to callback DR
+    function cboDeliveryReceiptCallback(value) {
+        $.ajax({
+            url: '@Url.Action("CboQuarryPartial")',
+            data: { PermitteeId: value },
+            success: function(obj) {
+                $('#quarry-container').html(obj);
+                QuarriesId.SetFocus();
+            }
+        });
+    }
+
+    //method to callback quarry
+    function cboQuarryCallback(value) {
+        $.ajax({
+            url: '@Url.Action("cboDeliveryReceiptPartial")',
+            data: { PermitteeId: value },
+            success: function(obj) {
+                $('#receipt-container').html(obj);
+                ReceiptNo.SetFocus();
+            }
+        });
+    }
+
+
+
+
+
+    function Grid_BatchEditEndEditing(s, e) {
+        var templateColumn = s.GetColumnByField("VehicleId");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = VehicleId.GetValue();
+        cellInfo.text = VehicleId.GetText();
+        cboReceiptNo(s, e);
+        cboQuarry(s, e);
+    }
+    function cboReceiptNo(s, e) {
+        var templateColumn = s.GetColumnByField("ReceiptNo");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = ReceiptNo.GetValue();
+        cellInfo.text = ReceiptNo.GetText();
+    }
+    function cboQuarry(s, e) {
+        var templateColumn = s.GetColumnByField("QuarriesId");
+        if (!e.rowValues.hasOwnProperty(templateColumn.index))
+            return;
+        var cellInfo = e.rowValues[templateColumn.index];
+        cellInfo.value = QuarriesId.GetValue();
+        cellInfo.text = QuarriesId.GetText();
+    }
+
+    function cboVehicleId(s, e) {
+        var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+        if (keyCode === ASPx.Key.Esc) {
+            var cellInfo = grid.batchEditApi.GetEditCellInfo();
+            window.setTimeout(function () {
+                ProductionGridView.SetFocusedCell(cellInfo.rowVisibleIndex, cellInfo.column.index);
+            }, 0);
+            s.GetInputElement().blur();
+            return;
+        }
+        if (keyCode !== ASPx.Key.Tab && keyCode !== ASPx.Key.Enter) return;
+        var moveActionName = e.htmlEvent.shiftKey ? "MoveFocusBackward" : "MoveFocusForward";
+        if (ProductionGridView.batchEditApi[moveActionName]()) {
+            ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+// ReSharper disable once AssignToImplicitGlobalInFunctionScope
+            preventEndEditOnLostFocus = true;
+        }
+    }
+    function cboQuarryId(s, e) {
+        var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+        if (keyCode === ASPx.Key.Esc) {
+            var cellInfo = grid.batchEditApi.GetEditCellInfo();
+            window.setTimeout(function () {
+                ProductionGridView.SetFocusedCell(cellInfo.rowVisibleIndex, cellInfo.column.index);
+            }, 0);
+            s.GetInputElement().blur();
+            return;
+        }
+        if (keyCode !== ASPx.Key.Tab && keyCode !== ASPx.Key.Enter) return;
+        var moveActionName = e.htmlEvent.shiftKey ? "MoveFocusBackward" : "MoveFocusForward";
+        if (ProductionGridView.batchEditApi[moveActionName]()) {
+            ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+            // ReSharper disable once AssignToImplicitGlobalInFunctionScope
+            preventEndEditOnLostFocus = true;
+        }
+    }
+
+
+
+    function cboDeliveryReceipt(s, e) {
+        var keyCode = ASPxClientUtils.GetKeyCode(e.htmlEvent);
+        if (keyCode === ASPx.Key.Esc) {
+            var cellInfo = grid.batchEditApi.GetEditCellInfo();
+            window.setTimeout(function () {
+                ProductionGridView.SetFocusedCell(cellInfo.rowVisibleIndex, cellInfo.column.index);
+            }, 0);
+            s.GetInputElement().blur();
+            return;
+        }
+        if (keyCode !== ASPx.Key.Tab && keyCode !== ASPx.Key.Enter) return;
+        var moveActionName = e.htmlEvent.shiftKey ? "MoveFocusBackward" : "MoveFocusForward";
+        if (ProductionGridView.batchEditApi[moveActionName]()) {
+            ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+// ReSharper disable once AssignToImplicitGlobalInFunctionScope
+            preventEndEditOnLostFocus = true;
+        }
+    }
+
+</script>

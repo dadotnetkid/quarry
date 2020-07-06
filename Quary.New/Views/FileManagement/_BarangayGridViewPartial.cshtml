@@ -1,0 +1,100 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "BarangayGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "BarangayGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "BarangayGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "BarangayGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "BarangayGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+        settings.SettingsSearchPanel.CustomEditorName = "search";
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.AddEditDeleteImportToolbar(tbSettings =>
+        {
+            tbSettings.SetTemplateContent(col =>
+            {
+                Html.DevExpress().Button(btnSettings =>
+                {
+                    btnSettings.Name = "btnImport";
+                    btnSettings.Text = "Import";
+                    btnSettings.ClientEnabled = User.UserIsInAction("Import Barangay");
+                    btnSettings.ClientSideEvents.Click = "function(s,e){ShowPopupFilemanagementImport('ImportBarangayUploadControlUpload','filemanagementImport')}";
+
+                }).GetHtml();
+
+                Html.DevExpress().HyperLink(lnkSettings =>
+                {
+                    lnkSettings.Name = "lnkDownload";
+
+                    lnkSettings.ClientEnabled = User.UserIsInAction("Download Vehicle Template");
+                    lnkSettings.NavigateUrl = Url.Action("DownloadTemplates", new { template = "barangay" });
+                    lnkSettings.Properties.Text = "Download Barangay Template";
+                    lnkSettings.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+                }).GetHtml();
+
+            });
+
+        });
+       
+
+
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+
+        settings.Columns.Add("Barangay");
+        settings.Columns.Add("Towns.Name");
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "Barangay")?.ToString() ?? "Barangay Name";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){BarangayGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["EditError"] != null && ViewData["Model"] != null)
+                    {
+                        Html.RenderPartial("AddEditBarangayPartial", ViewData["Model"]);
+                    }
+                    else
+                    {
+                        Html.RenderAction("AddEditBarangayPartial", new { barangayId = col.KeyValue });
+                    }
+                });
+            }).GetHtml();
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

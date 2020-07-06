@@ -1,0 +1,265 @@
+﻿@model Transactions
+@{
+    /**/
+
+    var transactionId = ViewBag.TransactionId;
+    var permiteeId = ViewBag.PermiteeId;
+    var item = "P " + Model?.DetailSubTotal?.ToString("N2");
+    var vehicle = "P " + Model?.VehicleSubTotal?.ToString("N2");
+    var facilities = "P " + Model?.FacilitiesSubTotal?.ToString("N2");
+    var sags = "P " + Model?.SagSubTotal?.ToString("N2");
+    var penalties = "P " + Model?.PenaltiesSubTotal?.ToString("N2");
+    string transactionType = ViewBag.TransactionType;
+}
+<input type="hidden" value="@ViewBag.TransactionId" name="transactionId" />
+<input type="hidden" value="@permiteeId" name="Id" />
+<div class="row">
+    <div class="col-lg-6">
+        @Html.DevExpress().ComboBoxFor(m => m.PermiteeId, settings =>
+        {
+            var btn = new EditButton("New");
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.Caption = "Permitee";
+            settings.Properties.TextField = "CompanyName";
+            settings.Properties.ValueField = "Id";
+            settings.Properties.Buttons.Add(btn);
+            settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){if(e.buttonIndex==0){popupAddEditPermitee.Show();popupAddEditPermitee.PerformCallback();}}";
+            settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){transactionCallBack(s.GetValue(),TransactionTypeId.GetValue())}";
+            //settings.Properties.ClientSideEvents.ValueChanged = "function(s, e){ postTransaction({ permiteeId: s.GetValue().toString(),transactionId: '" + ViewBag.TransactionId + "'})}";
+        }).BindList(new UnitOfWork().PermiteesRepo.Get()).Bind(permiteeId).GetHtml()
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        @Html.DevExpress().TextBoxFor(m => m.OfficialReceipt, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.Caption = "Official Receipt No.";
+            //settings.Properties.ClientSideEvents.ValueChanged = "function(s, e){ postTransaction({ permiteeId: s.GetValue().toString(),transactionId: '" + ViewBag.TransactionId + "'})}";
+        }).GetHtml()
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        @Html.DevExpress().TextBoxFor(m => m.DeliveryReceipt, settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+            settings.Properties.Caption = "Delivery Receipt";
+            //settings.Properties.ClientSideEvents.ValueChanged = "function(s, e){ postTransaction({ permiteeId: s.GetValue().toString(),transactionId: '" + ViewBag.TransactionId + "'})}";
+        }).GetHtml()
+    </div>
+</div>
+@*<div class="row">
+        <div class="col-lg-6">
+            @Html.DevExpress().TextBox( settings =>
+            {
+                settings.Name = "DeliveryReceipt";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Delivery Receipt";
+                settings.Properties.NullText = @"1805860";
+                //settings.Properties.ClientSideEvents.ValueChanged = "function(s, e){ postTransaction({ permiteeId: s.GetValue().toString(),transactionId: '" + ViewBag.TransactionId + "'})}";
+            }).GetHtml()
+        </div>
+    </div>*@
+<div class="row margin-top-10">
+    <div class="col-lg-4">
+        <table class="dxeRoot_Material">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Quaries:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left white-space-normal quarries">@ViewBag.Quaries</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-6">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.TransactionTypeId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Transaction Type";
+                settings.Properties.TextField = "TransactionType";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){transactionCallBack(PermiteeId.GetValue(),s.GetValue())}";
+            }).Bind(ViewBag.TransactionTypeId ?? Model?.TransactionTypeId).BindList(new UnitOfWork().TransactionTypesRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+@Html.HiddenFor(m => m.FilingDate)
+@if (!string.IsNullOrEmpty(transactionType))
+{
+
+    <div class="row margin-top-10">
+        <div class="col-lg-6">
+            @{
+                Html.RenderAction("TokenBoxProgramOfWorksPartial", new { transactionId = Model?.Id });
+            }
+        </div>
+    </div>
+
+
+}
+
+
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <div class="pull-right">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnSubmitTransaction";
+                    settings.Text = "Save";
+                    settings.ClientSideEvents.Click = "function(s,e){TransactionsGridView.UpdateEdit()}";
+                    settings.ClientEnabled = ViewBag.TransactionTypeId != null ? (Model?.IsPrinted == true ? (User.UserIsInAction("Override Transaction Save") ? true : false) : true) : false;
+                }).GetHtml();
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnCancelTransaction";
+                    settings.Text = "Cancel";
+                    settings.ClientSideEvents.Click = "function(s,e){TransactionsGridView.CancelEdit()}";
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Quarries</h4>
+
+        @Html.Action("TransactionQuarriesGridViewPartial", new { transactionId = transactionId, permiteeId = ViewBag.PermiteeId })
+
+
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Transaction Details</h4>
+        @Html.Action("TransactionDetailsGridViewPartial", new { transactionId = transactionId, permiteeId = ViewBag.PermiteeId })
+        <table class="dxeRoot_Material pull-right">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Sub Total:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left" id="lbl-item">@item</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Vehicles</h4>
+        @Html.Action("VehicleGridViewPartial", new { transactionId = transactionId })
+        <table class="dxeRoot_Material pull-right">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Sub Total:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left" id="lbl-vehicle">@vehicle</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Facilities</h4>
+        @Html.Action("FacilitiesGridViewPartial", new { transactionId = transactionId })
+        <table class="dxeRoot_Material pull-right">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Sub Total:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left" id="lbl-facilities">@facilities</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Sags</h4>
+
+        @Html.Action("TransactionSagGridViewPartial", new { transactionId = transactionId })
+
+        <table class="dxeRoot_Material pull-right">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Sub Total:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left" id="lbl-sag">@sags</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <h4>Penalties</h4>
+
+        @Html.Action("PenaltiesGridViewPartial")
+
+        <table class="dxeRoot_Material pull-right">
+            <tbody>
+                <tr>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material">
+                        <label class="dxeCaption_Material">Sub Total:</label>
+                    </td>
+                    <td class="dxeCaptionHALSys dxeCaptionVATSys dxeTextEditCTypeSys dxeCLLSys dxeCaptionCell_Material ">
+                        <label class="text-left" id="lbl-penalties">@penalties</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <div class="pull-right">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnSubmitTransactionUpper";
+                    settings.Text = "Save";
+                    settings.ClientSideEvents.Click = "function(s,e){TransactionsGridView.UpdateEdit()}";
+                    settings.ClientEnabled = ViewBag.TransactionTypeId != null ? (Model?.IsPrinted == true ? (User.UserIsInAction("Override Transaction Save") ? true : false) : true) : false;
+                }).GetHtml();
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnCancelTransactionUpper";
+                    settings.Text = "Cancel";
+                    settings.ClientSideEvents.Click = "function(s,e){TransactionsGridView.CancelEdit()}";
+                }).GetHtml();
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+
+</script>

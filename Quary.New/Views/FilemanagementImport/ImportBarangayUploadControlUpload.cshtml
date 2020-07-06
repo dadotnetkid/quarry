@@ -1,0 +1,50 @@
+﻿
+
+
+@using (Html.BeginForm("ImportBarangayUploadControlUpload", "FilemanagementImport", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            @Html.DevExpress().UploadControl(settings =>
+            {
+                settings.Name = "ImportBarangayUploadControlUpload";
+                //    settings.CallbackRouteValues = new { Controller = "FilemanagementImport", Action = "ImportVehicleUploadControlUpload" };
+                settings.Width = Unit.Percentage(100);
+
+                settings.ShowUploadButton = false;
+                settings.ShowProgressPanel = false;
+
+                settings.ClientSideEvents.FileUploadComplete = "function(s,e){UploadCompletePerformCallback(BarangayGridView);OnUploadCompleteCallback(e)}";
+                settings.ValidationSettings.Assign(Quary.New.Controllers.UploadControlSettings.UploadValidationSettings);
+            }).GetHtml()
+        </div>
+    </div>
+    <p class="callback-data-container p-danger"></p>
+    <div class="row margin-top-10">
+        <div class="col-lg-6">
+            @{
+                Html.DevExpress().CheckBox(settings =>
+                {
+                    settings.Name = "validate";
+                    settings.Text = "Validate Data";
+                    settings.Checked = true;
+                }).GetHtml();
+            }
+        </div>
+        <div class="col-lg-6">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnUpload";
+                    settings.Text = "Upload";
+                    settings.ControlStyle.CssClass = "pull-right";
+                    settings.ClientSideEvents.Click = "function(s,e){ImportBarangayUploadControlUpload.Upload()}";
+
+                }).GetHtml();
+            }
+        </div>
+    </div>
+
+
+}
+

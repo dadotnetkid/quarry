@@ -1,0 +1,255 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "ProductionGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new
+        {
+            Controller = "Productions",
+            Action = "ProductionsGridViewPartial",
+            filterText = ViewBag.filterText
+        };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "productions", Action = "ProductionsGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "productions", Action = "ProductionsGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "productions", Action = "ProductionsGridViewPartialDelete" };
+
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+
+
+
+
+//settings.AddEditDeleteImportToolbar(tbSettings =>
+//{
+
+//    tbSettings.SetTemplateContent(col =>
+//    {
+//        Html.DevExpress().Button(btnSettings =>
+//        {
+//            btnSettings.Name = "btnImport";
+//            btnSettings.Text = "Import";
+//            btnSettings.ClientEnabled = User.UserIsInAction("Import Vehicles");
+//            btnSettings.ClientSideEvents.Click = "function(s,e){ShowPopupFilemanagementImport('ImportProductionUploadControlUpload','filemanagementImport')}";
+
+//        }).GetHtml();
+//        Html.DevExpress().HyperLink(lnkSettings =>
+//        {
+//            lnkSettings.Name = "lnkDownload";
+
+//            lnkSettings.ClientEnabled = User.UserIsInAction("Download Vehicle Template");
+//            lnkSettings.NavigateUrl = Url.Action("DownloadTemplates", "filemanagement", new { template = "production" });
+//            lnkSettings.Properties.Text = "Download Production Template";
+//            lnkSettings.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+//        }).GetHtml();
+//    });
+//});
+
+#region Batch editing mode
+
+settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "productions", Action = "BatchEditingProductionsGridViewPartial" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
+        settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Cell;
+        settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.FocusedCellClick;
+
+        settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.True;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+#endregion
+settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+//settings.AddAddEditDeleteToolbar();
+
+settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.ClientSideEvents.BatchEditStartEditing = "function(s,e){Grid_BatchEditStartEditing(s,e)}";
+        settings.ClientSideEvents.BatchEditEndEditing = "function(s,e){Grid_BatchEditEndEditing(s,e)}";
+        settings.ClientSideEvents.BeginCallback = "OnBeginCallback";
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "PermiteeId";
+            c.Caption = "Permittee";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            if (Model is IEnumerable<Productions> item)
+            {
+                var model = item.GroupBy(x => x.Permitees?.CompanyName).Select(x => new { CompanyName = x.Key }).ToList();
+                c.SetFilterTemplateContent(filterTemp =>
+                {
+                    Html.DevExpress().ComboBox(cbo =>
+                    {
+                        cbo.Name = "comboBoxFilterSuppliers";// DataBinder.Eval(filterTemp.DataItem, "Id").ToString();
+                cbo.Properties.TextField = "CompanyName";
+                        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+                        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
+                        if (ViewData["filterText"] != null)
+                            cbo.PreRender = (s, e) =>
+                            {
+                                var combo = s as MVCxComboBox;
+                                combo.Text = ViewData["filterText"].ToString();
+                            };
+                    }).BindList(model).GetHtml();
+                });
+            }
+
+            c.EditorProperties().ComboBox(cbo =>
+            {
+
+                cbo.DataSource = new UnitOfWork().PermiteesRepo.Get();
+
+                cbo.TextField = "CompanyName";
+                cbo.ValueField = "Id";
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "SagId";
+            c.Caption = "Sag";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            c.EditorProperties().ComboBox(cbo =>
+            {
+                cbo.DataSource = new UnitOfWork().SagsRepo.Get();
+                cbo.TextField = "Sag";
+                cbo.ValueField = "Id";
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "QuarriesId";
+            c.Caption = "Quarry";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = c.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = new UnitOfWork().QuarriesRepo.Get();
+            cbo.ValueField = "Id";
+            cbo.TextField = "QuarryName";
+
+            c.SetEditItemTemplateContent(content =>
+            {
+                ViewContext.Writer.Write("<div id='quarry-container'>");
+                Html.RenderAction("CboQuarryPartial", new { permitteeId = DataBinder.Eval(content.DataItem, "PermitteeId") });
+                ViewContext.Writer.Write("</div>");
+            });
+
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "VehicleId";
+            c.Caption = "PlateNo";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = c.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = new UnitOfWork().VehiclesRepo.Get();
+            cbo.ValueField = "Id";
+            cbo.TextField = "PlateNo";
+
+            c.SetEditItemTemplateContent(content =>
+            {
+                ViewContext.Writer.Write("<div id='vehicle-container'>");
+                Html.RenderAction("cboVehiclesPartial", new { vehicleId = DataBinder.Eval(content.DataItem, "VehicleId") });
+                ViewContext.Writer.Write("</div>");
+            });
+
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "Quantity";
+            c.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        });
+        settings.Columns.Add(
+        c =>
+        {
+            c.FieldName = "ReceiptNo";
+            c.Caption = "Receipt No";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = c.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = new UnitOfWork().DeliveryReceiptsRepo.Get();
+            cbo.ValueField = "ReceiptNumber";
+            cbo.TextField = "ReceiptNumber";
+
+            c.SetEditItemTemplateContent(content =>
+            {
+                ViewContext.Writer.Write("<div id='receipt-container'>");
+                Html.RenderAction("cboDeliveryReceiptPartial", new { receiptNo = DataBinder.Eval(content.DataItem, "ReceiptNo") });
+                ViewContext.Writer.Write("</div>");
+            });
+
+        }
+
+        );
+        settings.Columns.Add("Destination");
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ProgramOfWorks.Name";
+            c.Caption = "Project Name";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            c.EditorProperties().ComboBox(cbo =>
+            {
+                cbo.DataSource = new UnitOfWork().ProgramOfWorksRepo.Get();
+                cbo.TextField = "Name";
+                cbo.ValueField = "Id";
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "BundleCode";
+            c.ColumnType = MVCxGridViewColumnType.ComboBox;
+            c.EditorProperties().ComboBox(cbo =>
+            {
+                cbo.DataSource = new UnitOfWork().ProductionsRepo.Fetch().GroupBy(x=>x.BundleCode).Select(x=>new{BundleCode=x.Key}).ToList();
+                cbo.TextField = "BundleCode";
+                cbo.DropDownStyle = DropDownStyle.DropDown;
+            });
+        });
+        settings.Columns.Add(c =>
+        {
+            c.FieldName = "ProductionDate";
+            c.ColumnType = MVCxGridViewColumnType.DateEdit;
+        });
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "ReceiptNo")?.ToString() ?? "Receipt No";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){ProductionGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["Model"] != null)
+                    {
+                        Html.RenderPartial("AddEditProductionPartial", ViewData["Model"]);
+                    }
+
+                    else
+                        Html.RenderAction("AddEditProductionPartial", new { deliveryId = col.KeyValue, permiteeId = ViewBag.RemainingSagQuantity });
+                });
+            }).GetHtml();
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

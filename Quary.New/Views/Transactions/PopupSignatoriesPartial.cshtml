@@ -1,0 +1,21 @@
+﻿@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popControlUpdateSignatories";
+        settings.ShowMaximizeButton = true;
+        settings.HeaderText = "Update Signatory";
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.CallbackRouteValues = new { Controller = "Transactions", Action = "PopupSignatoriesPartial", transactionId = ViewBag.TransactionId };
+        settings.ShowOnPageLoad = true;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+        settings.Width = Unit.Pixel(400);
+
+
+        settings.SetContent(() =>
+        {
+            Html.RenderAction("SignatoriesPartial", new { transactionId = ViewBag.TransactionId });
+
+        });
+    }).GetHtml();
+}

@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Billing Masterlist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm("PermitteeBillingMasterlistPartial", new { }, new AjaxOptions()
+{
+    Url = Url.Action("PermitteeBillingMasterlistPartial"),
+    UpdateTargetId= "container"
+}, new { id = "form-permittee-masterlist" }))
+{
+    <div class="col-lg-3">
+        @{
+            
+            Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Name = "TransactionId";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#form-permittee-masterlist').submit()}";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "TransactionNumber";
+                settings.Properties.Caption = "Transaction Number";
+            }).BindList(Model).GetHtml();
+
+
+        }
+    </div>
+}
+<div id="container">
+    @Html.Action("PermitteeBillingMasterlistPartial")
+</div>

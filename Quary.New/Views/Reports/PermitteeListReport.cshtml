@@ -1,0 +1,62 @@
+﻿@using System.Data.Entity.SqlServer
+@using System.Globalization
+
+@{
+    ViewBag.Title = "Permittee List Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm("PermitteeListReportPartial", null, new AjaxOptions()
+{
+    Url = Url.Action("PermitteeListReportPartial"),
+    UpdateTargetId = "callback-container",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()"
+}, new { @id = "permittee-report" }))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            @Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Properties.Caption = @"Permittee Type";
+                settings.Width = Unit.Percentage(100);
+                settings.Name = "permitteeTypeId";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField= "PermiteeTypeName";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#permittee-report').submit()}";
+            }).BindList(new UnitOfWork().PermiteeTypesRepo.Fetch().Select(x=>new {x.PermiteeTypeName,x.Id}).ToList()).GetHtml()
+        </div>
+        <div class="col-lg-4">
+            @{
+                Html.DevExpress().ComboBox(settings =>
+                {
+                    settings.Properties.Caption = @"Active Month";
+                    settings.Width = Unit.Percentage(100);
+                    settings.Name = "month";
+                    settings.Properties.ValueField = "month";
+                    settings.Properties.TextField = "monthName";
+                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#permittee-report').submit()}";
+                }).BindList(new UnitOfWork().TransactionsRepo.Fetch().Select(x => new { month = SqlFunctions.DatePart("month", x.TransactionDate) }).
+                    GroupBy(m => m.month).Select(x => new
+                    {
+                        month = x.Key
+                    }).OrderBy(x => x.month).Where(x => x.month > 0 || x.month!=null).ToList().Select(x => new { x.month, monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.month ?? 0) })).GetHtml();
+            }
+        </div>
+        <div class="col-lg-4">
+            @Html.DevExpress().ComboBox(settings =>
+            {
+                settings.Properties.Caption = @"Active Year";
+                settings.Width = Unit.Percentage(100);
+                settings.Name = "year";
+                settings.Properties.ValueField = "Year";
+                settings.Properties.TextField= "Year";
+                settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){$('#permittee-report').submit()}";
+            }).BindList(new UnitOfWork().TransactionsRepo.Fetch().Select(x=>new {year=SqlFunctions.DatePart("year",x.TransactionDate)}).
+                GroupBy(m=>m.year).Select(x=>new{year=x.Key}).OrderByDescending(m=>m.year).ToList()).GetHtml()
+        </div>
+    </div>
+}
+<div id="callback-container">
+    @Html.Action("PermitteeListReportPartial")
+</div>

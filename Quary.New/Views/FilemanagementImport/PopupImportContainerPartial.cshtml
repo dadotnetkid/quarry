@@ -1,0 +1,29 @@
+﻿    @{
+        string actionName = ViewBag.ActionName;
+        string controllerName = ViewBag.ControllerName;
+        object routes = ViewBag.Routes;
+        Html.DevExpress().PopupControl(settings =>
+        {
+            settings.Name = "PopupImportContainerPartial";
+            settings.Width = Unit.Pixel(500);
+            settings.HeaderText = "Imports";
+            settings.Modal = true;
+            settings.CloseOnEscape = true;
+            settings.ShowCloseButton = true;
+            settings.ShowHeader = true;
+            settings.ShowMaximizeButton = true;
+            settings.CallbackRouteValues = new {Action = "PopupImportContainerPartial",Controller="FilemanagementImport"};
+            settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+            settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+            settings.ShowCollapseButton = true;
+            
+            settings.SetContent(() =>
+            {
+                if (actionName != null)
+                    Html.RenderPartial(actionName);
+                
+            });
+
+
+        }).GetHtml();
+    }

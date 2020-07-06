@@ -1,0 +1,9 @@
+﻿@model QuarriesDeliveryReport
+
+    @{
+        Html.DevExpress().WebDocumentViewer(settings =>
+        {
+            settings.Name = "WebDocumentViewer";
+
+        }).Bind(Model).GetHtml();
+    }

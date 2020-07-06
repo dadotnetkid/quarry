@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Program Of Works";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form>
+
+    @Html.Action("ProgramOfWorkGridViewPartial")
+</form>
+<div id="print-container">
+
+</div>
+<script>
+    function changeProgramofWork(s) {
+        $('form').submit();
+        if (s.GetValue() != null)
+            btnPrint.SetEnabled(true);
+    }
+    function PrintProgramOfWork(Id) {
+
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PrintPopupSummaryOfProgramOfWork","ProgramOfWorks")',
+            data: { ProgramOfWorkId: Id },
+            success: function (s) {
+                $('#print-container').html(s);
+                hideLoading();
+            }
+        });
+    }
+
+    function InputPrepared() {
+
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PrintPopupSummaryOfProgramOfWork", "ProgramOfWorks")',
+            data: { ProgramOfWorkId: ProgramOfWorkId.GetValue() },
+            success: function (s) {
+                $('#print-container').html(s);
+                hideLoading();
+            }
+        });
+    }
+    function NewButton(s, e) {
+        if (e.buttonIndex == 0)
+            window.location.href = '@Url.Action("ProgramOfWorks","Filemanagement")';
+    }
+</script>

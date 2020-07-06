@@ -1,0 +1,77 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "DeliveryReceiptGridView";
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true ;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.Toolbars.Add(tb =>
+        {
+            tb.Enabled = true;
+            tb.Position = GridToolbarPosition.Top;
+            tb.Items.Add(GridViewToolbarCommand.New);
+            tb.Items.Add(GridViewToolbarCommand.Delete);
+        });
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.Columns.Add("Transactions.Permitees.FullName");
+        settings.Columns.Add("Transactions.Permitees.CompanyName");
+        settings.Columns.Add("ReceiptNumber");
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+            var id = col.KeyValue;
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = "Generate Delivery Receipt";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+       
+                pop.ShowMaximizeButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){DeliveryReceiptGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    Html.RenderAction("AddEditDeliveryReceiptPartial", new { id = id });
+                });
+            }).GetHtml();
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

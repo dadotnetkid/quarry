@@ -1,0 +1,2950 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Actions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Action" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Barangays">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Barangay" Type="nvarchar(max)" />
+          <Property Name="TownId" Type="int" />
+        </EntityType>
+        <EntityType Name="Billings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastModifiedBy" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DateModified" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="DeliveryReceipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReceiptNumber" Type="int" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Facilities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermiteeId" Type="int" />
+          <Property Name="FacilityName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cost" Type="money" />
+        </EntityType>
+        <EntityType Name="Hauleds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProgramOfWorkId" Type="int" />
+          <Property Name="TransportSlip" Type="nvarchar(max)" />
+          <Property Name="SagId" Type="int" />
+          <Property Name="Quantity" Type="money" />
+          <Property Name="Amount" Type="money" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UnitCost" Type="money" Nullable="false" />
+          <Property Name="UnitMeasureId" Type="int" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="IsIncludedSurcharge" Type="bit" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TableName" Type="nvarchar(max)" />
+          <Property Name="OldValues" Type="nvarchar(max)" />
+          <Property Name="NewValues" Type="nvarchar(max)" />
+          <Property Name="Action" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Particulars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Particular" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Permitees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccreditationNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="TownCityId" Type="int" />
+          <Property Name="PermiteeTypeId" Type="int" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactNumber1" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactNumber2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="150" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="150" />
+          <Property Name="BusinessRegistration" Type="nvarchar" MaxLength="150" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastEditedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="BIRNo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="PermiteeTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermiteeTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitCost" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" />
+          <Property Name="PermiteeId" Type="int" />
+          <Property Name="QuarriesId" Type="int" />
+          <Property Name="SagId" Type="int" />
+          <Property Name="Quantity" Type="money" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="DestinationId" Type="int" />
+          <Property Name="OriginId" Type="int" />
+          <Property Name="ReceiptNo" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="DateCreated" Type="datetime2" Precision="7" />
+          <Property Name="ReceiptDate" Type="datetime2" Precision="7" />
+          <Property Name="ProductionDate" Type="datetime2" Precision="7" />
+          <Property Name="ProgramOfWorkId" Type="int" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="128" />
+          <Property Name="BundleCode" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="ProgramOfWorks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermitteeId" Type="int" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="SourceFund" Type="nvarchar(max)" />
+          <Property Name="DateStarted" Type="datetime" />
+          <Property Name="DateFinish" Type="datetime" />
+          <Property Name="Proponent" Type="nvarchar(max)" />
+          <Property Name="QuarrySites" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="FilingDate" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="ProgramOfWorksInTransactions">
+          <Key>
+            <PropertyRef Name="ProgramOfWorkId" />
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="ProgramOfWorkId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Provinces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SortOrder" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="QuariesInPermitees">
+          <Key>
+            <PropertyRef Name="PermiteeId" />
+            <PropertyRef Name="QuarrieId" />
+          </Key>
+          <Property Name="PermiteeId" Type="int" Nullable="false" />
+          <Property Name="QuarrieId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Quarries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuarryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="JurisdictionName" Type="nvarchar" MaxLength="100" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastEditedBy" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="QuarriesInBarangay">
+          <Key>
+            <PropertyRef Name="QuarryId" />
+            <PropertyRef Name="BarangayId" />
+          </Key>
+          <Property Name="QuarryId" Type="int" Nullable="false" />
+          <Property Name="BarangayId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuarriesInTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuarryId" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Percentage" Type="int" Nullable="false" />
+          <Property Name="SagId" Type="int" />
+        </EntityType>
+        <EntityType Name="Sags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitMeasurementId" Type="int" />
+          <Property Name="Sag" Type="nvarchar(max)" />
+          <Property Name="UnitCost" Type="money" />
+        </EntityType>
+        <EntityType Name="Signatories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Signatory" Type="nvarchar" MaxLength="128" />
+          <Property Name="Position" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="SummaryProgramOfWorks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticularId" Type="int" />
+          <Property Name="SagId" Type="int" />
+          <Property Name="ProgramOfWorkId" Type="int" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="Quantity" Type="money" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Towns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProvinceId" Type="int" />
+          <Property Name="SortOrder" Type="int" />
+        </EntityType>
+        <EntityType Name="TransactionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitCost" Type="money" Nullable="false" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastEditedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="TransactionFacilities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FacilitiesId" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="isRenew" Type="bit" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EntryModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionPenalties">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Penalty" Type="nvarchar(max)" />
+          <Property Name="Amount" Type="money" />
+        </EntityType>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="TransactionNumber" Type="nvarchar" MaxLength="128" />
+          <Property Name="OfficialReceipt" Type="nvarchar" MaxLength="128" />
+          <Property Name="PermiteeId" Type="int" />
+          <Property Name="TransactionTypeId" Type="int" />
+          <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+          <Property Name="TransactionTotal" Type="money" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="LastEditedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="IsPrinted" Type="bit" />
+          <Property Name="FilingDate" Type="datetime2" Precision="7" />
+          <Property Name="Interest" Type="money" />
+          <Property Name="Surcharge" Type="money" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+          <Property Name="Signatory" Type="nvarchar" MaxLength="128" />
+          <Property Name="DeliveryReceipt" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="TransactionSags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" />
+          <Property Name="SagId" Type="int" />
+          <Property Name="UnitCost" Type="money" />
+          <Property Name="Quantity" Type="money" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedAt" Type="datetime2" Precision="7" />
+          <Property Name="ModifiedAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="TransactionTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionType" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="TransactionVehicles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" />
+          <Property Name="VehicleId" Type="int" />
+          <Property Name="Cost" Type="money" />
+          <Property Name="isRenew" Type="bit" />
+          <Property Name="EntryBy" Type="nvarchar" MaxLength="128" />
+          <Property Name="EntryModifiedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="UnitMeasurements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitMeasure" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserRolesInActions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Action" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="128" />
+          <Property Name="EmailConfirmed" Type="bit" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="25" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" />
+          <Property Name="TwoFactorEnabled" Type="bit" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" />
+          <Property Name="AccessFailedCount" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastUpdatedBy" Type="nvarchar" MaxLength="150" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CivilStatus" Type="nvarchar" MaxLength="12" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="6" />
+          <Property Name="BirthDate" Type="datetime" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="500" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="500" />
+          <Property Name="TownCity" Type="int" />
+          <Property Name="Cellular" Type="nvarchar" MaxLength="25" />
+          <Property Name="Height" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Weight" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Religion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Citizenship" Type="nvarchar" MaxLength="50" />
+          <Property Name="Languages" Type="nvarchar(max)" />
+          <Property Name="Position" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserRoles_Id" />
+            <PropertyRef Name="Users_Id" />
+          </Key>
+          <Property Name="UserRoles_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Users_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehicles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PermiteeId" Type="int" />
+          <Property Name="VehicleTypeId" Type="int" />
+          <Property Name="PlateNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Capacity" Type="money" />
+          <Property Name="Description" Type="nvarchar" MaxLength="128" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="VehicleTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="255" />
+          <Property Name="VehicleTypeName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cost" Type="money" />
+        </EntityType>
+        <Association Name="FK_Barangays_Towns">
+          <End Role="Towns" Type="Self.Towns" Multiplicity="0..1" />
+          <End Role="Barangays" Type="Self.Barangays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Towns">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Barangays">
+              <PropertyRef Name="TownId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Billings_Transactions">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Billings" Type="Self.Billings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Billings">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryReceipts_DeliveryReceipts">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DeliveryReceipts" Type="Self.DeliveryReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeliveryReceipts">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Facilities_Vehicles">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="Facilities" Type="Self.Facilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facilities">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hauleds_ProgramOfWorks">
+          <End Role="ProgramOfWorks" Type="Self.ProgramOfWorks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hauleds" Type="Self.Hauleds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hauleds">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hauleds_Sags">
+          <End Role="Sags" Type="Self.Sags" Multiplicity="0..1" />
+          <End Role="Hauleds" Type="Self.Hauleds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hauleds">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_UnitMeasurements">
+          <End Role="UnitMeasurements" Type="Self.UnitMeasurements" Multiplicity="0..1" />
+          <End Role="Items" Type="Self.Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasurements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="UnitMeasureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Logs_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Logs" Type="Self.Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permitees_PermiteeTypes">
+          <End Role="PermiteeTypes" Type="Self.PermiteeTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Permitees" Type="Self.Permitees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermiteeTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permitees">
+              <PropertyRef Name="PermiteeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Barangays">
+          <End Role="Barangays" Type="Self.Barangays" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Barangays">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="OriginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Permitees">
+          <End Role="Permitees" Type="Self.Permitees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Productions">
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_ProgramOfWorks">
+          <End Role="ProgramOfWorks" Type="Self.ProgramOfWorks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Quarries">
+          <End Role="Quarries" Type="Self.Quarries" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quarries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="QuarriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Sags">
+          <End Role="Sags" Type="Self.Sags" Multiplicity="0..1" />
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Vehicles">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1" />
+          <End Role="Productions" Type="Self.Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProgramOfWorksInTransactions_ProgramOfWorks">
+          <End Role="ProgramOfWorks" Type="Self.ProgramOfWorks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProgramOfWorksInTransactions" Type="Self.ProgramOfWorksInTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProgramOfWorksInTransactions">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuariesInPermitees_Quarries">
+          <End Role="Quarries" Type="Self.Quarries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QuariesInPermitees" Type="Self.QuariesInPermitees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quarries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuariesInPermitees">
+              <PropertyRef Name="QuarrieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuariesInPermites_Permitees">
+          <End Role="Permitees" Type="Self.Permitees" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QuariesInPermitees" Type="Self.QuariesInPermitees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuariesInPermitees">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuarriesInTowns_Quarries">
+          <End Role="Quarries" Type="Self.Quarries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QuarriesInBarangay" Type="Self.QuarriesInBarangay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quarries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInBarangay">
+              <PropertyRef Name="QuarryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuarriesInTowns_Towns">
+          <End Role="Barangays" Type="Self.Barangays" Multiplicity="1" />
+          <End Role="QuarriesInBarangay" Type="Self.QuarriesInBarangay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Barangays">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInBarangay">
+              <PropertyRef Name="BarangayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuarriesInTransactions_Sags">
+          <End Role="Sags" Type="Self.Sags" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="QuarriesInTransactions" Type="Self.QuarriesInTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInTransactions">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sags_UnitMeasurements">
+          <End Role="UnitMeasurements" Type="Self.UnitMeasurements" Multiplicity="0..1" />
+          <End Role="Sags" Type="Self.Sags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasurements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sags">
+              <PropertyRef Name="UnitMeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryProgramOfWorks_Particulars">
+          <End Role="Particulars" Type="Self.Particulars" Multiplicity="0..1" />
+          <End Role="SummaryProgramOfWorks" Type="Self.SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Particulars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="ParticularId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryProgramOfWorks_ProgramOfWorks">
+          <End Role="ProgramOfWorks" Type="Self.ProgramOfWorks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SummaryProgramOfWorks" Type="Self.SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryProgramOfWorks_Sags">
+          <End Role="Sags" Type="Self.Sags" Multiplicity="0..1" />
+          <End Role="SummaryProgramOfWorks" Type="Self.SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Towns_Towns">
+          <End Role="Provinces" Type="Self.Provinces" Multiplicity="0..1" />
+          <End Role="Towns" Type="Self.Towns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Towns">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_TransactionTypes">
+          <End Role="TransactionTypes" Type="Self.TransactionTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="TransactionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionSags_TransactionSags">
+          <End Role="Sags" Type="Self.Sags" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionSags" Type="Self.TransactionSags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionSags">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionVehicles_Vehicles">
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TransactionVehicles" Type="Self.TransactionVehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionVehicles">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserClaims" Type="Self.UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserLogins" Type="Self.UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_UserRoles">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="UserRoles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInRoles_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UsersInRoles" Type="Self.UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersInRoles">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicles_Permittees">
+          <End Role="Permitees" Type="Self.Permitees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicles">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicles_VehicleTypes">
+          <End Role="VehicleTypes" Type="Self.VehicleTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vehicles" Type="Self.Vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicles">
+              <PropertyRef Name="VehicleTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Actions" EntityType="Self.Actions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Barangays" EntityType="Self.Barangays" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Billings" EntityType="Self.Billings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeliveryReceipts" EntityType="Self.DeliveryReceipts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Facilities" EntityType="Self.Facilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hauleds" EntityType="Self.Hauleds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Items" EntityType="Self.Items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Particulars" EntityType="Self.Particulars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permitees" EntityType="Self.Permitees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PermiteeTypes" EntityType="Self.PermiteeTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productions" EntityType="Self.Productions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgramOfWorks" EntityType="Self.ProgramOfWorks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProgramOfWorksInTransactions" EntityType="Self.ProgramOfWorksInTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Provinces" EntityType="Self.Provinces" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuariesInPermitees" EntityType="Self.QuariesInPermitees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quarries" EntityType="Self.Quarries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuarriesInBarangay" EntityType="Self.QuarriesInBarangay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuarriesInTransactions" EntityType="Self.QuarriesInTransactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sags" EntityType="Self.Sags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Signatories" EntityType="Self.Signatories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SummaryProgramOfWorks" EntityType="Self.SummaryProgramOfWorks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Towns" EntityType="Self.Towns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionFacilities" EntityType="Self.TransactionFacilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionPenalties" EntityType="Self.TransactionPenalties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionSags" EntityType="Self.TransactionSags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionTypes" EntityType="Self.TransactionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionVehicles" EntityType="Self.TransactionVehicles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitMeasurements" EntityType="Self.UnitMeasurements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserClaims" EntityType="Self.UserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLogins" EntityType="Self.UserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRolesInActions" EntityType="Self.UserRolesInActions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersInRoles" EntityType="Self.UsersInRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehicleTypes" EntityType="Self.VehicleTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Barangays_Towns" Association="Self.FK_Barangays_Towns">
+            <End Role="Towns" EntitySet="Towns" />
+            <End Role="Barangays" EntitySet="Barangays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Billings_Transactions" Association="Self.FK_Billings_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Billings" EntitySet="Billings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryReceipts_DeliveryReceipts" Association="Self.FK_DeliveryReceipts_DeliveryReceipts">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="DeliveryReceipts" EntitySet="DeliveryReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Facilities_Vehicles" Association="Self.FK_Facilities_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Facilities" EntitySet="Facilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hauleds_ProgramOfWorks" Association="Self.FK_Hauleds_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="Hauleds" EntitySet="Hauleds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hauleds_Sags" Association="Self.FK_Hauleds_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="Hauleds" EntitySet="Hauleds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_Categories" Association="Self.FK_Items_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_UnitMeasurements" Association="Self.FK_Items_UnitMeasurements">
+            <End Role="UnitMeasurements" EntitySet="UnitMeasurements" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Logs_Users" Association="Self.FK_Logs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permitees_PermiteeTypes" Association="Self.FK_Permitees_PermiteeTypes">
+            <End Role="PermiteeTypes" EntitySet="PermiteeTypes" />
+            <End Role="Permitees" EntitySet="Permitees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Barangays" Association="Self.FK_Productions_Barangays">
+            <End Role="Barangays" EntitySet="Barangays" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Permitees" Association="Self.FK_Productions_Permitees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Productions" Association="Self.FK_Productions_Productions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_ProgramOfWorks" Association="Self.FK_Productions_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Quarries" Association="Self.FK_Productions_Quarries">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Sags" Association="Self.FK_Productions_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Vehicles" Association="Self.FK_Productions_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgramOfWorksInTransactions_ProgramOfWorks" Association="Self.FK_ProgramOfWorksInTransactions_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="ProgramOfWorksInTransactions" EntitySet="ProgramOfWorksInTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuariesInPermitees_Quarries" Association="Self.FK_QuariesInPermitees_Quarries">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="QuariesInPermitees" EntitySet="QuariesInPermitees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuariesInPermites_Permitees" Association="Self.FK_QuariesInPermites_Permitees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="QuariesInPermitees" EntitySet="QuariesInPermitees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuarriesInTowns_Quarries" Association="Self.FK_QuarriesInTowns_Quarries">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="QuarriesInBarangay" EntitySet="QuarriesInBarangay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuarriesInTowns_Towns" Association="Self.FK_QuarriesInTowns_Towns">
+            <End Role="Barangays" EntitySet="Barangays" />
+            <End Role="QuarriesInBarangay" EntitySet="QuarriesInBarangay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuarriesInTransactions_Sags" Association="Self.FK_QuarriesInTransactions_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="QuarriesInTransactions" EntitySet="QuarriesInTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sags_UnitMeasurements" Association="Self.FK_Sags_UnitMeasurements">
+            <End Role="UnitMeasurements" EntitySet="UnitMeasurements" />
+            <End Role="Sags" EntitySet="Sags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryProgramOfWorks_Particulars" Association="Self.FK_SummaryProgramOfWorks_Particulars">
+            <End Role="Particulars" EntitySet="Particulars" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryProgramOfWorks_ProgramOfWorks" Association="Self.FK_SummaryProgramOfWorks_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryProgramOfWorks_Sags" Association="Self.FK_SummaryProgramOfWorks_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Towns_Towns" Association="Self.FK_Towns_Towns">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Towns" EntitySet="Towns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_TransactionTypes" Association="Self.FK_Transactions_TransactionTypes">
+            <End Role="TransactionTypes" EntitySet="TransactionTypes" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionSags_TransactionSags" Association="Self.FK_TransactionSags_TransactionSags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="TransactionSags" EntitySet="TransactionSags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionVehicles_Vehicles" Association="Self.FK_TransactionVehicles_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="TransactionVehicles" EntitySet="TransactionVehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="Self.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="Self.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_UserRoles" Association="Self.FK_UsersInRoles_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInRoles_Users" Association="Self.FK_UsersInRoles_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersInRoles" EntitySet="UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicles_Permittees" Association="Self.FK_Vehicles_Permittees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="Vehicles" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicles_VehicleTypes" Association="Self.FK_Vehicles_VehicleTypes">
+            <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+            <End Role="Vehicles" EntitySet="Vehicles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="ModelDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Items" EntityType="Model.Items" />
+          <EntitySet Name="Permitees" EntityType="Model.Permitees" />
+          <EntitySet Name="PermiteeTypes" EntityType="Model.PermiteeTypes" />
+          <EntitySet Name="UserClaims" EntityType="Model.UserClaims" />
+          <EntitySet Name="UserLogins" EntityType="Model.UserLogins" />
+          <EntitySet Name="UserRoles" EntityType="Model.UserRoles" />
+          <EntitySet Name="Users" EntityType="Model.Users" />
+          <EntitySet Name="Vehicles" EntityType="Model.Vehicles" />
+          <AssociationSet Name="FK_Permitees_PermiteeTypes" Association="Model.FK_Permitees_PermiteeTypes">
+            <End Role="PermiteeTypes" EntitySet="PermiteeTypes" />
+            <End Role="Permitees" EntitySet="Permitees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicles_Permittees" Association="Model.FK_Vehicles_Permittees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="Vehicles" EntitySet="Vehicles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserClaims_Users" Association="Model.FK_UserClaims_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserClaims" EntitySet="UserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLogins_Users" Association="Model.FK_UserLogins_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLogins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="UsersInRoles" Association="Model.UsersInRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="TransactionVehicles" EntityType="Model.TransactionVehicles" />
+          <AssociationSet Name="FK_TransactionVehicles_Vehicles" Association="Model.FK_TransactionVehicles_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="TransactionVehicles" EntitySet="TransactionVehicles" />
+          </AssociationSet>
+          <EntitySet Name="TransactionFacilities" EntityType="Model.TransactionFacilities" />
+          <EntitySet Name="Facilities" EntityType="Model.Facilities" />
+          <EntitySet Name="VehicleTypes" EntityType="Model.VehicleTypes" />
+          <AssociationSet Name="FK_Facilities_Vehicles" Association="Model.FK_Facilities_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Facilities" EntitySet="Facilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionFacilities_Facilities" Association="Model.FK_TransactionFacilities_Facilities">
+            <End Role="Facilities" EntitySet="Facilities" />
+            <End Role="TransactionFacilities" EntitySet="TransactionFacilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vehicles_VehicleTypes" Association="Model.FK_Vehicles_VehicleTypes">
+            <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+            <End Role="Vehicles" EntitySet="Vehicles" />
+          </AssociationSet>
+          <EntitySet Name="Categories" EntityType="Model.Categories" />
+          <AssociationSet Name="FK_Items_Categories" Association="Model.FK_Items_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <EntitySet Name="UserRolesInActions" EntityType="Model.UserRolesInActions" />
+          <AssociationSet Name="FK_UserRolesInActions_UserRoles" Association="Model.FK_UserRolesInActions_UserRoles">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="UserRolesInActions" EntitySet="UserRolesInActions" />
+          </AssociationSet>
+          <EntitySet Name="TransactionTypes" EntityType="Model.TransactionTypes" />
+          <EntitySet Name="Particulars" EntityType="Model.Particulars" />
+          <EntitySet Name="SummaryProgramOfWorks" EntityType="Model.SummaryProgramOfWorks" />
+          <AssociationSet Name="FK_SummaryProgramOfWorks_Particulars" Association="Model.FK_SummaryProgramOfWorks_Particulars">
+            <End Role="Particulars" EntitySet="Particulars" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <EntitySet Name="Logs" EntityType="Model.Logs" />
+          <AssociationSet Name="FK_Logs_Users" Association="Model.FK_Logs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Logs" EntitySet="Logs" />
+          </AssociationSet>
+          <EntitySet Name="TransactionPenalties" EntityType="Model.TransactionPenalties" />
+          <EntitySet Name="Barangays" EntityType="Model.Barangays" />
+          <EntitySet Name="ProgramOfWorks" EntityType="Model.ProgramOfWorks" />
+          <AssociationSet Name="FK_SummaryProgramOfWorks_ProgramOfWorks" Association="Model.FK_SummaryProgramOfWorks_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <EntitySet Name="Quarries" EntityType="Model.Quarries" />
+          <EntitySet Name="QuarriesInTransactions" EntityType="Model.QuarriesInTransactions" />
+          <AssociationSet Name="FK_QuarriesInTransactions_Quarries" Association="Model.FK_QuarriesInTransactions_Quarries">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="QuarriesInTransactions" EntitySet="QuarriesInTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="QuariesInPermitees" Association="Model.QuariesInPermitees">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="Permitees" EntitySet="Permitees" />
+          </AssociationSet>
+          <AssociationSet Name="QuarriesInBarangay" Association="Model.QuarriesInBarangay">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="Barangays" EntitySet="Barangays" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProgramOfWorks_Permitees" Association="Model.FK_ProgramOfWorks_Permitees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+          </AssociationSet>
+          <EntitySet Name="Hauleds" EntityType="Model.Hauleds" />
+          <AssociationSet Name="FK_Hauleds_ProgramOfWorks" Association="Model.FK_Hauleds_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="Hauleds" EntitySet="Hauleds" />
+          </AssociationSet>
+          <EntitySet Name="TransactionDetails" EntityType="Model.TransactionDetails" />
+          <AssociationSet Name="FK_TransactionDetails_Items" Association="Model.FK_TransactionDetails_Items">
+            <End Role="Items" EntitySet="Items" />
+            <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+          </AssociationSet>
+          <EntitySet Name="DeliveryReceipts" EntityType="Model.DeliveryReceipts" />
+          <EntitySet Name="Signatories" EntityType="Model.Signatories" />
+          <EntitySet Name="Actions" EntityType="Model.Actions" />
+          <EntitySet Name="Productions" EntityType="Model.Productions" />
+          <EntitySet Name="Provinces" EntityType="Model.Provinces" />
+          <EntitySet Name="Towns" EntityType="Model.Towns" />
+          <EntitySet Name="TransactionSags" EntityType="Model.TransactionSags" />
+          <EntitySet Name="UnitMeasurements" EntityType="Model.UnitMeasurements" />
+          <AssociationSet Name="FK_Productions_Permitees" Association="Model.FK_Productions_Permitees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_ProgramOfWorks" Association="Model.FK_Productions_ProgramOfWorks">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Quarries" Association="Model.FK_Productions_Quarries">
+            <End Role="Quarries" EntitySet="Quarries" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Vehicles" Association="Model.FK_Productions_Vehicles">
+            <End Role="Vehicles" EntitySet="Vehicles" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Towns_Towns" Association="Model.FK_Towns_Towns">
+            <End Role="Provinces" EntitySet="Provinces" />
+            <End Role="Towns" EntitySet="Towns" />
+          </AssociationSet>
+          <EntitySet Name="Sags" EntityType="Model.Sags" />
+          <AssociationSet Name="FK_Productions_Sags" Association="Model.FK_Productions_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sags_UnitMeasurements" Association="Model.FK_Sags_UnitMeasurements">
+            <End Role="UnitMeasurements" EntitySet="UnitMeasurements" />
+            <End Role="Sags" EntitySet="Sags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionSags_TransactionSags" Association="Model.FK_TransactionSags_TransactionSags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="TransactionSags" EntitySet="TransactionSags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hauleds_Sags" Association="Model.FK_Hauleds_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="Hauleds" EntitySet="Hauleds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuarriesInTransactions_Sags" Association="Model.FK_QuarriesInTransactions_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="QuarriesInTransactions" EntitySet="QuarriesInTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SummaryProgramOfWorks_Sags" Association="Model.FK_SummaryProgramOfWorks_Sags">
+            <End Role="Sags" EntitySet="Sags" />
+            <End Role="SummaryProgramOfWorks" EntitySet="SummaryProgramOfWorks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Items_UnitMeasurements" Association="Model.FK_Items_UnitMeasurements">
+            <End Role="UnitMeasurements" EntitySet="UnitMeasurements" />
+            <End Role="Items" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Barangays_Towns" Association="Model.FK_Barangays_Towns">
+            <End Role="Towns" EntitySet="Towns" />
+            <End Role="Barangays" EntitySet="Barangays" />
+          </AssociationSet>
+          <EntitySet Name="Transactions" EntityType="Model.Transactions" />
+          <AssociationSet Name="FK_DeliveryReceipts_DeliveryReceipts" Association="Model.FK_DeliveryReceipts_DeliveryReceipts">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="DeliveryReceipts" EntitySet="DeliveryReceipts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Permittees" Association="Model.FK_Transactions_Permittees">
+            <End Role="Permitees" EntitySet="Permitees" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Productions" Association="Model.FK_Productions_Productions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuarriesInTransactions_Transactions" Association="Model.FK_QuarriesInTransactions_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="QuarriesInTransactions" EntitySet="QuarriesInTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionDetails_Transactions" Association="Model.FK_TransactionDetails_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionFacilities_Transactions" Association="Model.FK_TransactionFacilities_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="TransactionFacilities" EntitySet="TransactionFacilities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionPenalties_Transactions" Association="Model.FK_TransactionPenalties_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="TransactionPenalties" EntitySet="TransactionPenalties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Transactions_TransactionTypes" Association="Model.FK_Transactions_TransactionTypes">
+            <End Role="TransactionTypes" EntitySet="TransactionTypes" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionSags_Transactions" Association="Model.FK_TransactionSags_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="TransactionSags" EntitySet="TransactionSags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransactionVehicles_Transactions" Association="Model.FK_TransactionVehicles_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="TransactionVehicles" EntitySet="TransactionVehicles" />
+          </AssociationSet>
+          <AssociationSet Name="ProgramOfWorksInTransactions" Association="Model.ProgramOfWorksInTransactions">
+            <End Role="ProgramOfWorks" EntitySet="ProgramOfWorks" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
+          <EntitySet Name="Billings" EntityType="Model.Billings" />
+          <AssociationSet Name="FK_Billings_Transactions" Association="Model.FK_Billings_Transactions">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="Billings" EntitySet="Billings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productions_Barangays" Association="Model.FK_Productions_Barangays">
+            <End Role="Barangays" EntitySet="Barangays" />
+            <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Items">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UnitCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <NavigationProperty Name="Categories" Relationship="Model.FK_Items_Categories" FromRole="Items" ToRole="Categories" />
+          <Property Name="UnitMeasureId" Type="Int32" />
+          <NavigationProperty Name="TransactionDetails" Relationship="Model.FK_TransactionDetails_Items" FromRole="Items" ToRole="TransactionDetails" />
+          <Property Name="IsIncludedSurcharge" Type="Boolean" />
+          <NavigationProperty Name="UnitMeasurements" Relationship="Model.FK_Items_UnitMeasurements" FromRole="Items" ToRole="UnitMeasurements" />
+        </EntityType>
+        <EntityType Name="Permitees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TownCityId" Type="Int32" />
+          <Property Name="PermiteeTypeId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PermiteeTypes" Relationship="Model.FK_Permitees_PermiteeTypes" FromRole="Permitees" ToRole="PermiteeTypes" />
+          <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicles_Permittees" FromRole="Permitees" ToRole="Vehicles" />
+          <Property Name="AccreditationNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="BusinessRegistration" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Quarries" Relationship="Model.QuariesInPermitees" FromRole="Permitees" ToRole="Quarries" />
+          <NavigationProperty Name="ProgramOfWorks" Relationship="Model.FK_ProgramOfWorks_Permitees" FromRole="Permitees" ToRole="ProgramOfWorks" />
+          <Property Name="BIRNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Permitees" FromRole="Permitees" ToRole="Productions" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_Transactions_Permittees" FromRole="Permitees" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="PermiteeTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermiteeTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permitees" Relationship="Model.FK_Permitees_PermiteeTypes" FromRole="PermiteeTypes" ToRole="Permitees" />
+          <Property Name="UnitCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="UserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_UserClaims_Users" FromRole="UserClaims" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_UserLogins_Users" FromRole="UserLogins" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.UsersInRoles" FromRole="UserRoles" ToRole="Users" />
+          <NavigationProperty Name="UserRolesInActions" Relationship="Model.FK_UserRolesInActions_UserRoles" FromRole="UserRoles" ToRole="UserRolesInActions" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" />
+          <Property Name="AccessFailedCount" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdatedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CivilStatus" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="AddressLine2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TownCity" Type="Int32" />
+          <Property Name="Cellular" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Height" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Weight" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Religion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Citizenship" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Languages" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserClaims" Relationship="Model.FK_UserClaims_Users" FromRole="Users" ToRole="UserClaims" />
+          <NavigationProperty Name="UserLogins" Relationship="Model.FK_UserLogins_Users" FromRole="Users" ToRole="UserLogins" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.UsersInRoles" FromRole="Users" ToRole="UserRoles" />
+          <NavigationProperty Name="Logs" Relationship="Model.FK_Logs_Users" FromRole="Users" ToRole="Logs" />
+          <Property Name="Position" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Vehicles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermiteeId" Type="Int32" />
+          <Property Name="VehicleTypeId" Type="Int32" />
+          <Property Name="PlateNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permitees" Relationship="Model.FK_Vehicles_Permittees" FromRole="Vehicles" ToRole="Permitees" />
+          <NavigationProperty Name="TransactionVehicles" Relationship="Model.FK_TransactionVehicles_Vehicles" FromRole="Vehicles" ToRole="TransactionVehicles" />
+          <NavigationProperty Name="Facilities" Relationship="Model.FK_Facilities_Vehicles" FromRole="Vehicles" ToRole="Facilities" />
+          <NavigationProperty Name="VehicleTypes" Relationship="Model.FK_Vehicles_VehicleTypes" FromRole="Vehicles" ToRole="VehicleTypes" />
+          <Property Name="Capacity" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Vehicles" FromRole="Vehicles" ToRole="Productions" />
+        </EntityType>
+        <Association Name="FK_Permitees_PermiteeTypes">
+          <End Type="Model.PermiteeTypes" Role="PermiteeTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermiteeTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Permitees">
+              <PropertyRef Name="PermiteeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicles_Permittees">
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Vehicles" Role="Vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicles">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserClaims_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="Model.UserClaims" Role="UserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLogins_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="1" />
+          <End Type="Model.UserLogins" Role="UserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersInRoles">
+          <End Type="Model.UserRoles" Role="UserRoles" Multiplicity="*" />
+          <End Type="Model.Users" Role="Users" Multiplicity="*" />
+        </Association>
+        <EntityType Name="TransactionVehicles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="isRenew" Type="Boolean" />
+          <Property Name="EntryBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EntryModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vehicles" Relationship="Model.FK_TransactionVehicles_Vehicles" FromRole="TransactionVehicles" ToRole="Vehicles" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_TransactionVehicles_Transactions" FromRole="TransactionVehicles" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_TransactionVehicles_Vehicles">
+          <End Type="Model.Vehicles" Role="Vehicles" Multiplicity="0..1" />
+          <End Type="Model.TransactionVehicles" Role="TransactionVehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionVehicles">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransactionFacilities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FacilitiesId" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="isRenew" Type="Boolean" />
+          <Property Name="EntryBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EntryModifiedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Facilities" Relationship="Model.FK_TransactionFacilities_Facilities" FromRole="TransactionFacilities" ToRole="Facilities" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_TransactionFacilities_Transactions" FromRole="TransactionFacilities" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Facilities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermiteeId" Type="Int32" />
+          <Property Name="FacilityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Vehicles" Relationship="Model.FK_Facilities_Vehicles" FromRole="Facilities" ToRole="Vehicles" />
+          <NavigationProperty Name="TransactionFacilities" Relationship="Model.FK_TransactionFacilities_Facilities" FromRole="Facilities" ToRole="TransactionFacilities" />
+        </EntityType>
+        <EntityType Name="VehicleTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VehicleTypeName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Vehicles" Relationship="Model.FK_Vehicles_VehicleTypes" FromRole="VehicleTypes" ToRole="Vehicles" />
+          <Property Name="Code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Facilities_Vehicles">
+          <End Type="Model.Vehicles" Role="Vehicles" Multiplicity="0..1" />
+          <End Type="Model.Facilities" Role="Facilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Facilities">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionFacilities_Facilities">
+          <End Type="Model.Facilities" Role="Facilities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionFacilities" Role="TransactionFacilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Facilities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionFacilities">
+              <PropertyRef Name="FacilitiesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vehicles_VehicleTypes">
+          <End Type="Model.VehicleTypes" Role="VehicleTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Vehicles" Role="Vehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Vehicles">
+              <PropertyRef Name="VehicleTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Categories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Items" Relationship="Model.FK_Items_Categories" FromRole="Categories" ToRole="Items" />
+        </EntityType>
+        <Association Name="FK_Items_Categories">
+          <End Type="Model.Categories" Role="Categories" Multiplicity="0..1" />
+          <End Type="Model.Items" Role="Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserRolesInActions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRoles" Relationship="Model.FK_UserRolesInActions_UserRoles" FromRole="UserRolesInActions" ToRole="UserRoles" />
+        </EntityType>
+        <Association Name="FK_UserRolesInActions_UserRoles">
+          <End Type="Model.UserRoles" Role="UserRoles" Multiplicity="0..1" />
+          <End Type="Model.UserRolesInActions" Role="UserRolesInActions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserRolesInActions">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransactionTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionType" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_Transactions_TransactionTypes" FromRole="TransactionTypes" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Particulars">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Particular" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SummaryProgramOfWorks" Relationship="Model.FK_SummaryProgramOfWorks_Particulars" FromRole="Particulars" ToRole="SummaryProgramOfWorks" />
+        </EntityType>
+        <EntityType Name="SummaryProgramOfWorks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticularId" Type="Int32" />
+          <Property Name="SagId" Type="Int32" />
+          <Property Name="ProgramOfWorkId" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Particulars" Relationship="Model.FK_SummaryProgramOfWorks_Particulars" FromRole="SummaryProgramOfWorks" ToRole="Particulars" />
+          <NavigationProperty Name="ProgramOfWorks" Relationship="Model.FK_SummaryProgramOfWorks_ProgramOfWorks" FromRole="SummaryProgramOfWorks" ToRole="ProgramOfWorks" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_SummaryProgramOfWorks_Sags" FromRole="SummaryProgramOfWorks" ToRole="Sags" />
+        </EntityType>
+        <Association Name="FK_SummaryProgramOfWorks_Particulars">
+          <End Type="Model.Particulars" Role="Particulars" Multiplicity="0..1" />
+          <End Type="Model.SummaryProgramOfWorks" Role="SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Particulars">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="ParticularId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OldValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NewValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="7" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Model.FK_Logs_Users" FromRole="Logs" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_Logs_Users">
+          <End Type="Model.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="Model.Logs" Role="Logs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Logs">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransactionPenalties">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Penalty" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_TransactionPenalties_Transactions" FromRole="TransactionPenalties" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Barangays">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Barangay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TownId" Type="Int32" />
+          <NavigationProperty Name="Quarries" Relationship="Model.QuarriesInBarangay" FromRole="Barangays" ToRole="Quarries" />
+          <NavigationProperty Name="Towns" Relationship="Model.FK_Barangays_Towns" FromRole="Barangays" ToRole="Towns" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Barangays" FromRole="Barangays" ToRole="Productions" />
+        </EntityType>
+        <EntityType Name="ProgramOfWorks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PermitteeId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SourceFund" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateStarted" Type="DateTime" Precision="3" />
+          <Property Name="DateFinish" Type="DateTime" Precision="3" />
+          <Property Name="Proponent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuarrySites" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SummaryProgramOfWorks" Relationship="Model.FK_SummaryProgramOfWorks_ProgramOfWorks" FromRole="ProgramOfWorks" ToRole="SummaryProgramOfWorks" />
+          <NavigationProperty Name="Permitees" Relationship="Model.FK_ProgramOfWorks_Permitees" FromRole="ProgramOfWorks" ToRole="Permitees" />
+          <NavigationProperty Name="Hauleds" Relationship="Model.FK_Hauleds_ProgramOfWorks" FromRole="ProgramOfWorks" ToRole="Hauleds" />
+          <Property Name="FilingDate" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_ProgramOfWorks" FromRole="ProgramOfWorks" ToRole="Productions" />
+          <NavigationProperty Name="Transactions" Relationship="Model.ProgramOfWorksInTransactions" FromRole="ProgramOfWorks" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_SummaryProgramOfWorks_ProgramOfWorks">
+          <End Type="Model.ProgramOfWorks" Role="ProgramOfWorks" Multiplicity="0..1" />
+          <End Type="Model.SummaryProgramOfWorks" Role="SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Quarries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuarryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="JurisdictionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EntryBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="QuarriesInTransactions" Relationship="Model.FK_QuarriesInTransactions_Quarries" FromRole="Quarries" ToRole="QuarriesInTransactions" />
+          <NavigationProperty Name="Permitees" Relationship="Model.QuariesInPermitees" FromRole="Quarries" ToRole="Permitees" />
+          <NavigationProperty Name="Barangays" Relationship="Model.QuarriesInBarangay" FromRole="Quarries" ToRole="Barangays" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Quarries" FromRole="Quarries" ToRole="Productions" />
+        </EntityType>
+        <EntityType Name="QuarriesInTransactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuarryId" Type="Int32" Nullable="false" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Percentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Quarries" Relationship="Model.FK_QuarriesInTransactions_Quarries" FromRole="QuarriesInTransactions" ToRole="Quarries" />
+          <Property Name="SagId" Type="Int32" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_QuarriesInTransactions_Sags" FromRole="QuarriesInTransactions" ToRole="Sags" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_QuarriesInTransactions_Transactions" FromRole="QuarriesInTransactions" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_QuarriesInTransactions_Quarries">
+          <End Type="Model.Quarries" Role="Quarries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.QuarriesInTransactions" Role="QuarriesInTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quarries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInTransactions">
+              <PropertyRef Name="QuarryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="QuariesInPermitees">
+          <End Type="Model.Quarries" Role="Quarries" Multiplicity="*" />
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="*" />
+        </Association>
+        <Association Name="QuarriesInBarangay">
+          <End Type="Model.Quarries" Role="Quarries" Multiplicity="*" />
+          <End Type="Model.Barangays" Role="Barangays" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_ProgramOfWorks_Permitees">
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="0..1" />
+          <End Type="Model.ProgramOfWorks" Role="ProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProgramOfWorks">
+              <PropertyRef Name="PermitteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Hauleds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProgramOfWorkId" Type="Int32" />
+          <Property Name="TransportSlip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SagId" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProgramOfWorks" Relationship="Model.FK_Hauleds_ProgramOfWorks" FromRole="Hauleds" ToRole="ProgramOfWorks" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_Hauleds_Sags" FromRole="Hauleds" ToRole="Sags" />
+        </EntityType>
+        <Association Name="FK_Hauleds_ProgramOfWorks">
+          <End Type="Model.ProgramOfWorks" Role="ProgramOfWorks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Hauleds" Role="Hauleds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hauleds">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransactionDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UnitCost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="EntryBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedBy" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Items" Relationship="Model.FK_TransactionDetails_Items" FromRole="TransactionDetails" ToRole="Items" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_TransactionDetails_Transactions" FromRole="TransactionDetails" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_TransactionDetails_Items">
+          <End Type="Model.Items" Role="Items" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionDetails" Role="TransactionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Items">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionDetails">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeliveryReceipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNumber" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="DeliveryReceipts" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="Signatories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Signatory" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Actions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Action" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Productions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PermiteeId" Type="Int32" />
+          <Property Name="QuarriesId" Type="Int32" />
+          <Property Name="SagId" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="VehicleId" Type="Int32" />
+          <Property Name="DestinationId" Type="Int32" />
+          <Property Name="OriginId" Type="Int32" />
+          <Property Name="ReceiptNo" Type="Int32" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Precision="7" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="7" />
+          <Property Name="ProductionDate" Type="DateTime" Precision="7" />
+          <Property Name="ProgramOfWorkId" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Permitees" Relationship="Model.FK_Productions_Permitees" FromRole="Productions" ToRole="Permitees" />
+          <NavigationProperty Name="ProgramOfWorks" Relationship="Model.FK_Productions_ProgramOfWorks" FromRole="Productions" ToRole="ProgramOfWorks" />
+          <NavigationProperty Name="Quarries" Relationship="Model.FK_Productions_Quarries" FromRole="Productions" ToRole="Quarries" />
+          <NavigationProperty Name="Vehicles" Relationship="Model.FK_Productions_Vehicles" FromRole="Productions" ToRole="Vehicles" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_Productions_Sags" FromRole="Productions" ToRole="Sags" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_Productions_Productions" FromRole="Productions" ToRole="Transactions" />
+          <Property Name="BundleCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Barangays" Relationship="Model.FK_Productions_Barangays" FromRole="Productions" ToRole="Barangays" />
+        </EntityType>
+        <EntityType Name="Provinces">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SortOrder" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Towns" Relationship="Model.FK_Towns_Towns" FromRole="Provinces" ToRole="Towns" />
+        </EntityType>
+        <EntityType Name="Towns">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProvinceId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <NavigationProperty Name="Provinces" Relationship="Model.FK_Towns_Towns" FromRole="Towns" ToRole="Provinces" />
+          <NavigationProperty Name="Barangays" Relationship="Model.FK_Barangays_Towns" FromRole="Towns" ToRole="Barangays" />
+        </EntityType>
+        <EntityType Name="TransactionSags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="SagId" Type="Int32" />
+          <Property Name="UnitCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="7" />
+          <Property Name="ModifiedAt" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_TransactionSags_TransactionSags" FromRole="TransactionSags" ToRole="Sags" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_TransactionSags_Transactions" FromRole="TransactionSags" ToRole="Transactions" />
+        </EntityType>
+        <EntityType Name="UnitMeasurements">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitMeasure" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sags" Relationship="Model.FK_Sags_UnitMeasurements" FromRole="UnitMeasurements" ToRole="Sags" />
+          <NavigationProperty Name="Items" Relationship="Model.FK_Items_UnitMeasurements" FromRole="UnitMeasurements" ToRole="Items" />
+        </EntityType>
+        <Association Name="FK_Productions_Permitees">
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_ProgramOfWorks">
+          <End Type="Model.ProgramOfWorks" Role="ProgramOfWorks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProgramOfWorks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="ProgramOfWorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Quarries">
+          <End Type="Model.Quarries" Role="Quarries" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quarries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="QuarriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Vehicles">
+          <End Type="Model.Vehicles" Role="Vehicles" Multiplicity="0..1" />
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehicles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="VehicleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Towns_Towns">
+          <End Type="Model.Provinces" Role="Provinces" Multiplicity="0..1" />
+          <End Type="Model.Towns" Role="Towns" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Provinces">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Towns">
+              <PropertyRef Name="ProvinceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Sags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitMeasurementId" Type="Int32" />
+          <Property Name="Sag" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UnitCost" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Sags" FromRole="Sags" ToRole="Productions" />
+          <NavigationProperty Name="UnitMeasurements" Relationship="Model.FK_Sags_UnitMeasurements" FromRole="Sags" ToRole="UnitMeasurements" />
+          <NavigationProperty Name="TransactionSags" Relationship="Model.FK_TransactionSags_TransactionSags" FromRole="Sags" ToRole="TransactionSags" />
+          <NavigationProperty Name="Hauleds" Relationship="Model.FK_Hauleds_Sags" FromRole="Sags" ToRole="Hauleds" />
+          <NavigationProperty Name="QuarriesInTransactions" Relationship="Model.FK_QuarriesInTransactions_Sags" FromRole="Sags" ToRole="QuarriesInTransactions" />
+          <NavigationProperty Name="SummaryProgramOfWorks" Relationship="Model.FK_SummaryProgramOfWorks_Sags" FromRole="Sags" ToRole="SummaryProgramOfWorks" />
+        </EntityType>
+        <Association Name="FK_Productions_Sags">
+          <End Type="Model.Sags" Role="Sags" Multiplicity="0..1" />
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sags_UnitMeasurements">
+          <End Type="Model.UnitMeasurements" Role="UnitMeasurements" Multiplicity="0..1" />
+          <End Type="Model.Sags" Role="Sags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasurements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sags">
+              <PropertyRef Name="UnitMeasurementId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionSags_TransactionSags">
+          <End Type="Model.Sags" Role="Sags" Multiplicity="0..1" />
+          <End Type="Model.TransactionSags" Role="TransactionSags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionSags">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hauleds_Sags">
+          <End Type="Model.Sags" Role="Sags" Multiplicity="0..1" />
+          <End Type="Model.Hauleds" Role="Hauleds" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hauleds">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuarriesInTransactions_Sags">
+          <End Type="Model.Sags" Role="Sags" Multiplicity="0..1" />
+          <End Type="Model.QuarriesInTransactions" Role="QuarriesInTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInTransactions">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SummaryProgramOfWorks_Sags">
+          <End Type="Model.Sags" Role="Sags" Multiplicity="0..1" />
+          <End Type="Model.SummaryProgramOfWorks" Role="SummaryProgramOfWorks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sags">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SummaryProgramOfWorks">
+              <PropertyRef Name="SagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Items_UnitMeasurements">
+          <End Type="Model.UnitMeasurements" Role="UnitMeasurements" Multiplicity="0..1" />
+          <End Type="Model.Items" Role="Items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasurements">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Items">
+              <PropertyRef Name="UnitMeasureId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Barangays_Towns">
+          <End Type="Model.Towns" Role="Towns" Multiplicity="0..1" />
+          <End Type="Model.Barangays" Role="Barangays" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Towns">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Barangays">
+              <PropertyRef Name="TownId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Transactions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionNumber" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="OfficialReceipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PermiteeId" Type="Int32" />
+          <Property Name="TransactionTypeId" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TransactionTotal" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="EntryBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastEditedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsPrinted" Type="Boolean" />
+          <Property Name="FilingDate" Type="DateTime" Precision="7" />
+          <Property Name="Interest" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Surcharge" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Signatory" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DeliveryReceipts" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="Transactions" ToRole="DeliveryReceipts" />
+          <NavigationProperty Name="Permitees" Relationship="Model.FK_Transactions_Permittees" FromRole="Transactions" ToRole="Permitees" />
+          <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Productions" FromRole="Transactions" ToRole="Productions" />
+          <NavigationProperty Name="QuarriesInTransactions" Relationship="Model.FK_QuarriesInTransactions_Transactions" FromRole="Transactions" ToRole="QuarriesInTransactions" />
+          <NavigationProperty Name="TransactionDetails" Relationship="Model.FK_TransactionDetails_Transactions" FromRole="Transactions" ToRole="TransactionDetails" />
+          <NavigationProperty Name="TransactionFacilities" Relationship="Model.FK_TransactionFacilities_Transactions" FromRole="Transactions" ToRole="TransactionFacilities" />
+          <NavigationProperty Name="TransactionPenalties" Relationship="Model.FK_TransactionPenalties_Transactions" FromRole="Transactions" ToRole="TransactionPenalties" />
+          <NavigationProperty Name="TransactionTypes" Relationship="Model.FK_Transactions_TransactionTypes" FromRole="Transactions" ToRole="TransactionTypes" />
+          <NavigationProperty Name="TransactionSags" Relationship="Model.FK_TransactionSags_Transactions" FromRole="Transactions" ToRole="TransactionSags" />
+          <NavigationProperty Name="TransactionVehicles" Relationship="Model.FK_TransactionVehicles_Transactions" FromRole="Transactions" ToRole="TransactionVehicles" />
+          <NavigationProperty Name="ProgramOfWorks" Relationship="Model.ProgramOfWorksInTransactions" FromRole="Transactions" ToRole="ProgramOfWorks" />
+          <NavigationProperty Name="Billings" Relationship="Model.FK_Billings_Transactions" FromRole="Transactions" ToRole="Billings" />
+          <Property Name="DeliveryReceipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_DeliveryReceipts_DeliveryReceipts">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.DeliveryReceipts" Role="DeliveryReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeliveryReceipts">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Permittees">
+          <End Type="Model.Permitees" Role="Permitees" Multiplicity="0..1" />
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permitees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="PermiteeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Productions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuarriesInTransactions_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.QuarriesInTransactions" Role="QuarriesInTransactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="QuarriesInTransactions">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionDetails_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionDetails" Role="TransactionDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionDetails">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionFacilities_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionFacilities" Role="TransactionFacilities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionFacilities">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionPenalties_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionPenalties" Role="TransactionPenalties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionPenalties">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_TransactionTypes">
+          <End Type="Model.TransactionTypes" Role="TransactionTypes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransactionTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="TransactionTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionSags_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionSags" Role="TransactionSags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionSags">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransactionVehicles_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.TransactionVehicles" Role="TransactionVehicles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TransactionVehicles">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProgramOfWorksInTransactions">
+          <End Type="Model.ProgramOfWorks" Role="ProgramOfWorks" Multiplicity="*" />
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Billings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DateModified" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_Billings_Transactions" FromRole="Billings" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_Billings_Transactions">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Billings" Role="Billings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Billings">
+              <PropertyRef Name="TransactionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productions_Barangays">
+          <End Type="Model.Barangays" Role="Barangays" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Productions" Role="Productions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Barangays">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Productions">
+              <PropertyRef Name="OriginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelDb">
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="Model.Items">
+              <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="IsIncludedSurcharge" ColumnName="IsIncludedSurcharge" />
+                <ScalarProperty Name="UnitMeasureId" ColumnName="UnitMeasureId" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permitees">
+            <EntityTypeMapping TypeName="Model.Permitees">
+              <MappingFragment StoreEntitySet="Permitees">
+                <ScalarProperty Name="BIRNo" ColumnName="BIRNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNumber2" ColumnName="ContactNumber2" />
+                <ScalarProperty Name="ContactNumber1" ColumnName="ContactNumber1" />
+                <ScalarProperty Name="BusinessRegistration" ColumnName="BusinessRegistration" />
+                <ScalarProperty Name="AccreditationNumber" ColumnName="AccreditationNumber" />
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PermiteeTypeId" ColumnName="PermiteeTypeId" />
+                <ScalarProperty Name="TownCityId" ColumnName="TownCityId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PermiteeTypes">
+            <EntityTypeMapping TypeName="Model.PermiteeTypes">
+              <MappingFragment StoreEntitySet="PermiteeTypes">
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="PermiteeTypeName" ColumnName="PermiteeTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserClaims">
+            <EntityTypeMapping TypeName="Model.UserClaims">
+              <MappingFragment StoreEntitySet="UserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="Model.UserLogins">
+              <MappingFragment StoreEntitySet="UserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="Model.UserRoles">
+              <MappingFragment StoreEntitySet="UserRoles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Languages" ColumnName="Languages" />
+                <ScalarProperty Name="Citizenship" ColumnName="Citizenship" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Cellular" ColumnName="Cellular" />
+                <ScalarProperty Name="TownCity" ColumnName="TownCity" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="CivilStatus" ColumnName="CivilStatus" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehicles">
+            <EntityTypeMapping TypeName="Model.Vehicles">
+              <MappingFragment StoreEntitySet="Vehicles">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="PlateNo" ColumnName="PlateNo" />
+                <ScalarProperty Name="VehicleTypeId" ColumnName="VehicleTypeId" />
+                <ScalarProperty Name="PermiteeId" ColumnName="PermiteeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersInRoles" TypeName="Model.UsersInRoles" StoreEntitySet="UsersInRoles">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="UserRoles">
+              <ScalarProperty Name="Id" ColumnName="UserRoles_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="TransactionVehicles">
+            <EntityTypeMapping TypeName="Model.TransactionVehicles">
+              <MappingFragment StoreEntitySet="TransactionVehicles">
+                <ScalarProperty Name="EntryModifiedBy" ColumnName="EntryModifiedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="isRenew" ColumnName="isRenew" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionFacilities">
+            <EntityTypeMapping TypeName="Model.TransactionFacilities">
+              <MappingFragment StoreEntitySet="TransactionFacilities">
+                <ScalarProperty Name="EntryModifiedBy" ColumnName="EntryModifiedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="isRenew" ColumnName="isRenew" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="FacilitiesId" ColumnName="FacilitiesId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facilities">
+            <EntityTypeMapping TypeName="Model.Facilities">
+              <MappingFragment StoreEntitySet="Facilities">
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="FacilityName" ColumnName="FacilityName" />
+                <ScalarProperty Name="PermiteeId" ColumnName="PermiteeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleTypes">
+            <EntityTypeMapping TypeName="Model.VehicleTypes">
+              <MappingFragment StoreEntitySet="VehicleTypes">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="VehicleTypeName" ColumnName="VehicleTypeName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Model.Categories">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRolesInActions">
+            <EntityTypeMapping TypeName="Model.UserRolesInActions">
+              <MappingFragment StoreEntitySet="UserRolesInActions">
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionTypes">
+            <EntityTypeMapping TypeName="Model.TransactionTypes">
+              <MappingFragment StoreEntitySet="TransactionTypes">
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Particulars">
+            <EntityTypeMapping TypeName="Model.Particulars">
+              <MappingFragment StoreEntitySet="Particulars">
+                <ScalarProperty Name="Particular" ColumnName="Particular" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SummaryProgramOfWorks">
+            <EntityTypeMapping TypeName="Model.SummaryProgramOfWorks">
+              <MappingFragment StoreEntitySet="SummaryProgramOfWorks">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ProgramOfWorkId" ColumnName="ProgramOfWorkId" />
+                <ScalarProperty Name="SagId" ColumnName="SagId" />
+                <ScalarProperty Name="ParticularId" ColumnName="ParticularId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="Model.Logs">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="NewValues" ColumnName="NewValues" />
+                <ScalarProperty Name="OldValues" ColumnName="OldValues" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionPenalties">
+            <EntityTypeMapping TypeName="Model.TransactionPenalties">
+              <MappingFragment StoreEntitySet="TransactionPenalties">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Penalty" ColumnName="Penalty" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Barangays">
+            <EntityTypeMapping TypeName="Model.Barangays">
+              <MappingFragment StoreEntitySet="Barangays">
+                <ScalarProperty Name="TownId" ColumnName="TownId" />
+                <ScalarProperty Name="Barangay" ColumnName="Barangay" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProgramOfWorks">
+            <EntityTypeMapping TypeName="Model.ProgramOfWorks">
+              <MappingFragment StoreEntitySet="ProgramOfWorks">
+                <ScalarProperty Name="FilingDate" ColumnName="FilingDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="QuarrySites" ColumnName="QuarrySites" />
+                <ScalarProperty Name="Proponent" ColumnName="Proponent" />
+                <ScalarProperty Name="DateFinish" ColumnName="DateFinish" />
+                <ScalarProperty Name="DateStarted" ColumnName="DateStarted" />
+                <ScalarProperty Name="SourceFund" ColumnName="SourceFund" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PermitteeId" ColumnName="PermitteeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quarries">
+            <EntityTypeMapping TypeName="Model.Quarries">
+              <MappingFragment StoreEntitySet="Quarries">
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="JurisdictionName" ColumnName="JurisdictionName" />
+                <ScalarProperty Name="QuarryName" ColumnName="QuarryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuarriesInTransactions">
+            <EntityTypeMapping TypeName="Model.QuarriesInTransactions">
+              <MappingFragment StoreEntitySet="QuarriesInTransactions">
+                <ScalarProperty Name="SagId" ColumnName="SagId" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="QuarryId" ColumnName="QuarryId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="QuariesInPermitees" TypeName="Model.QuariesInPermitees" StoreEntitySet="QuariesInPermitees">
+            <EndProperty Name="Permitees">
+              <ScalarProperty Name="Id" ColumnName="PermiteeId" />
+            </EndProperty>
+            <EndProperty Name="Quarries">
+              <ScalarProperty Name="Id" ColumnName="QuarrieId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="QuarriesInBarangay" TypeName="Model.QuarriesInBarangay" StoreEntitySet="QuarriesInBarangay">
+            <EndProperty Name="Barangays">
+              <ScalarProperty Name="Id" ColumnName="BarangayId" />
+            </EndProperty>
+            <EndProperty Name="Quarries">
+              <ScalarProperty Name="Id" ColumnName="QuarryId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Hauleds">
+            <EntityTypeMapping TypeName="Model.Hauleds">
+              <MappingFragment StoreEntitySet="Hauleds">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SagId" ColumnName="SagId" />
+                <ScalarProperty Name="TransportSlip" ColumnName="TransportSlip" />
+                <ScalarProperty Name="ProgramOfWorkId" ColumnName="ProgramOfWorkId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionDetails">
+            <EntityTypeMapping TypeName="Model.TransactionDetails">
+              <MappingFragment StoreEntitySet="TransactionDetails">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryReceipts">
+            <EntityTypeMapping TypeName="Model.DeliveryReceipts">
+              <MappingFragment StoreEntitySet="DeliveryReceipts">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Signatories">
+            <EntityTypeMapping TypeName="Model.Signatories">
+              <MappingFragment StoreEntitySet="Signatories">
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Signatory" ColumnName="Signatory" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Actions">
+            <EntityTypeMapping TypeName="Model.Actions">
+              <MappingFragment StoreEntitySet="Actions">
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productions">
+            <EntityTypeMapping TypeName="Model.Productions">
+              <MappingFragment StoreEntitySet="Productions">
+                <ScalarProperty Name="BundleCode" ColumnName="BundleCode" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ProgramOfWorkId" ColumnName="ProgramOfWorkId" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ReceiptNo" ColumnName="ReceiptNo" />
+                <ScalarProperty Name="OriginId" ColumnName="OriginId" />
+                <ScalarProperty Name="DestinationId" ColumnName="DestinationId" />
+                <ScalarProperty Name="VehicleId" ColumnName="VehicleId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SagId" ColumnName="SagId" />
+                <ScalarProperty Name="QuarriesId" ColumnName="QuarriesId" />
+                <ScalarProperty Name="PermiteeId" ColumnName="PermiteeId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Provinces">
+            <EntityTypeMapping TypeName="Model.Provinces">
+              <MappingFragment StoreEntitySet="Provinces">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Towns">
+            <EntityTypeMapping TypeName="Model.Towns">
+              <MappingFragment StoreEntitySet="Towns">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionSags">
+            <EntityTypeMapping TypeName="Model.TransactionSags">
+              <MappingFragment StoreEntitySet="TransactionSags">
+                <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="SagId" ColumnName="SagId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitMeasurements">
+            <EntityTypeMapping TypeName="Model.UnitMeasurements">
+              <MappingFragment StoreEntitySet="UnitMeasurements">
+                <ScalarProperty Name="UnitMeasure" ColumnName="UnitMeasure" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sags">
+            <EntityTypeMapping TypeName="Model.Sags">
+              <MappingFragment StoreEntitySet="Sags">
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Sag" ColumnName="Sag" />
+                <ScalarProperty Name="UnitMeasurementId" ColumnName="UnitMeasurementId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Transactions">
+            <EntityTypeMapping TypeName="Model.Transactions">
+              <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="DeliveryReceipt" ColumnName="DeliveryReceipt" />
+                <ScalarProperty Name="Signatory" ColumnName="Signatory" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+                <ScalarProperty Name="Interest" ColumnName="Interest" />
+                <ScalarProperty Name="FilingDate" ColumnName="FilingDate" />
+                <ScalarProperty Name="IsPrinted" ColumnName="IsPrinted" />
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="EntryBy" ColumnName="EntryBy" />
+                <ScalarProperty Name="TransactionTotal" ColumnName="TransactionTotal" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="TransactionTypeId" ColumnName="TransactionTypeId" />
+                <ScalarProperty Name="PermiteeId" ColumnName="PermiteeId" />
+                <ScalarProperty Name="OfficialReceipt" ColumnName="OfficialReceipt" />
+                <ScalarProperty Name="TransactionNumber" ColumnName="TransactionNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ProgramOfWorksInTransactions" TypeName="Model.ProgramOfWorksInTransactions" StoreEntitySet="ProgramOfWorksInTransactions">
+            <EndProperty Name="Transactions">
+              <ScalarProperty Name="Id" ColumnName="TransactionId" />
+            </EndProperty>
+            <EndProperty Name="ProgramOfWorks">
+              <ScalarProperty Name="Id" ColumnName="ProgramOfWorkId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Billings">
+            <EntityTypeMapping TypeName="Model.Billings">
+              <MappingFragment StoreEntitySet="Billings">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

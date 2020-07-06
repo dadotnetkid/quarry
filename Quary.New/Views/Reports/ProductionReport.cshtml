@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "BIR Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("ProductionReportPartial", new { isSubmitted = true }),
+    HttpMethod = "POST",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()",
+    UpdateTargetId = "report-container"
+}))
+{
+    <div class="row">
+        <div class="col-lg-4">
+            @{
+                Html.DevExpress().ComboBox(settings =>
+                {
+                    settings.Name = "QuarriesId";
+                    settings.Properties.TextField = "QuarryName";
+                    settings.Properties.ValueField = "Id";
+                    settings.Properties.Caption = "Quarry Site";
+                    settings.Width = Unit.Percentage(100);
+                    settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+
+                }).BindList(new UnitOfWork().QuarriesRepo.Get()).GetHtml();
+            }
+        </div>
+        <div class="col-lg-4">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnSubmit";
+                    settings.Text = "Submit";
+                    settings.UseSubmitBehavior = true;
+                }).GetHtml();
+            }
+        </div>
+    </div>
+}
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <div id="report-container"></div>
+    </div>
+</div>

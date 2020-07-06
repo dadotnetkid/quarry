@@ -1,0 +1,109 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "BillingGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Billing", Action = "BillingGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Billing", Action = "BillingGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Billing", Action = "BillingGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Billing", Action = "BillingGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.ClientSideEvents.RowClick = "function(s,e){GridSelectionChanged(s,e)}";
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.Visible = false;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.Toolbars.Add(tb =>
+        {
+            tb.Enabled = true;
+            tb.Position = GridToolbarPosition.Top;
+
+
+            tb.Items.Add(GridViewToolbarCommand.New);
+            tb.Items.Add(GridViewToolbarCommand.Edit);
+            tb.Items.Add(GridViewToolbarCommand.Delete);
+            tb.Items.Add(i =>
+            {
+                i.Command = GridViewToolbarCommand.Refresh;
+                i.BeginGroup = true;
+                i.AdaptivePriority = 1;
+            });
+            tb.Items.Add(content =>
+            {
+                content.SetTemplateContent(coln =>
+                {
+                    Html.DevExpress().Button(btnSettings =>
+                    {
+                        btnSettings.Name = "btnPrint";
+                        btnSettings.ClientSideEvents.Click = "function(s,e){ShowPrintPreview()}";
+                        btnSettings.Text = "Print";
+                        btnSettings.ClientEnabled = false;
+                        //if (DataBinder.Eval(content.DataItem, "Id") == null)
+                        //    btnSettings.ClientEnabled = false;
+                    }).GetHtml();
+                });
+
+            });
+        });
+
+        settings.Columns.Add("Transactions.TransactionNumber");
+        settings.Columns.Add("OfficialReceipt");
+        settings.Columns.Add("Amount").PropertiesEdit.DisplayFormatString = "n2";
+        settings.Columns.Add("CreatedBy");
+        settings.Columns.Add("DateCreated");
+        settings.Columns.Add("LastModifiedBy");
+        settings.Columns.Add("DateModified");
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "Transactions.TransactionNumber")?.ToString() ?? "Billings";
+                pop.Width = Unit.Pixel(500);
+                pop.PopupVerticalAlign = PopupVerticalAlign.Above;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = false;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){BillingGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    Html.RenderAction("AddEditBillingPartial", new {billingId = col.KeyValue});
+
+                });
+            }).GetHtml();
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

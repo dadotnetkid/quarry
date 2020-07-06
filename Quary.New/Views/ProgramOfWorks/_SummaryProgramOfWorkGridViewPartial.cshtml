@@ -1,0 +1,128 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "SummaryProgramOfWorkGridView";
+        settings.SettingsDetail.MasterGridName = "ProgramOfWorkGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new
+        {
+            Controller = "ProgramOfWorks",
+            Action = "SummaryProgramOfWorkGridViewPartial",
+            programOfWorkId = ViewBag.ProgramOfWorkId
+        };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "ProgramOfWorks", Action = "SummaryProgramOfWorkGridViewPartialAddNew", programOfWorkId = ViewBag.ProgramOfWorkId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "ProgramOfWorks", Action = "SummaryProgramOfWorkGridViewPartialUpdate", programOfWorkId = ViewBag.ProgramOfWorkId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "ProgramOfWorks", Action = "SummaryProgramOfWorkGridViewPartialDelete", programOfWorkId = ViewBag.ProgramOfWorkId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = ViewBag.ProgramOfWorkId == null ? false : true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.Columns.Add("Particulars.Particular");
+        settings.Columns.Add("OrdinaryEarth").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "OrdinaryAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+
+        settings.Columns.Add("Mixed").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "MixedAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+//settings.Columns.Add("").Caption="Php";
+settings.Columns.Add("FineScreen").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "FineScreenAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+//settings.Columns.Add("FineScreenAmount").Caption = "Php";
+settings.Columns.Add("Coarse").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "CoarseAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+//settings.Columns.Add("CourseAmount").Caption="Php";
+settings.Columns.Add("Boulders").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "BouldersAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+        settings.Columns.Add("CrushedRocks").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "CrushedRocksAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+        settings.Columns.Add("Total").PropertiesEdit.DisplayFormatString = "#,#.#0";
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Php";
+            col.FieldName = "TotalAmount";
+            col.PropertiesEdit.DisplayFormatString = "#,#.#0";
+        });
+//      settings.Columns.Add("BouldersAmount").Caption="Php";
+settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "Particulars.Particular")?.ToString() ?? "Particular";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){SummaryProgramOfWorkGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["Model"] != null)
+                    {
+                        Html.RenderPartial("AddEditProjectOfWorkPartial", ViewData["Model"]);
+                    }
+
+                    else
+                        Html.RenderAction("AddEditProjectOfWorkPartial", new { summaryId = col.KeyValue });
+                });
+            }).GetHtml();
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()
+

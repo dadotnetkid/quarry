@@ -1,0 +1,160 @@
+﻿@using Quary.New.Controllers
+@*<p>@ViewContext.RouteData.Values["Controller"].ToString()</p>*@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+            <li class="header">MAIN NAVIGATION</li>
+            <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(HomeController.Index) && ViewContext.RouteData.Values["Controller"].ToString() == "Home" ? "active" : "")">
+                <a href="@Url.Action("Index", "Home")"><i class="ion ion-home"></i> <span>Dash Board</span></a>
+
+
+            <li class="@("treeview " + (ControllerHelpers.IsControllerName("transactions","Billing,Productions")  ? "menu-open active" : ""))">
+                <a href="">
+                    <i class="fa fa-book"></i> <span>Transactions</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "transactions") ?"active":"")">
+                        <a href="@Url.Action("Index", "transactions")"><i class="fa fa-list"></i> <span>Transactions List</span></a>
+                    </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "Billing")?"active":"")">
+                        <a href="@Url.Action("Index", "Billing")"><i class="fa fa-list"></i> <span>Billings</span></a>
+                    </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Productions", "Production")?"active":"")">
+                        <a href="@Url.Action("Productions", "Productions")"><i class="fa fa-list"></i> <span>Production List</span></a>
+                    </li>
+                    @*<li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
+                        <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
+                    </li>*@
+                    
+                    <li class="@(ControllerHelpers.IsMenuBarActive("ProgramOfWorks", "FileManagement")?"active":"")">
+                        <a href="@Url.Action("ProgramOfWorks", "filemanagement")"><i class="fa fa-list"></i> <span>Program Of Works</span></a>
+                    </li>
+
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "Hauled")?"active":"")">
+                        <a href="@Url.Action("Index", "Hauled")"><i class="fa fa-list"></i> <span>Hauled</span></a>
+                    </li>
+                </ul>
+            </li>
+        
+
+        <li class="@("treeview " + (ControllerHelpers.IsControllerName("FileManagement")  ? "menu-open active" : ""))">
+            <a href="">
+                <i class="fa fa-file"></i> <span>File Management</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="@(ControllerHelpers.IsMenuBarActive("TransactionItems", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("transactionitems", "filemanagement")"><i class="fa fa-archive"></i> <span>Transaction Items</span></a>
+                </li>
+             
+                <li class="@(ControllerHelpers.IsMenuBarActive("Particulars", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Particulars", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Particulars</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Categories", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("categories", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Items Category</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Sags", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("sags", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Sags</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Permitees", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("permitees", "filemanagement")"><i class="fa fa-user"></i> <span>Permittees</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("TransactionTypes", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("TransactionTypes", "filemanagement")"><i class="fa fa-clipboard"></i> <span>Transaction Types</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("PermiteeTypes", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("permiteetypes", "filemanagement")"><i class="fa fa-clipboard"></i> <span>Permittee Types</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Vehicles", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("vehicles", "filemanagement")"><i class="fa fa-truck"></i> <span>Vehicles</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("VehicleTypes", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("vehicletypes", "filemanagement")"><i class="fa fa-truck"></i> <span>Vehicle Types</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Facilities", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("facilities", "filemanagement")"><i class="fa fa-building-o"></i> <span>Facilities</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Quarries", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("quarries", "filemanagement")"><i class="fa fa-map-signs"></i> <span>Quarries</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("UnitOfMeasurement", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("UnitOfMeasurement", "filemanagement")"><i class="fa fa-map-signs"></i> <span>Unit Measure</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("DeliveryReceipts", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("DeliveryReceipts", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Delivery Receipts</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Barangays", "FileManagement")?"active":"")">
+                    <a href="@Url.Action("Barangays", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Barangays</span></a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="@("treeview " + (ControllerHelpers.IsControllerName("reports","PermitteeBillingMasterlist")  ? "active" : ""))">
+            <a href="">
+                <i class="fa fa-print"></i> <span>Reports</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="@(ControllerHelpers.IsMenuBarActive("PermitteeListReport","reports") ? "active" : "")">
+                    <a href="@Url.Action("PermitteeListReport", "reports")"><i class="fa fa-list-ol"></i> <span>Permitee List Report</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("VehicleMasterList","reports") ? "active" : "")">
+                    <a href="@Url.Action("VehicleMasterList", "reports")"><i class="fa fa-list-ol"></i> <span>Vehicle Master List</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("ProductionReport","reports") ? "active" : "")">
+                    <a href="@Url.Action("ProductionReport", "reports")"><i class="fa fa-list-ol"></i> <span>BIR Report</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("ProductionLedger","reports") ? "active" : "")">
+                    <a href="@Url.Action("ProductionLedger", "reports")"><i class="fa fa-list-ol"></i> <span>Production Ledger</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("SummaryProductionReportPerPermittee","reports") ? "active" : "")">
+                    <a href="@Url.Action("SummaryProductionReportPerPermittee", "reports")"><i class="fa fa-list-ol"></i> <span>PTO Report</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("AccountingReport","reports") ? "active" : "")">
+                    <a href="@Url.Action("AccountingReport", "reports")"><i class="fa fa-list-ol"></i> <span>Accounting Report</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index","PermitteeBillingMasterlist") ? "active" : "")">
+                    <a href="@Url.Action("Index", "PermitteeBillingMasterlist")"><i class="fa fa-list-ol"></i> <span>Billing Masterlist Report</span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="@("treeview " + (ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : ""))">
+            <a href="">
+                <i class="fa fa-gear"></i> <span>Maintenance</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Users).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                    <a href="@Url.Action("users", "maintenance")"><i class="fa fa-circle"></i> <span>Users</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.UserRoles).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                    <a href="@Url.Action("userroles", "maintenance")"><i class="fa fa-circle"></i> <span>User Roles</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.QueryManagement).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                    <a href="@Url.Action("querymanagement", "maintenance")"><i class="fa fa-circle"></i> <span>Query Management</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Logs).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                    <a href="@Url.Action("logs", "maintenance")"><i class="fa fa-circle"></i> <span>Logs</span></a>
+                </li>
+
+                @*<li class="@(ViewContext.RouteData.Values["Action"].ToString() == nameof(MaintenanceController.Controllers).ToLower() && ViewContext.RouteData.Values["Controller"].ToString() == "maintenance" ? "active" : "")">
+                    <a href="@Url.Action("controllers", "maintenance")"><i class="fa fa-circle"></i> <span>Authorized Users</span></a>
+                </li>*@
+            </ul>
+        </li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

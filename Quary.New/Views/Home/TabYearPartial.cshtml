@@ -1,0 +1,27 @@
+﻿@using System.Data.Entity.SqlServer
+
+        @Html.DevExpress().PageControl(settings =>
+        {
+            settings.Width = Unit.Percentage(100);
+       settings.Name = "tabYear";
+       settings.ClientSideEvents.TabClick = "function(s,e){tabYear.PerformCallback({year:s.GetActiveTab().GetText()})}";
+       settings.CallbackRouteValues = new {Controller="Home",Action= "TabYearPartial" };
+       foreach (var i in new UnitOfWork().TransactionsRepo.Fetch().Select(x => new
+       {
+           year = SqlFunctions.DatePart("year", x.TransactionDate)
+       }).GroupBy(x => x.year).Select(x => new {year = x.Key}).OrderByDescending(m=>m.year))
+       {
+           settings.TabPages.Add(tabSettings =>
+           {
+               tabSettings.Name = "tab" + i.year;
+               tabSettings.Text = i.year.ToString();
+               tabSettings.SetContent(() =>
+               {
+                   Html.RenderAction("DashboardPartial", new {year = i.year});
+               });
+           });
+
+       }
+   }).GetHtml();
+
+

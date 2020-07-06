@@ -1,0 +1,12 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "QuarriesId";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "QuarryName";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "productions", Action = "CboQuarryPartial", PermitteeId = ViewBag.PermitteeId };
+        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){cboQuarryId(s,e)}";
+    }).Bind(ViewBag.ReceiptNo).BindList(Model).GetHtml();
+}
+

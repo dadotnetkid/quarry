@@ -1,0 +1,19 @@
+﻿@model AccountingReportViewModel
+
+@{
+    List<Quarries> quarries = new List<Quarries>() { new Quarries() {  QuarryName= "ALL" } };
+    if (Model != null)
+
+    {
+        quarries.AddRange(new UnitOfWork().QuarriesRepo.Get(x => x.Permitees.Any(m => m.Id == Model.PermitteeId)));
+    }
+
+    Html.DevExpress().ComboBoxFor(m => m.QuarryId, settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.TextField = "QuarryName";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.Columns.Add("QuarryName");
+        settings.Properties.Caption = "Quarries";
+    }).BindList(quarries).GetHtml();
+}

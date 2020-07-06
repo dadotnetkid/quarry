@@ -1,0 +1,60 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "UnPaidTransactionGridView";
+        settings.CallbackRouteValues = new { Controller = "Home", Action = "UnPaidTransactionGridViewPartial", Year = ViewBag.Year };
+
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButtonInHeader = false;
+        settings.CommandColumn.ShowDeleteButton = false;
+        settings.CommandColumn.ShowEditButton = false;
+        settings.SettingsBehavior.AllowFocusedRow = true;
+
+        settings.KeyFieldName = "Id";
+
+
+        settings.SettingsPager.Visible = false;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add(col =>
+    {
+        col.FieldName = "TransactionNumber";
+        col.Caption = "Trans. No";
+    });
+        settings.Columns.Add(col =>
+    {
+        col.FieldName = "Permitees.FullName";
+        col.Caption = "Permitee";
+    });
+
+        settings.Columns.Add(col =>
+    {
+        col.FieldName = "TransactionDate";
+    });
+        settings.Columns.Add(col =>
+    {
+        col.FieldName = "TransactionTotal";
+        col.PropertiesEdit.DisplayFormatString = "N2";
+    });
+
+
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

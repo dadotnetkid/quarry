@@ -1,0 +1,26 @@
+﻿
+@Html.Action("InformationsPartial",new{year = ViewBag.Year })
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>UnPaid Transaction</h4>
+            </div>
+            <div class="panel-body">
+                @Html.Action("UnPaidTransactionGridViewPartial", new { year = ViewBag.Year })
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Recent Transaction</h4>
+            </div>
+            <div class="panel-body">
+                @Html.Action("RecentTransactionGridViewPartial", new { year = ViewBag.Year })
+            </div>
+        </div>
+
+    </div>
+</div>

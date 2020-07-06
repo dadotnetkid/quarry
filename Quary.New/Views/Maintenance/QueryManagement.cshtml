@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Query Management";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("QueryManagementPartial"),
+    OnSuccess = "",
+    UpdateTargetId = "query-container",
+    HttpMethod = "POST",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()",
+    OnFailure = "onFailure()",
+   
+
+}))
+{
+    <div class="row">
+        <div class="col-lg-8">
+            @Html.DevExpress().Memo(settings =>
+            {
+                settings.Name = "query";
+                settings.Properties.Caption = "Query";
+                settings.Width = Unit.Percentage(100);
+                settings.Height = 100;
+                settings.Properties.ValidationSettings.RequiredField.IsRequired = true;
+            }).GetHtml()
+        </div>
+        <div class="col-lg-4">
+            @Html.DevExpress().Button(settings =>
+       {
+           settings.Name = "btnExecute";
+           settings.Text = "Execute";
+           settings.UseSubmitBehavior = true;
+       }).GetHtml()
+        </div>
+    </div>
+}
+<div id="query-container"class="margin-top-10">
+    @Html.Action("QueryManagementPartial")
+</div>
+
+
+<script>
+    function onFailure() {
+        hideLoading();
+    }
+</script>

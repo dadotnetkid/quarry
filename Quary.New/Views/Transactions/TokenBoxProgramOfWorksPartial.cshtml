@@ -1,0 +1,23 @@
+﻿
+@model IEnumerable<ProgramOfWorks>
+@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "programOfWorkIds";
+        settings.Properties.Caption = "Programg Of Works";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Transactions", Action = "TokenBoxProgramOfWorksPartial", quarryId = ViewBag.QuarryId };
+        settings.Properties.TextField = "Name";
+        settings.Properties.ValueField = "Id";
+        settings.PreRender = (s, e) =>
+        {
+            var tkb = s as MVCxTokenBox;
+            if (Model != null)
+                foreach (var i in Model)
+                {
+                    tkb.Tokens.Add(i.Name);
+                }
+
+        };
+    }).BindList(ViewBag.ProgramOfWorksRepo).GetHtml();
+}

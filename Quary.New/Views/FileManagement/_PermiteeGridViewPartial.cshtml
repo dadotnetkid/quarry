@@ -1,0 +1,144 @@
+@using System.Drawing
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "PermiteeGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "PermiteeGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "PermiteeGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "PermiteeGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "PermiteeGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowEditButton = true;
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.AddEditDeleteImportToolbar(tbSettings =>
+        {
+            
+            tbSettings.SetTemplateContent(col =>
+            {
+                Html.DevExpress().Button(btnSettings =>
+                {
+                    btnSettings.Name = "btnImport";
+                    btnSettings.Text = "Import";
+                    btnSettings.ClientEnabled = User.UserIsInAction("Import Permittees");
+                    btnSettings.ClientSideEvents.Click = "function(s,e){ShowPopupFilemanagementImport('ImportPermitteeUploadControlUpload','filemanagementImport')}";
+
+                }).GetHtml();
+                Html.DevExpress().HyperLink(lnkSettings =>
+                {
+                    lnkSettings.Name = "lnkDownload";
+                    lnkSettings.ClientEnabled = User.UserIsInAction("Download Permittees Template");
+                    lnkSettings.NavigateUrl = Url.Action("DownloadTemplates", new { template = "permittee" });
+                    lnkSettings.Properties.Text = "Download Permittees Template";
+                    lnkSettings.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+                }).GetHtml();
+            });
+        });
+        settings.Columns.Add(colSettings =>
+        {
+            colSettings.FieldName = "AccreditationNumber";
+            colSettings.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = colSettings.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = (Model as List<Permitees>)?.Select(x => new { x.AccreditationNumber });
+            cbo.TextField = "AccreditationNumber";
+
+        });
+        settings.Columns.Add(colSettings =>
+        {
+            colSettings.FieldName = "FullName";
+            colSettings.Caption = "Permittee";
+            colSettings.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = colSettings.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = (Model as List<Permitees>)?.Select(x => new { x.FullName });
+            cbo.TextField = "FullName";
+        });
+        settings.Columns.Add(colSettings =>
+        {
+            colSettings.FieldName = "BusinessRegistration";
+            colSettings.Caption = "BusinessRegistration";
+            colSettings.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = colSettings.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = (Model as List<Permitees>)?.Select(x => new { x.BusinessRegistration });
+            cbo.TextField = "BusinessRegistration";
+        });
+        settings.Columns.Add(colSettings =>
+        {
+            colSettings.FieldName = "BIRNo";
+            colSettings.Caption = "BIRNo";
+            colSettings.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = colSettings.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = (Model as List<Permitees>)?.Select(x => new { x.BIRNo });
+            cbo.TextField = "BIRNo";
+        });
+        settings.Columns.Add("CompanyName");
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "Quarry Sites";
+            col.FieldName = "_QuarySites";
+
+            col.CellStyle.CssClass = "td-min-width";
+
+
+        });
+        settings.Columns.Add("AddressLine1");
+        settings.Columns.Add("AddressLine2");
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "FullName")?.ToString() ?? "Permitee";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){PermiteeGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["EditError"] != null && ViewData["Model"] != null)
+                    {
+                        Html.RenderPartial("AddEditPermiteePartial", ViewData["Model"]);
+                    }
+                    else
+                    {
+                        Html.RenderAction("AddEditPermiteePartial", new { permiteeId = col.KeyValue });
+                    }
+                });
+            }).GetHtml();
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+    if (Session["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)Session["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Vehicle Master List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("VehicleMasterListPartial"),
+    UpdateTargetId= "master-list-container",
+    OnBegin="showLoading()",
+    OnComplete="hideLoading()"
+
+}))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            @{
+                Html.DevExpress().ComboBox(settings =>
+                {
+                    settings.Name = "PermitteeId";
+                    settings.Width = Unit.Percentage(100);
+                    settings.Properties.Caption = "Permittee";
+                    settings.Properties.TextField = "FullName";
+                    settings.Properties.ValueField = "Id";
+                }).BindList(new UnitOfWork().PermiteesRepo.Get()).GetHtml();
+            }
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                @{
+                    Html.DevExpress().Button(settings =>
+                    {
+                        settings.Name = "btnSubmit";
+                        settings.Text = "Submit";
+                        settings.UseSubmitBehavior = true;
+                    }).GetHtml();
+                }
+            </div>
+        </div>
+    </div>
+}
+<div class="row margin-top-10">
+    <div class="row">
+        <div id="master-list-container">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("VehicleMasterListPartial")',
+            success: function (obj) {
+                $('#master-list-container').html(obj);
+                hideLoading();
+            }
+        });
+    });
+</script>

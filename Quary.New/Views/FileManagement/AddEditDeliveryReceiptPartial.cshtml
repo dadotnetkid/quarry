@@ -1,0 +1,55 @@
+﻿
+@model DeliveryReceipts
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.TransactionId, settings =>
+            {
+                settings.Properties.NullText = "Transaction";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Transaction";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                settings.Properties.TextField = "TransactionNumber";
+                settings.Properties.ValueField = "Id";
+            }).BindList(new UnitOfWork().TransactionsRepo.Get(x=>!x.DeliveryReceipts.Any() && x.TransactionDetails.Any(m=>m.Items.ItemName.Contains("Delivery Receipt")) ) ).GetHtml();
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.ReceiptNumber, settings =>
+            {
+                settings.Properties.NullText = "Receipt Number";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Receipt Number";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){DeliveryReceiptGridView.UpdateEdit()}";
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){DeliveryReceiptGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>
+
+

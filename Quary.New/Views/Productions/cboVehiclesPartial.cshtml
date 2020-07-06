@@ -1,0 +1,11 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "VehicleId";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.TextField = "PlateNo";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "productions", Action = "cboVehiclesPartial",PermitteeId = ViewBag.PermitteeId  };
+        settings.Properties.ClientSideEvents.KeyDown = "function(s,e){cboVehicleId(s,e)}";
+    }).Bind(ViewBag.VehicleId).BindList(Model).GetHtml();
+}

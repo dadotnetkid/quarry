@@ -1,0 +1,34 @@
+@Html.DevExpress().PivotGrid(settings => {
+    settings.Name = "PivotGrid";
+                                             settings.Width = Unit.Percentage(100);
+    settings.CallbackRouteValues = new { Controller = "Reports", Action = "PivotGridPartial" };
+    
+    settings.Fields.Add(field =>
+    {
+
+        field.FieldName = "Particulars.Particular";
+        field.Caption = "Particulars";
+    });
+    settings.Fields.Add(field => {
+        field.FieldName = "Sags.Sag";
+        field.Caption = "Sag";
+        field.Area = PivotArea.ColumnArea;
+
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.DataArea;
+        field.FieldName = "Quantity";
+        field.Caption = "QTY";
+        field.CellFormat.FormatType = FormatType.Custom;
+        field.CellFormat.FormatString = "#,#.0#";
+    });
+    settings.Fields.Add(field =>
+    {
+        field.Area = PivotArea.DataArea;
+        field.FieldName = "Amount";
+        field.Caption = "Php";
+        field.CellFormat.FormatType = FormatType.Custom;
+        field.CellFormat.FormatString = "#,#.0#";
+    });
+}).Bind(Model).GetHtml()

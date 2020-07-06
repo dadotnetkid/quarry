@@ -1,0 +1,25 @@
+﻿@model XtraReport
+@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popControl";
+        settings.ShowMaximizeButton = true;
+        settings.HeaderText = "Print Report Viewer";
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+        settings.ShowOnPageLoad = true;
+        settings.SetContent(() =>
+        {
+            Html.DevExpress().WebDocumentViewer(ssettings =>
+            {
+             //   ssettings.ClientSideEvents.Init = "function(s,e){s.previewModel.reportPreview.zoom()}";
+                ssettings.Name = "WebDocumentViewer1";
+            }).Bind(Model).GetHtml();
+
+        });
+    }).GetHtml();
+
+}
+
+
+

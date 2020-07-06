@@ -1,0 +1,27 @@
+﻿
+@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "PrintPopupSummaryOfProgramOfWork";
+        settings.Width = Unit.Pixel(700);
+        settings.ShowCloseButton = true;
+        settings.CloseAction = CloseAction.CloseButton;
+        settings.ShowMaximizeButton = true;
+        settings.Maximized = true;
+
+        settings.ShowHeader = true;
+        settings.HeaderText = "Print";
+        settings.CallbackRouteValues = new {Action = "PrintPopupSummaryOfProgramOfWork",Controller="ProgramOfWork" };
+        settings.ShowOnPageLoad = true;
+        
+        settings.SetContent(() =>
+        {
+            if (Model != null)
+                Html.DevExpress().WebDocumentViewer(webDocumentViewersettings =>
+                {
+                    webDocumentViewersettings.Name = "WebDocumentViewer";
+
+                }).Bind(Model).GetHtml();
+        });
+    }).GetHtml();
+}

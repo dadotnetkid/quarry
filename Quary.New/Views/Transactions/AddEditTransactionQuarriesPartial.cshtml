@@ -1,0 +1,70 @@
+﻿
+@model QuarriesInTransactions
+
+@{
+    int? permiteeId = ViewBag.PermiteeId;
+    Vehicles vehicles = ViewBag.Vehicle as Vehicles;
+    string transactionId = ViewBag.TransactionId;
+}
+<input type="hidden" name="TransactionId" value="@ViewBag.TransactionId" />
+
+
+<div class="row ">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.QuarryId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Quarry";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField= "QuarryName";
+            }).BindList(new UnitOfWork().QuarriesRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.SagId, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "SAG";
+                settings.Properties.ValueField = "Id";
+                settings.Properties.TextField = "Sag";
+            }).BindList(new UnitOfWork().SagsRepo.Get()).GetHtml();
+        }
+    </div>
+</div>
+<div class="row ">
+    <div class="col-lg-4">
+        @{
+            Html.DevExpress().SpinEditFor(m => m.Percentage, settings =>
+            {
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.Caption = "Percentage";
+              
+            }).GetHtml();
+        }
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmitTransactionQuarries";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){TransactionQuarriesGridView.UpdateEdit()}";
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnCancelTransactionQuarries";
+                settings.Text = "Cancel";
+                settings.ClientSideEvents.Click = "function(s,e){TransactionQuarriesGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+
+    </div>
+</div>

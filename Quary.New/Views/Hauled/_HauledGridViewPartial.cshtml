@@ -1,0 +1,76 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "HauledGridView";
+        settings.Width = Unit.Percentage(100);
+        
+        settings.CallbackRouteValues = new { Controller = "Hauled", Action = "HauledGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Hauled", Action = "HauledGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Hauled", Action = "HauledGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Hauled", Action = "HauledGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.AddAddEditDeleteToolbar();
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add("ProgramOfWorks.Name");
+        settings.Columns.Add("TransportSlip");
+        settings.Columns.Add("Sags.Sag");
+        settings.Columns.Add("Quantity").PropertiesEdit.DisplayFormatString="##.##";
+        settings.Columns.Add("Amount");
+        settings.Columns.Add("DateCreated");
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+            var id = col.KeyValue;
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = "Hauled";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+
+                pop.ShowMaximizeButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){HauledGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+
+                    Html.RenderAction("AddEditHauledPartial", new { hauledId = id });
+                 
+                });
+            }).GetHtml();
+
+
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

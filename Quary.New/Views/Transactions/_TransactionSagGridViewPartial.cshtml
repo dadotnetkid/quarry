@@ -1,0 +1,54 @@
+@{
+    var transaction = ViewBag.Transactions as Transactions;
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "TransactionSagGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Transactions", Action = "TransactionSagGridViewPartial", PermiteeId = ViewBag.PermiteeId, transactionId = ViewBag.TransactionId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Transactions", Action = "TransactionSagGridViewPartialAddNew", PermiteeId = ViewBag.PermiteeId, transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Transactions", Action = "TransactionSagGridViewPartialUpdate", PermiteeId = ViewBag.PermiteeId, transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Transactions", Action = "TransactionSagGridViewPartialDelete", PermiteeId = ViewBag.PermiteeId, transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+
+        settings.ClientSideEvents.EndCallback = "function(s,e){transactionEndCallBack('" + ViewBag.PermiteeId + "','" + ViewBag.TransactionId + "')}";
+
+        settings.CommandColumn.Visible = (ViewBag.PermiteeId == null) ? false : transaction?.IsPrinted == true ? (User.UserIsInAction("Override Transaction Save") ? true : false) : true; ;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = false;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.Columns.Add("Sags.Sag");
+        settings.Columns.Add("Quantity");
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "TotalCost";
+            col.ColumnType = MVCxGridViewColumnType.TextBox;
+            col.PropertiesEdit.DisplayFormatString = "N2";
+        });
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.RenderAction("AddEditTransactionSagPartial", new { transactionSagId = col.KeyValue, PermiteeId = ViewBag.PermiteeId, TransactionId = ViewBag.TransactionId });
+        });
+
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Barangays>
+@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.Name = "BarangayIds";
+        settings.Properties.Caption = "Barangay";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "TokenBoxBarangayPartials", quarryId = ViewBag.QuarryId };
+        settings.Properties.TextField = "Barangay";
+        settings.Properties.ValueField = "Id";
+        settings.PreRender = (s, e) =>
+        {
+            var tkb = s as MVCxTokenBox;
+            if(Model!=null)
+                foreach (var i in Model)
+                {
+                    tkb.Tokens.Add(i.Barangay);
+                }
+
+        };
+    }).BindList(ViewBag.Barangays).GetHtml();
+}

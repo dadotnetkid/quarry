@@ -1,0 +1,147 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Width = Unit.Percentage(100);
+        settings.Name = "ProgramOfWorkGridView";
+        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "ProgramOfWorkGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "ProgramOfWorkGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "ProgramOfWorkGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "ProgramOfWorkGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+        settings.SettingsExport.EnableClientSideExportAPI = true;
+        settings.SettingsExport.ExcelExportMode = DevExpress.Export.ExportType.WYSIWYG;
+        settings.AddEditDeleteImportToolbar(items =>
+        {
+            items.Text = "Export";
+            items.Items.Add(GridViewToolbarCommand.ExportToXls);
+        });
+
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = true;
+        settings.SettingsDetail.ShowDetailRow = true;
+
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "Name";
+            col.ColumnType = MVCxGridViewColumnType.ComboBox;
+            var cbo = col.PropertiesEdit as ComboBoxProperties;
+            cbo.DataSource = (Model as List<ProgramOfWorks>).Select(x => new { x.Name });
+            cbo.TextField = "Name";
+        });
+        settings.Columns.Add("Cost");
+        settings.Columns.Add("Address");
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "FilingDate";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.SettingsHeaderFilter.Mode = GridHeaderFilterMode.DateRangePicker;
+        });
+        settings.Columns.Add("SourceFund");
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "DateStarted";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.SettingsHeaderFilter.Mode = GridHeaderFilterMode.DateRangePicker;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "DateFinish";
+            col.ColumnType = MVCxGridViewColumnType.DateEdit;
+            col.SettingsHeaderFilter.Mode = GridHeaderFilterMode.DateRangePicker;
+        });
+        settings.Columns.Add("Proponent");
+        settings.SetEditFormTemplateContent(col =>
+        {
+
+
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "Name")?.ToString() ?? "Name";
+                pop.Width = Unit.Pixel(700);
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){ProgramOfWorkGridView.CancelEdit()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    if (ViewData["Model"] != null)
+                    {
+                        Html.RenderPartial("AddEditProgramOfWorkPartial", ViewData["Model"]);
+                    }
+
+                    else
+                        Html.RenderAction("AddEditProgramOfWorkPartial", new { programOfWorkId = col.KeyValue });
+                });
+            }).GetHtml();
+
+
+        });
+
+        settings.SetDetailRowTemplateContent(col =>
+        {
+
+            Html.DevExpress().PopupControl(pop =>
+            {
+                pop.HeaderText = DataBinder.Eval(col.DataItem, "Name")?.ToString() ?? "Name";
+                pop.Maximized = true;
+                pop.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+                pop.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+                pop.Name = col.KeyValue + "_popup_detail_page";
+                pop.Modal = true;
+                pop.ShowOnPageLoad = true;
+                pop.CloseOnEscape = false;
+                pop.ShowCloseButton = true;
+                pop.ClientSideEvents.CloseUp = "function(s,e){ProgramOfWorkGridView.CollapseAllDetailRows()}";
+                pop.CloseAction = CloseAction.CloseButton;
+                pop.SetContent(() =>
+                {
+                    ViewContext.Writer.Write("<div class='row margin-bottom-10'><div class='col-lg-3'>");
+                    Html.DevExpress().Button(btnSettings =>
+                    {
+
+                        //  btnSettings.ClientEnabled = ViewBag.ProgramOfWorkId != null;
+                        btnSettings.Name = "btnPrint";
+                        btnSettings.Text = "Print";
+                        btnSettings.UseSubmitBehavior = false;
+                        btnSettings.ClientSideEvents.Click = "function(s,e){PrintProgramOfWork('" + col.KeyValue + "')}";
+                    }).GetHtml();
+
+                    ViewContext.Writer.Write("</div></div>");
+                    ViewContext.Writer.Write("<div class='row margin-top-10'><div class='col-lg-12'>");
+                    Html.RenderAction("SummaryProgramOfWorkGridViewPartial", "ProgramOfWorks", new { programOfWorkId = col.KeyValue });
+                    ViewContext.Writer.Write("</div></div>");
+                });
+            }).GetHtml();
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

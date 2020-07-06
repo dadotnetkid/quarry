@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "ImportProductions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-lg-3">
+        @using (Html.BeginForm("UploadControlUpload", "Transactions", FormMethod.Post))
+        {
+            @Html.DevExpress().UploadControl(settings => {
+                                                             settings.Name = "UploadControl";
+                                                             settings.CallbackRouteValues = new { Controller = "Transactions", Action = "UploadControlUpload" };
+
+
+                                                             settings.ShowUploadButton = false;
+                                                             settings.ShowProgressPanel = false;
+                                                             settings.ClientSideEvents.FilesUploadComplete = "function(s,e){alert('File Upload successfully');ImportOutpostGridView.PerformCallback()}";
+                                                             settings.ValidationSettings.Assign(Quary.New.Controllers.TransactionsControllerUploadControlSettings.UploadValidationSettings);
+            }).GetHtml()
+        }
+
+
+    </div>
+    <div class="col-lg-3">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Upload";
+                settings.ClientSideEvents.Click = "function(s,e){UploadControl.Upload()}";
+            }).GetHtml();
+        }
+    </div>
+</div>
+
+
+
+@Html.Action("ImportProductionGridViewPartial")

@@ -1,0 +1,195 @@
+﻿@model ProgramOfWorks
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().ComboBoxFor(m => m.PermitteeId, settings =>
+            {
+                settings.Properties.NullText = "Permittee";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Permittee";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+                settings.Properties.TextField = "CompanyName";
+                settings.Properties.ValueField = "Id";
+            }).BindList(new UnitOfWork().PermiteesRepo.Get()).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Name, settings =>
+            {
+                settings.Properties.NullText = "Program of Work Name";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Program of Work Name";
+                settings.ShowModelErrors = true;
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Address, settings =>
+            {
+                settings.Properties.NullText = "Address";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Address";
+         
+                settings.ShowModelErrors = true;
+                
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Cost, settings =>
+            {
+                settings.Properties.NullText = "Cost";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Cost";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.FilingDate, settings =>
+            {
+                settings.Properties.NullText = "Filing Date";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Filing Date";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+
+
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.SourceFund, settings =>
+            {
+                settings.Properties.NullText = "Source Fund";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Source Fund";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().DateEditFor(m => m.DateStarted, settings =>
+            {
+                settings.Properties.NullText = "Date Started";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Date Started";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().DateEditFor(m => m.DateFinish, settings =>
+            {
+                settings.Properties.NullText = "Date Finish";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Date Finish";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+            Html.DevExpress().TextBoxFor(m => m.Proponent, settings =>
+            {
+                settings.Properties.NullText = "Proponent";
+                settings.Width = Unit.Percentage(100);
+                settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+                settings.Properties.Caption = "Proponent";
+
+                settings.ShowModelErrors = true;
+
+                settings.Properties.ValidationSettings.Display = Display.Dynamic;
+            }).GetHtml();
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        @{
+
+        }
+    </div>
+
+</div>
+
+<div class="row margin-top-10">
+    <div class="col-lg-12 col-md-12 ">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Submit";
+                settings.ClientSideEvents.Click = "function(s,e){ProgramOfWorkGridView.UpdateEdit()}";
+
+            }).GetHtml();
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnCancel";
+                settings.Text = "Cancel";
+                settings.ControlStyle.CssClass = "margin-left-10";
+                settings.ClientSideEvents.Click = "function(s,e){ProgramOfWorkGridView.CancelEdit()}";
+            }).GetHtml();
+        }
+    </div>
+</div>
+
+

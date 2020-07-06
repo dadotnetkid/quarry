@@ -1,0 +1,83 @@
+﻿@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action("SummaryProgramOfWorkGridViewPartial"),
+    UpdateTargetId = "container",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()",
+
+}))
+{
+    <div class="row">
+        <div class="col-lg-3">
+            @{
+                Html.DevExpress().ComboBox(settings =>
+                {
+                    settings.Name = "ProgramOfWorkId";
+                    settings.Properties.TextField = "Name";
+                    settings.Properties.ValueField = "Id";
+                    settings.Width = Unit.Percentage(100);
+                    settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){changeProgramofWork(s)}";
+                    settings.Properties.Caption = "Name of Project";
+                    settings.Properties.Buttons.Add(new EditButton()
+                    {
+                        Text = "New"
+                    });
+                    settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){NewButton(s,e)}";
+                }).BindList(new UnitOfWork().ProgramOfWorksRepo.Get()).Bind(ViewBag.ProgramOfWorkId).GetHtml();
+            }
+
+        </div>
+        <div class="col-lg-3">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+
+                    settings.ClientEnabled = ViewBag.ProgramOfWorkId != null;
+                    settings.Name = "btnPrint";
+                    settings.Text = "Print";
+                    settings.UseSubmitBehavior = false;
+                    settings.ClientSideEvents.Click = "function(s,e){PrintProgramOfWork()}";
+                }).GetHtml();
+            }
+        </div>
+    </div>
+
+}
+
+
+<script>
+    function changeProgramofWork(s) {
+        $('form').submit();
+        if (s.GetValue() != null)
+            btnPrint.SetEnabled(true);
+    }
+    function PrintProgramOfWork() {
+
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PrintPopupSummaryOfProgramOfWork")',
+            data: { ProgramOfWorkId: ProgramOfWorkId.GetValue() },
+            success: function (s) {
+                $('#print-container').html(s);
+                hideLoading();
+            }
+        });
+    }
+
+     function InputPrepared() {
+
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PrintPopupSummaryOfProgramOfWork")',
+            data: { ProgramOfWorkId: ProgramOfWorkId.GetValue() },
+            success: function (s) {
+                $('#print-container').html(s);
+                hideLoading();
+            }
+        });
+    }
+    function NewButton(s, e) {
+        if (e.buttonIndex == 0)
+            window.location.href = '@Url.Action("ProgramOfWorks","Filemanagement")';
+    }
+</script>

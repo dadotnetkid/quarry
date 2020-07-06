@@ -1,0 +1,48 @@
+@{
+    string transactionId = ViewBag.TransactionId;
+    var transactions = new UnitOfWork().TransactionsRepo.Find(m => m.Id == transactionId);
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "PenaltiesGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "Transactions", Action = "PenaltiesGridViewPartial", transactionId = ViewBag.TransactionId };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "Transactions", Action = "PenaltiesGridViewPartialAddNew", transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "Transactions", Action = "PenaltiesGridViewPartialUpdate", transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "Transactions", Action = "PenaltiesGridViewPartialDelete", transactionId = ViewBag.TransactionId };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.ClientSideEvents.EndCallback = "function(s,e){transactionEndCallBack('" + ViewBag.PermiteeId + "','" + ViewBag.TransactionId + "')}";
+
+        settings.CommandColumn.Visible = transactions?.IsPrinted == true ? (User.UserIsInAction("Override Transaction Save") ? true : false) : true;
+        settings.CommandColumn.ShowNewButtonInHeader = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = false;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+
+        settings.Columns.Add("Penalty");
+        settings.Columns.Add("Amount").PropertiesEdit.DisplayFormatString = "N2";
+        settings.SetEditFormTemplateContent(col =>
+        {
+            Html.RenderAction("AddEditTransactionPenalties", new { transactionPenaltiesId = col.KeyValue, TransactionId = ViewBag.TransactionId });
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

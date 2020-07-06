@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Billings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@Html.Action("BillingGridViewPartial")
+<div id="report-viewer"></div>
+<script>
+    function ShowPrintPreview()
+    {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PrintOfficialReceipt")',
+            data: { billingId: billingId },
+            success: function(e) {
+                hideLoading();
+                $('#report-viewer').html(e);
+
+            }
+        });
+    }
+    var transactionId;
+
+
+    function GridSelectionChanged(s, e) {
+        s.GetRowValues(s.GetFocusedRowIndex(), 'Id', GetSelectedRows);
+        if (s.GetSelectedRowCount() >= 0) {
+            btnPrint.SetEnabled(true);
+        }
+
+    }
+
+    function GetSelectedRows(values) {
+
+        billingId = values;
+
+        //popControl.PerformCallback({transactionId:'" + DataBinder.Eval(content.DataItem,"Id") + "'})
+    }
+</script>

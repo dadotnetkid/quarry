@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Transactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Action("TransactionsGridViewPartial")
+
+
+@Html.Action("PopupAddEditPermiteePartial")
+
+<div id="report-viewer"></div>
+@*@Html.Action("ReportViewerPartial")*@
+<script>
+    var transactionId;
+    function postTransaction(permiteeId, transactionId) {
+        $.ajax({
+            url: "@Url.Action("AddEditTransactionPartial")" +
+                "?permiteeId=" +
+                permiteeId +
+                "&transactionId=" +
+                transactionId,
+            type: 'POST',
+            success: function(e) {
+                $('#transation-container').html(e);
+            }
+
+
+        });
+    }
+
+    function GridSelectionChanged(s, e) {
+        s.GetRowValues(s.GetFocusedRowIndex(), 'Id', GetSelectedRows);
+        if (s.GetSelectedRowCount() >= 0) {
+            btnPrint.SetEnabled(true);
+        }
+
+    }
+
+    function GetSelectedRows(values) {
+
+        transactionId = values;
+
+        //popControl.PerformCallback({transactionId:'" + DataBinder.Eval(content.DataItem,"Id") + "'})
+    }
+    function ReportViewShow() {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("ReportViewerPartial")',
+            data: { transactionId: transactionId },
+            success: function(e) {
+                hideLoading();
+                $('#report-viewer').html(e);
+
+            }
+        });
+    }
+    function ShowSignatories()
+    {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("PopupSignatoriesPartial")',
+            data: { transactionId: transactionId },
+            success: function(e) {
+                hideLoading();
+                $('#report-viewer').html(e);
+
+            }
+        });
+    }
+
+    function GetSubTotal() {
+
+    }
+
+    function transactionEndCallBack(permiteeId, transactionId) {
+        $.ajax({
+            url: '@Url.Action("Transactions")',
+            data: { transactionId: transactionId },
+            success: function(e) {
+                $('#lbl-item').html(e.DetailSubTotal);
+                $('#lbl-vehicle').html(e.VehicleSubTotal);
+                $('#lbl-facilities').html(e.FacilitiesSubTotal);
+                $('#lbl-sag').html(e.SagSubTotal);
+                $('#lbl-penalties').html(e.PenaltiesSubTotal);
+                console.log(JSON.stringify(e));
+            }
+        })
+    }
+
+    function transactionCallBack(permiteeId,transactionTypeId) {
+        TransactionsGridView.PerformCallback({ transactionTypeId: transactionTypeId, permiteeId: permiteeId, transactionId: '@ViewBag.TransactionId + ' });
+    }
+</script>
