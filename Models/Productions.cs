@@ -23,7 +23,7 @@ namespace Models
         public Nullable<int> VehicleId { get; set; }
         public Nullable<int> DestinationId { get; set; }
         public Nullable<int> OriginId { get; set; }
-        public Nullable<int> ReceiptNo { get; set; }
+        public string ReceiptNo { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> ReceiptDate { get; set; }

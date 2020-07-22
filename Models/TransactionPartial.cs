@@ -35,7 +35,7 @@ namespace Models
         //  public decimal? SurCharge => (DetailSubTotal + VehicleSubTotal + FacilitiesSubTotal) * 0.25M;
 
 
-
+        public int DeliveryReceiptTotal => this.TransactionDetails.Where(x => x.ItemId == 15).Sum(x => x.Quantity);
     }
 
 

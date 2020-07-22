@@ -27,6 +27,9 @@
                     <li class="@(ControllerHelpers.IsMenuBarActive("Productions", "Production")?"active":"")">
                         <a href="@Url.Action("Productions", "Productions")"><i class="fa fa-list"></i> <span>Production List</span></a>
                     </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("Index", "DeliveryReceipts")?"active":"")">
+                        <a href="@Url.Action("Index", "DeliveryReceipts")"><i class="fa fa-list"></i> <span>Add DR</span></a>
+                    </li>
                     @*<li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
                         <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
                     </li>*@
@@ -119,8 +122,11 @@
                 <li class="@(ControllerHelpers.IsMenuBarActive("SummaryProductionReportPerPermittee","reports") ? "active" : "")">
                     <a href="@Url.Action("SummaryProductionReportPerPermittee", "reports")"><i class="fa fa-list-ol"></i> <span>PTO Report</span></a>
                 </li>
-                <li class="@(ControllerHelpers.IsMenuBarActive("AccountingReport","reports") ? "active" : "")">
-                    <a href="@Url.Action("AccountingReport", "reports")"><i class="fa fa-list-ol"></i> <span>Accounting Report</span></a>
+                <li class="@(ControllerHelpers.IsMenuBarActive("Index","Accountingreport") ? "active" : "")">
+                    <a href="@Url.Action("Index", "Accountingreport")"><i class="fa fa-list-ol"></i> <span>Accounting Report</span></a>
+                </li>
+                <li class="@(ControllerHelpers.IsMenuBarActive("detailproductions","reports") ? "active" : "")">
+                    <a href="@Url.Action("detailproductions", "reports")"><i class="fa fa-list-ol"></i> <span>Detail Production</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("Index","PermitteeBillingMasterlist") ? "active" : "")">
                     <a href="@Url.Action("Index", "PermitteeBillingMasterlist")"><i class="fa fa-list-ol"></i> <span>Billing Masterlist Report</span></a>

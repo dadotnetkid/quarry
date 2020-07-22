@@ -77,7 +77,7 @@
                     settings.Properties.Caption = "Month";
                     settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Top;
                     settings.Width = Unit.Percentage(100);
-                }).BindList(new UnitOfWork().ProductionsRepo.Fetch().OrderBy(m => m.Id).GroupBy(x => SqlFunctions.DatePart("month", x.ProductionDate)).Select(x => new { Month = x.Key}).ToList().Select(x=>new{x.Month, MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month?.ToInt()??1) })).GetHtml();
+                }).BindList(new UnitOfWork().ProductionsRepo.Fetch().OrderBy(m => m.Id).GroupBy(x => SqlFunctions.DatePart("month", x.DateCreated)).Select(x => new { Month = x.Key}).ToList().Select(x=>new{x.Month, MonthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Month?.ToInt()??1) })).GetHtml();
             }
         </div>
         <div class="col-lg-2">

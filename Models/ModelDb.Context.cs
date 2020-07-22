@@ -50,7 +50,6 @@ namespace Models
         public virtual DbSet<QuarriesInTransactions> QuarriesInTransactions { get; set; }
         public virtual DbSet<Hauleds> Hauleds { get; set; }
         public virtual DbSet<TransactionDetails> TransactionDetails { get; set; }
-        public virtual DbSet<DeliveryReceipts> DeliveryReceipts { get; set; }
         public virtual DbSet<Signatories> Signatories { get; set; }
         public virtual DbSet<Actions> Actions { get; set; }
         public virtual DbSet<Productions> Productions { get; set; }
@@ -61,5 +60,6 @@ namespace Models
         public virtual DbSet<Sags> Sags { get; set; }
         public virtual DbSet<Transactions> Transactions { get; set; }
         public virtual DbSet<Billings> Billings { get; set; }
+        public virtual DbSet<DeliveryReceipts> DeliveryReceipts { get; set; }
     }
 }

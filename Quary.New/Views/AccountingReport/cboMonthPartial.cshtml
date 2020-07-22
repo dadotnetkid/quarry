@@ -1,0 +1,11 @@
+﻿
+@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "month";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Month";
+        settings.Properties.TextField = "monthName";
+        settings.Properties.ValueField= "month";
+    }).BindList(Model).GetHtml();
+}

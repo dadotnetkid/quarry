@@ -16,7 +16,7 @@ namespace Models
     {
         public int Id { get; set; }
         public string TransactionId { get; set; }
-        public int ReceiptNumber { get; set; }
+        public string ReceiptNumber { get; set; }
         public string Remarks { get; set; }
         public string CreatedBy { get; set; }
     

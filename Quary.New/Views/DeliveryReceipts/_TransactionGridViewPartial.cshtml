@@ -1,0 +1,80 @@
+
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "TransactionGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = true;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.Off;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = false;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 0;
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(content =>
+            {
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "btn_" + content.KeyValue;
+                    btn.Text = "Add DR";
+                    btn.ClientSideEvents.Click = "function(s,e){showModal('" + content.KeyValue + "');;console.log('" + content.KeyValue + "')}";
+                    //btn.EncodeHtml = true;
+                }).GetHtml();
+            });
+            col.Width = 10;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "TransactionNumber";
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "CompanyName";
+
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = @"Total AdditionalDR";
+            col.FieldName = "TotalAdditionalDR";
+            col.Width = 10;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.Caption = @"Remaining Rcpt Cnt";
+            col.FieldName = "DeliveryReceiptTotal";
+            col.Width = 10;
+        });
+        settings.Columns.Add(col =>
+        {
+            col.FieldName = "TransactionDate";
+
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

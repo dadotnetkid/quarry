@@ -205,8 +205,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountingReportController.cs" />
     <Compile Include="Controllers\BillingController.cs" />
     <Compile Include="Controllers\ControllerActionHelper.cs" />
+    <Compile Include="Controllers\DeliveryReceiptsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileManagementController.cs" />
     <Compile Include="Controllers\FilemanagementImportController.cs" />
@@ -555,8 +557,8 @@
     <Content Include="Views\FileManagement\DeliveryReceipts.cshtml" />
     <Content Include="Views\FileManagement\_DeliveryReceiptGridViewPartial.cshtml" />
     <Content Include="Views\FileManagement\AddEditDeliveryReceiptPartial.cshtml" />
-    <Content Include="Views\Reports\AccountingReport.cshtml" />
-    <Content Include="Views\Reports\AccountingReportPartial.cshtml" />
+    <Content Include="Views\AccountingReport\AccountingReport.cshtml" />
+    <Content Include="Views\AccountingReport\AccountingReportPartial.cshtml" />
     <Content Include="Views\FileManagement\Barangays.cshtml" />
     <Content Include="Views\FileManagement\_BarangayGridViewPartial.cshtml" />
     <Content Include="Views\FilemanagementImport\ImportBarangayUploadControlUpload.cshtml" />
@@ -595,9 +597,23 @@
     <Content Include="Views\Productions\Index.cshtml" />
     <Content Include="Views\Productions\cboDeliveryReceiptPartial.cshtml" />
     <Content Include="Views\Productions\CboQuarryPartial.cshtml" />
-    <Content Include="Views\Reports\CboQuarriesInPermittee.cshtml" />
+    <Content Include="Views\AccountingReport\CboQuarriesInPermittee.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+    <Content Include="Views\DeliveryReceipts\Index.cshtml" />
+    <Content Include="Views\DeliveryReceipts\_TransactionGridViewPartial.cshtml" />
+    <Content Include="Views\DeliveryReceipts\AddDeliveryReceiptPopupPartial.cshtml" />
+    <Content Include="Views\DeliveryReceipts\AddDeliveryReceiptContentPartial.cshtml" />
+    <Content Include="Views\Reports\DetailProductions.cshtml" />
+    <Content Include="Views\Reports\DetailProductionsPartial.cshtml" />
+    <Content Include="Views\Reports\cboMonthPartial.cshtml" />
+    <Content Include="Views\Reports\cboYearPartial.cshtml" />
+    <Content Include="Views\Reports\cboPermitteePartial.cshtml" />
+    <Content Include="Views\AccountingReport\Index.cshtml" />
+    <Content Include="Views\AccountingReport\CboPermitteePartial.cshtml" />
+    <Content Include="Views\AccountingReport\cboYearPartial.cshtml" />
+    <Content Include="Views\AccountingReport\cboMonthPartial.cshtml" />
+    <Content Include="Views\AccountingReport\CboPermitteeTypePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\excel\" />
@@ -652,4 +668,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\..\..\Development Cache\.nuget\packages\EmptyLicensesLicx.2.0.1\build\EmptyLicensesLicx.targets" Condition="Exists('..\..\..\Development Cache\.nuget\packages\EmptyLicensesLicx.2.0.1\build\EmptyLicensesLicx.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\Development Cache\.nuget\packages\EmptyLicensesLicx.2.0.1\build\EmptyLicensesLicx.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Development Cache\.nuget\packages\EmptyLicensesLicx.2.0.1\build\EmptyLicensesLicx.targets'))" />
+  </Target>
 </Project>

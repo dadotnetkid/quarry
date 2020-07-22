@@ -45,7 +45,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ReceiptNumber" Type="int" Nullable="false" />
+          <Property Name="ReceiptNumber" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
         </EntityType>
@@ -145,7 +145,7 @@
           <Property Name="VehicleId" Type="int" />
           <Property Name="DestinationId" Type="int" />
           <Property Name="OriginId" Type="int" />
-          <Property Name="ReceiptNo" Type="int" />
+          <Property Name="ReceiptNo" Type="nvarchar" MaxLength="128" />
           <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
           <Property Name="DateCreated" Type="datetime2" Precision="7" />
           <Property Name="ReceiptDate" Type="datetime2" Precision="7" />
@@ -1243,7 +1243,6 @@
             <End Role="Items" EntitySet="Items" />
             <End Role="TransactionDetails" EntitySet="TransactionDetails" />
           </AssociationSet>
-          <EntitySet Name="DeliveryReceipts" EntityType="Model.DeliveryReceipts" />
           <EntitySet Name="Signatories" EntityType="Model.Signatories" />
           <EntitySet Name="Actions" EntityType="Model.Actions" />
           <EntitySet Name="Productions" EntityType="Model.Productions" />
@@ -1305,10 +1304,6 @@
             <End Role="Barangays" EntitySet="Barangays" />
           </AssociationSet>
           <EntitySet Name="Transactions" EntityType="Model.Transactions" />
-          <AssociationSet Name="FK_DeliveryReceipts_DeliveryReceipts" Association="Model.FK_DeliveryReceipts_DeliveryReceipts">
-            <End Role="Transactions" EntitySet="Transactions" />
-            <End Role="DeliveryReceipts" EntitySet="DeliveryReceipts" />
-          </AssociationSet>
           <AssociationSet Name="FK_Transactions_Permittees" Association="Model.FK_Transactions_Permittees">
             <End Role="Permitees" EntitySet="Permitees" />
             <End Role="Transactions" EntitySet="Transactions" />
@@ -1357,6 +1352,11 @@
           <AssociationSet Name="FK_Productions_Barangays" Association="Model.FK_Productions_Barangays">
             <End Role="Barangays" EntitySet="Barangays" />
             <End Role="Productions" EntitySet="Productions" />
+          </AssociationSet>
+          <EntitySet Name="DeliveryReceipts" EntityType="Model.DeliveryReceipts" />
+          <AssociationSet Name="FK_DeliveryReceipts_DeliveryReceipts" Association="Model.FK_DeliveryReceipts_DeliveryReceipts">
+            <End Role="Transactions" EntitySet="Transactions" />
+            <End Role="DeliveryReceipts" EntitySet="DeliveryReceipts" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Items">
@@ -1939,17 +1939,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DeliveryReceipts">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptNumber" Type="Int32" Nullable="false" />
-          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Transactions" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="DeliveryReceipts" ToRole="Transactions" />
-        </EntityType>
         <EntityType Name="Signatories">
           <Key>
             <PropertyRef Name="Id" />
@@ -1978,7 +1967,7 @@
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="DestinationId" Type="Int32" />
           <Property Name="OriginId" Type="Int32" />
-          <Property Name="ReceiptNo" Type="Int32" />
+          <Property Name="ReceiptNo" Type="String" MaxLength="128" />
           <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="7" />
           <Property Name="ReceiptDate" Type="DateTime" Precision="7" />
@@ -2236,7 +2225,6 @@
           <Property Name="Surcharge" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Signatory" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DeliveryReceipts" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="Transactions" ToRole="DeliveryReceipts" />
           <NavigationProperty Name="Permitees" Relationship="Model.FK_Transactions_Permittees" FromRole="Transactions" ToRole="Permitees" />
           <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Productions" FromRole="Transactions" ToRole="Productions" />
           <NavigationProperty Name="QuarriesInTransactions" Relationship="Model.FK_QuarriesInTransactions_Transactions" FromRole="Transactions" ToRole="QuarriesInTransactions" />
@@ -2249,21 +2237,8 @@
           <NavigationProperty Name="ProgramOfWorks" Relationship="Model.ProgramOfWorksInTransactions" FromRole="Transactions" ToRole="ProgramOfWorks" />
           <NavigationProperty Name="Billings" Relationship="Model.FK_Billings_Transactions" FromRole="Transactions" ToRole="Billings" />
           <Property Name="DeliveryReceipt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DeliveryReceipts" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="Transactions" ToRole="DeliveryReceipts" />
         </EntityType>
-        <Association Name="FK_DeliveryReceipts_DeliveryReceipts">
-          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Model.DeliveryReceipts" Role="DeliveryReceipts" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Transactions">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DeliveryReceipts">
-              <PropertyRef Name="TransactionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Transactions_Permittees">
           <End Type="Model.Permitees" Role="Permitees" Multiplicity="0..1" />
           <End Type="Model.Transactions" Role="Transactions" Multiplicity="*" />
@@ -2430,6 +2405,31 @@
             </Principal>
             <Dependent Role="Productions">
               <PropertyRef Name="OriginId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeliveryReceipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNumber" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Transactions" Relationship="Model.FK_DeliveryReceipts_DeliveryReceipts" FromRole="DeliveryReceipts" ToRole="Transactions" />
+        </EntityType>
+        <Association Name="FK_DeliveryReceipts_DeliveryReceipts">
+          <End Type="Model.Transactions" Role="Transactions" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.DeliveryReceipts" Role="DeliveryReceipts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Transactions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DeliveryReceipts">
+              <PropertyRef Name="TransactionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2778,17 +2778,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DeliveryReceipts">
-            <EntityTypeMapping TypeName="Model.DeliveryReceipts">
-              <MappingFragment StoreEntitySet="DeliveryReceipts">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
-                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Signatories">
             <EntityTypeMapping TypeName="Model.Signatories">
               <MappingFragment StoreEntitySet="Signatories">
@@ -2920,6 +2909,17 @@
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliveryReceipts">
+            <EntityTypeMapping TypeName="Model.DeliveryReceipts">
+              <MappingFragment StoreEntitySet="DeliveryReceipts">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

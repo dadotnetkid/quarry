@@ -205,7 +205,7 @@ namespace Helpers
                 var productionDate = i["Date of Production"];
                 var receiptDate = i["Receipt Date"];
                 var quarry = i["Quarry"]?.ToString() ?? "";
-                var receiptNo = i["Receipt No"].ToInt();
+                var receiptNo = i["Receipt No"].ToString();
                 var capacity = i["Capacity"].ToDecimal();
                 IQueryable<ProgramOfWorks> programOfWorks = new List<ProgramOfWorks>().AsQueryable();
                 if (!string.IsNullOrEmpty(projectName))

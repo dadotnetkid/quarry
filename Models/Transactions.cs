@@ -17,7 +17,6 @@ namespace Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Transactions()
         {
-            this.DeliveryReceipts = new HashSet<DeliveryReceipts>();
             this.Productions = new HashSet<Productions>();
             this.QuarriesInTransactions = new HashSet<QuarriesInTransactions>();
             this.TransactionDetails = new HashSet<TransactionDetails>();
@@ -27,6 +26,7 @@ namespace Models
             this.TransactionVehicles = new HashSet<TransactionVehicles>();
             this.ProgramOfWorks = new HashSet<ProgramOfWorks>();
             this.Billings = new HashSet<Billings>();
+            this.DeliveryReceipts = new HashSet<DeliveryReceipts>();
         }
     
         public string Id { get; set; }
@@ -46,8 +46,6 @@ namespace Models
         public string Signatory { get; set; }
         public string DeliveryReceipt { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryReceipts> DeliveryReceipts { get; set; }
         public virtual Permitees Permitees { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Productions> Productions { get; set; }
@@ -68,5 +66,7 @@ namespace Models
         public virtual ICollection<ProgramOfWorks> ProgramOfWorks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Billings> Billings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryReceipts> DeliveryReceipts { get; set; }
     }
 }

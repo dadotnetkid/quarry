@@ -1,0 +1,18 @@
+﻿
+@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "AddDeliveryReceiptPopup";
+        settings.HeaderText = "Add Delivery Receipt";
+        settings.SetContent(() =>
+        {
+            ViewContext.Writer.Write("<div id='form-add-delivery-modal'>");
+            Html.RenderAction("AddDeliveryReceiptContentPartial", new { transactionId = ViewBag.TransactionId });
+            ViewContext.Writer.Write("</div>");
+        });
+        settings.ShowOnPageLoad = true;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+        settings.Width = 500;
+        settings.Modal = true;
+    }).GetHtml();
+}

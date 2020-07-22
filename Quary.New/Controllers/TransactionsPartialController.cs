@@ -37,7 +37,7 @@ namespace Quary.New.Controllers
                     int? quantity = Convert.ToInt32(i["quantity"]);
                     string plateno = i["plateno"]?.ToString();
                     string quarries = i["quarries"]?.ToString();
-                    int? receiptNo = Convert.ToInt32(i["receiptno"]);
+                    string receiptNo = i["receiptno"]?.ToString();
                     unitOfWork.ProductionsRepo.Insert(new Models.Productions()
                     {
                         PermiteeId = unitOfWork.PermiteesRepo.Find(m => m.AccreditationNumber == code)?.Id,

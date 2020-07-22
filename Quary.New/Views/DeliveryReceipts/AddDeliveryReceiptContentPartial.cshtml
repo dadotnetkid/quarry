@@ -1,0 +1,48 @@
+﻿
+@model DeliveryReceipts
+@using (Ajax.BeginForm("AddDeliveryReceiptContentPartial", "DeliveryReceipts", new
+{
+    transactionId = ViewBag.TransactionId,
+    CreatedBy=User.Identity.GetUserId()
+}, new AjaxOptions()
+{
+    Confirm = "Do you want to add this receipt",
+    HttpMethod = "POST",
+    UpdateTargetId= "form-add-delivery-modal",
+    OnComplete="oncomplete"
+
+}, new { }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            @{
+                Html.DevExpress().TextBoxFor(x => x.ReceiptNumber, settings =>
+                {
+                    settings.Width = Unit.Percentage(100);
+                    settings.Properties.Caption = "Receipt Number";
+                }).GetHtml();
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "btnSave";
+                    settings.UseSubmitBehavior = true;
+                    settings.Text = "Submit";
+                }).GetHtml();
+            }
+        </div>
+    </div>
+    if (ViewBag.ReturnStatus != null)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="return-status" class="alert alert-success">@ViewBag.ReturnStatus</div>
+            </div>
+        </div>
+    }
+
+}

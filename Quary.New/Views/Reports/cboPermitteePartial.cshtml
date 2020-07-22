@@ -1,0 +1,14 @@
+﻿
+   @{
+       Html.DevExpress().ComboBox(settings =>
+       {
+           settings.Properties.Caption = "Permittee";
+           settings.Name = "permitteeId";
+           settings.Width = Unit.Percentage(100);
+           settings.Properties.TextField = "CompanyName";
+           settings.Properties.ValueField = "Id";
+           settings.Properties.Columns.Add("Fullname").Caption = "Permittee Name";
+           settings.Properties.Columns.Add("CompanyName");
+           settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){changePermittee(s,e)}";
+       }).BindList(Model).GetHtml();
+   }

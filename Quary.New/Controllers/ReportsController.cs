@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -183,23 +184,23 @@ namespace Quary.New.Controllers
 
                         ProductionOrdinaryEarth = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 1)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Quantity),
 
                         ProductionOrdinaryEarthAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 1)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
 
                         ProductionMixed = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 4)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Quantity),
 
                         ProductionMixedAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 4)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
 
@@ -209,7 +210,7 @@ namespace Quary.New.Controllers
 
                         ProductionFinedAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 5)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
 
@@ -219,28 +220,28 @@ namespace Quary.New.Controllers
 
                         ProductionCoarseAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 8)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
                         ProductionBoulders = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 6)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Quantity),
 
                         ProductionBouldersAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 6)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
                         ProductionCrushed = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 7)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Quantity),
 
 
                         ProductionCrushedAmount = unitOfWork.ProductionsRepo
                             .Fetch(m => m.PermiteeId == permittee.Id && m.QuarriesId == i.Id && m.SagId == 7)
-                            .Where(m => SqlFunctions.DatePart("year", m.ProductionDate) == item.Year && SqlFunctions.DatePart("month", m.ProductionDate) == item.Month)
+                            .Where(m => SqlFunctions.DatePart("year", m.DateCreated) == item.Year && SqlFunctions.DatePart("month", m.DateCreated) == item.Month)
                             .Sum(m => m.Sags.UnitCost * m.Quantity),
 
                         Permitees = permittee,
@@ -404,71 +405,8 @@ namespace Quary.New.Controllers
         }
 
 
-        public ActionResult AccountingReport()
-        {
-            return View(new AccountingReportViewModel());
-        }
-        public ActionResult AccountingReportPartial([ModelBinder(typeof(DevExpressEditorsBinder))]AccountingReportViewModel item)
-        {
-            var transaction = unitOfWork.TransactionsRepo.Fetch(m =>
-                  m.TransactionDate >= item.DateFrom && m.TransactionDate <= item.DateTo);
-            if (item.PermitteeId != 0)
-            {
-                transaction = transaction.Where(m => m.PermiteeId == item.PermitteeId);
-            }
 
 
-
-            List<AccountingReportViewModel> accountingReportViewModels = new List<AccountingReportViewModel>();
-
-
-
-
-            foreach (var t in transaction.ToList())
-            {
-                //var dr = t.DeliveryReceipts.Select(x => x.ReceiptNumber).ToList();
-                //var production =unitOfWork.ProductionsRepo.Get(m => (m.ReceiptDate >= item.DateFrom && m.ReceiptDate <= item.DateTo)).Where(m => dr.Contains(m.ReceiptNo.ToInt())).ToList();
-                //
-                var quarries = t.Productions.GroupBy(m => m.QuarriesId);
-                if (item.QuarryId != 0)
-                {
-                    quarries = quarries.Where(x => x.Key == item.QuarryId);
-                }
-                foreach (var i in quarries)
-                {
-                    if (i.Key != null)
-                    {
-                        var accountingReportViewModel = new AccountingReportViewModel()
-                        {
-                            Permittee = t.Permitees,
-                            OfficialReceipt = t.OfficialReceipt,
-                            Amount = t.SagSubTotal.ToDecimal()
-                        };
-                        var quarryId = i.Key.ToInt();
-                        accountingReportViewModel.Extraction = t.Productions.Where(m => m.QuarriesId == quarryId)
-                            .Sum(m => m.Quantity * m.Sags.UnitCost).ToDecimal();
-                        accountingReportViewModel.Quarries = unitOfWork.QuarriesRepo.Find(m => m.Id == quarryId);
-                        accountingReportViewModels.Add(accountingReportViewModel);
-                    }
-
-                }
-
-
-
-
-            }
-
-            AccountingReports reports = new AccountingReports()
-            {
-                DataSource = accountingReportViewModels
-            };
-            return PartialView(reports);
-        }
-
-        public ActionResult CboQuarriesInPermittee([ModelBinder(typeof(DevExpressEditorsBinder))]AccountingReportViewModel item)
-        {
-            return PartialView(item);
-        }
 
 
         [OnUserAuthorization(ActionName = "Permittee List")]
@@ -528,5 +466,68 @@ namespace Quary.New.Controllers
             return PartialView(xtraReport);
         }
         #endregion
+
+
+        #region Summary of Productions
+
+        [Route("detail-productions")]
+        public ActionResult DetailProductions()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult DetailProductionsPartial([ModelBinder(typeof(DevExpressEditorsBinder))]int? permitteeId, [ModelBinder(typeof(DevExpressEditorsBinder))]int? year, [ModelBinder(typeof(DevExpressEditorsBinder))] int? month)
+        {
+            var permittee = unitOfWork.PermiteesRepo.Fetch();
+            if (permitteeId != 0)
+                permittee = permittee.Where(x => x.Id == permitteeId);
+            var res = permittee.Where(x => x.Productions.Any(m => SqlFunctions.DatePart("month", m.DateCreated) == month && SqlFunctions.DatePart("year", m.DateCreated) == year)).ToList();
+
+            var rpt = new rptProductionLedgerList()
+            {
+                DataSource = res
+            };
+            rpt.lblHeader.Text = $"Summary of Productions(as of { CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month.ToInt())} {year})";
+            return PartialView(rpt);
+        }
+
+        public ActionResult cboMonthPartial(int year, int permitteeId)
+        {
+            var months = unitOfWork.ProductionsRepo.Fetch();
+            if (permitteeId != 0)
+                months = months.Where(x => x.PermiteeId == permitteeId);
+            var res = months.Where(x => SqlFunctions.DatePart("year", x.DateCreated) == year).ToList().Select(x => new
+            {
+                month = x.DateCreated?.Month,
+            }).GroupBy(x => x.month).Select(x => new
+            {
+                month = x.Key,
+                monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(x.Key ?? 1)
+            }).ToList();
+            return PartialView(res);
+        }
+        public ActionResult cboYearPartial(int permitteeId)
+        {
+            var months = unitOfWork.ProductionsRepo.Fetch();
+            if (permitteeId != 0)
+                months = months.Where(x => x.PermiteeId == permitteeId);
+            var res = months.ToList().Select(x => new { year = x.DateCreated?.Year }).ToList().GroupBy(x => x.year).Select(x => new { year = x.Key }).ToList();
+            return PartialView(res);
+        }
+        public ActionResult cboPermitteePartial(string permitteeTypeId)
+        {
+            var list = new List<Permitees>() { new Permitees() { FirstName = "All", Id = 0 } };
+            if (!string.IsNullOrEmpty(permitteeTypeId))
+                foreach (var i in permitteeTypeId.Split(','))
+                {
+                    var id = i.ToInt();
+                    var model = unitOfWork.PermiteesRepo.Get(x => x.PermiteeTypeId == id);
+                    list.AddRange(model);
+                }
+
+            return PartialView(list);
+        }
+        #endregion
+
     }
 }

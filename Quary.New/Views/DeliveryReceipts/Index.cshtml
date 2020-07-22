@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Add DR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@Html.Action("TransactionGridViewPartial")
+
+<div id="form-add-delivery">
+
+</div>
+
+<script>
+    function showModal(transactionId) {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("AddDeliveryReceiptPopupPartial")',
+            data: { transactionId: transactionId},
+            success: function (result) {
+                $('#form-add-delivery').html(result);
+                hideLoading();
+            }
+
+        });
+    }
+    var oncomplete = function onComplete() {
+        TransactionGridView.PerformCallback();
+    }
+</script>

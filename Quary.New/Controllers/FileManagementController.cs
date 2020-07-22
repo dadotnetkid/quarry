@@ -1269,11 +1269,14 @@ namespace Quary.New.Controllers
                     var transaction = unitOfWork.TransactionsRepo.Find(m => m.Id == item.TransactionId, includeProperties: "TransactionDetails");
                     var deliveryQTY = transaction.TransactionDetails
                         .FirstOrDefault(m => m.Items.ItemName.ToLower().Contains("delivery"))?.Quantity;
+                    deliveryQTY = deliveryQTY - 1;
                     for (var i = 1; i <= deliveryQTY; i++)
                     {
+                        var receiptNumber = item.ReceiptNumber.ToInt();
+                        receiptNumber = receiptNumber + i;
                         unitOfWork.DeliveryReceiptsRepo.Insert(new DeliveryReceipts()
                         {
-                            ReceiptNumber = item.ReceiptNumber + i,
+                            ReceiptNumber = receiptNumber.ToString(),
                             TransactionId = transaction.Id
                         });
                     }
@@ -1314,13 +1317,15 @@ namespace Quary.New.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "Delete Delivery Receipts")]
-        public ActionResult DeliveryReceiptGridViewPartialDelete(System.Int32 Id)
+        public ActionResult DeliveryReceiptGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]int? Id)
         {
             if (Id >= 0)
             {
                 try
                 {
                     // Insert here a code to delete the item from your model
+                    unitOfWork.DeliveryReceiptsRepo.Delete(x => x.Id == Id);
+                    unitOfWork.Save();
                 }
                 catch (Exception e)
                 {

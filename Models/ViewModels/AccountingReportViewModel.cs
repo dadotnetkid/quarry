@@ -20,5 +20,7 @@ namespace Models.ViewModels
         public decimal Provicial => this.Extraction * 0.3M;
         public Permitees Permittee { get; set; }
         public int PermitteeId { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
     }
 }

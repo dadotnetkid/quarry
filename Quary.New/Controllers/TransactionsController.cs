@@ -206,7 +206,7 @@ namespace Quary.New.Controllers
                             {
                                 unitOfWork.DeliveryReceiptsRepo.Insert(new DeliveryReceipts()
                                 {
-                                    ReceiptNumber = item.DeliveryReceipt.ToInt() + i,
+                                    ReceiptNumber = (item.DeliveryReceipt.ToInt() + i).ToString(),
                                     TransactionId = item.Id
                                 });
                             }
@@ -306,21 +306,21 @@ namespace Quary.New.Controllers
 
 
 
-                
+
                     ///add delivery receipt
                     if (transaction.TransactionDetails.Any())
                     {
                         var deliveryQTY = item.TransactionDetails.FirstOrDefault(m => m.Items.ItemName.ToLower().Contains("delivery"))?.Quantity;
                         if (item.DeliveryReceipt != null)
                             transaction.DeliveryReceipts.Clear();
-                            for (var i = 1; i <= deliveryQTY; i++)
+                        for (var i = 1; i <= deliveryQTY; i++)
+                        {
+                            transaction.DeliveryReceipts.Add(new DeliveryReceipts()
                             {
-                                transaction.DeliveryReceipts.Add(new DeliveryReceipts()
-                                {
-                                    ReceiptNumber = item.DeliveryReceipt.ToInt() + i,
-                                    TransactionId = item.Id
-                                });
-                            }
+                                ReceiptNumber = (item.DeliveryReceipt.ToInt() + i).ToString(),
+                                TransactionId = item.Id
+                            });
+                        }
                     }
                     unitOfWork.Save();
                     // Insert here a code to update the item in your model
