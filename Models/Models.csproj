@@ -153,6 +153,9 @@
     </Compile>
     <Compile Include="ControllersActionsPartial.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
+    <Compile Include="DeletedDeliveryReceipts.cs">
+      <DependentUpon>ModelDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="DeliveriesPartial.cs" />
     <Compile Include="DeliveryReceipts.cs">
       <DependentUpon>ModelDb.tt</DependentUpon>
@@ -300,12 +303,14 @@
     <Compile Include="ViewModels\AccountingReportViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\BillingStatementViewModel.cs" />
+    <Compile Include="ViewModels\BIRParamsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\PermitteeBillingMasterlistViewModel.cs" />
     <Compile Include="ViewModels\PermitteeViewModel.cs" />
     <Compile Include="ViewModels\ProductionReport.cs" />
     <Compile Include="ViewModels\ProductionLedgerReport.cs" />
+    <Compile Include="ViewModels\PTOReportParams.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\TransactionsMeta.cs" />
     <Compile Include="ViewModels\TransactionViewModel.cs" />

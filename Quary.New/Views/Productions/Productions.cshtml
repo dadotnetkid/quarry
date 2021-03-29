@@ -7,11 +7,13 @@
 <script type="text/javascript">
     var filterText;
     function OnSelectedIndexChanged(s, e) {
+        ldpPanel.Show();
         $.ajax({
             url: "@Url.Action("ProductionsGridViewPartial")",
             data: { filterText: s.GetValue() },
             success: function (obj) {
                 $('#grid-container').html(obj);
+                ldpPanel.Hide();
             }
         });
     }
@@ -58,6 +60,7 @@
     }
     //method to callback vehicle
     function cboVehicleCallback(value) {
+
         $.ajax({
             url: '@Url.Action("cboVehiclesPartial")',
             data: { PermitteeId: value},

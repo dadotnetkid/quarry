@@ -35,8 +35,8 @@ namespace Quary.New.Controllers
         [ValidateInput(false)]
         public ActionResult UnPaidTransactionGridViewPartial([ModelBinder(typeof(DevExpressEditorsBinder))]int? year)
         {
-            var dateFrom = Convert.ToDateTime("01/01/" + year);
-            var dateTo = Convert.ToDateTime("12/31/" + year);
+            var dateFrom = new DateTime(year.ToInt(), 1, 31);
+            var dateTo = new DateTime(year.ToInt(), 12, 31);
             ViewBag.Year = year;
             var model = unitOfWork.TransactionsRepo.Get(m => m.OfficialReceipt != null && (m.TransactionDate >= dateFrom && m.TransactionDate <= dateTo));
             return PartialView("_UnPaidTransactionGridViewPartial", model);
@@ -53,8 +53,8 @@ namespace Quary.New.Controllers
         public ActionResult InformationsPartial([ModelBinder(typeof(DevExpressEditorsBinder))]int? year)
         {
             ViewBag.Year = year;
-            var dateFrom = Convert.ToDateTime("01/01/" + year);
-            var dateTo = Convert.ToDateTime("12/31/" + year);
+            var dateFrom = new DateTime(year.ToInt(),1,31);
+            var dateTo = new DateTime(year.ToInt(),12, 31);
             ViewBag.UnPaid = unitOfWork.TransactionsRepo.Fetch(m => m.OfficialReceipt == null && (m.TransactionDate >= dateFrom && m.TransactionDate <= dateTo))
                 .Sum(m => m.TransactionTotal)?.ToString("#,#.##");
             ViewBag.Paid = unitOfWork.TransactionsRepo.Fetch(m => m.OfficialReceipt != null && (m.TransactionDate >= dateFrom && m.TransactionDate <= dateTo))

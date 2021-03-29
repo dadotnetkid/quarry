@@ -6,9 +6,9 @@ using DevExpress.XtraReports.UI;
 
 namespace Helpers
 {
-    public partial class SummaryProductionReports : DevExpress.XtraReports.UI.XtraReport
+    public partial class PTOReport : DevExpress.XtraReports.UI.XtraReport
     {
-        public SummaryProductionReports()
+        public PTOReport()
         {
             InitializeComponent();
         }

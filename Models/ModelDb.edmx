@@ -39,6 +39,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryName" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="DeletedDeliveryReceipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ReceiptNumber" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" />
+        </EntityType>
         <EntityType Name="DeliveryReceipts">
           <Key>
             <PropertyRef Name="Id" />
@@ -113,6 +123,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="152" StoreGeneratedPattern="Computed" Nullable="false" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactNumber1" Type="nvarchar" MaxLength="50" />
           <Property Name="ContactNumber2" Type="nvarchar" MaxLength="50" />
@@ -948,6 +959,7 @@
           <EntitySet Name="Barangays" EntityType="Self.Barangays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Billings" EntityType="Self.Billings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeletedDeliveryReceipts" EntityType="Self.DeletedDeliveryReceipts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliveryReceipts" EntityType="Self.DeliveryReceipts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Facilities" EntityType="Self.Facilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Hauleds" EntityType="Self.Hauleds" Schema="dbo" store:Type="Tables" />
@@ -1358,6 +1370,7 @@
             <End Role="Transactions" EntitySet="Transactions" />
             <End Role="DeliveryReceipts" EntitySet="DeliveryReceipts" />
           </AssociationSet>
+          <EntitySet Name="DeletedDeliveryReceipts" EntityType="Model.DeletedDeliveryReceipts" />
           </EntityContainer>
         <EntityType Name="Items">
           <Key>
@@ -1401,6 +1414,7 @@
           <Property Name="BIRNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Productions" Relationship="Model.FK_Productions_Permitees" FromRole="Permitees" ToRole="Productions" />
           <NavigationProperty Name="Transactions" Relationship="Model.FK_Transactions_Permittees" FromRole="Permitees" ToRole="Transactions" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="152" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="PermiteeTypes">
           <Key>
@@ -1967,7 +1981,7 @@
           <Property Name="VehicleId" Type="Int32" />
           <Property Name="DestinationId" Type="Int32" />
           <Property Name="OriginId" Type="Int32" />
-          <Property Name="ReceiptNo" Type="String" MaxLength="128" />
+          <Property Name="ReceiptNo" Type="String" MaxLength="128" Unicode="true" FixedLength="false" />
           <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="7" />
           <Property Name="ReceiptDate" Type="DateTime" Precision="7" />
@@ -2433,6 +2447,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DeletedDeliveryReceipts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptNumber" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2455,6 +2479,7 @@
           <EntitySetMapping Name="Permitees">
             <EntityTypeMapping TypeName="Model.Permitees">
               <MappingFragment StoreEntitySet="Permitees">
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="BIRNo" ColumnName="BIRNo" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ContactNumber2" ColumnName="ContactNumber2" />
@@ -2917,6 +2942,17 @@
           <EntitySetMapping Name="DeliveryReceipts">
             <EntityTypeMapping TypeName="Model.DeliveryReceipts">
               <MappingFragment StoreEntitySet="DeliveryReceipts">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedDeliveryReceipts">
+            <EntityTypeMapping TypeName="Model.DeletedDeliveryReceipts">
+              <MappingFragment StoreEntitySet="DeletedDeliveryReceipts">
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />

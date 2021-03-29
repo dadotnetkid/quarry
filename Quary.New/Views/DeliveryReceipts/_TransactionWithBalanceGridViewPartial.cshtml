@@ -1,0 +1,102 @@
+@{
+    var grid = Html.DevExpress().GridView(settings =>
+    {
+        settings.Name = "TransactionWithBalanceGridView";
+        settings.Width = Unit.Percentage(100);
+        settings.CallbackRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionWithBalanceGridViewPartial" };
+
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionWithBalanceGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionWithBalanceGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "DeliveryReceipts", Action = "TransactionWithBalanceGridViewPartialDelete" };
+        settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
+        settings.SettingsBehavior.ConfirmDelete = true;
+
+        settings.CommandColumn.Visible = false;
+        settings.CommandColumn.ShowNewButton = true;
+        settings.CommandColumn.ShowDeleteButton = true;
+        settings.CommandColumn.ShowEditButton = true;
+
+        settings.KeyFieldName = "Id";
+
+        settings.SettingsPager.Visible = true;
+        settings.Settings.ShowGroupPanel = false;
+        settings.Settings.ShowFilterRow = true;
+        settings.SettingsBehavior.AllowSelectByRowClick = true;
+
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCellsWindowLimit;
+        settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
+        settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
+        settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
+        settings.SettingsAdaptivity.HideDataCellsAtWindowInnerWidth = 300;
+        settings.Columns.Add(col =>
+        {
+            col.Caption = "";
+            col.SetDataItemTemplateContent(content =>
+            {
+                Html.DevExpress().Button(btn =>
+                {
+                    btn.Name = "btn_" + content.KeyValue;
+                    btn.Text = "Add DR";
+                    btn.ClientSideEvents.Click = "function(s,e){showModal('" + content.KeyValue + "');;console.log('" + content.KeyValue + "')}";
+                    //btn.EncodeHtml = true;
+                }).GetHtml();
+            });
+            col.Width = 10;
+        });
+        settings.Columns.Add("OfficialReceipt");
+        settings.Columns.Add("TransactionNumber");
+        settings.Columns.Add("CompanyName");
+        settings.Columns.Add("RemainingDR");
+        settings.Columns.Add(x =>
+        {
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+            x.FieldName = "TransactionTotal";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "OrdinaryEarth";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+            x.Caption = "OE";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Mixed";
+            x.Caption = "M";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Fine";
+            x.Caption = "S1";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Boulder";
+            x.Caption = "B";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Crushed";
+            x.Caption = "C";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Screen";
+            x.Caption = "G1/G2";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+        settings.Columns.Add(x =>
+        {
+            x.FieldName = "Balance";
+            x.PropertiesEdit.DisplayFormatString = "#,0.##";
+        });
+    });
+    if (ViewData["EditError"] != null)
+    {
+        grid.SetEditErrorText((string)ViewData["EditError"]);
+    }
+}
+@grid.Bind(Model).GetHtml()

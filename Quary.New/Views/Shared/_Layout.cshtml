@@ -62,9 +62,10 @@
 
     </div>
     @Html.DevExpress().LoadingPanel(settings =>
-    {
-        settings.Name = "ldpPanel";
-    }).GetHtml()
+{
+    settings.Name = "ldpPanel";
+    settings.Modal = true;
+}).GetHtml()
     @RenderSection("scripts", required: false)
     @Html.Action("PopupImportContainerPartial", "FilemanagementImport")
 </body>

@@ -1,13 +1,14 @@
 @{
     var grid = Html.DevExpress().GridView(settings =>
     {
+        string filter = ViewBag.filterText ?? "";
         settings.Name = "ProductionGridView";
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new
         {
             Controller = "Productions",
             Action = "ProductionsGridViewPartial",
-            filterText = ViewBag.filterText
+            filterText = filter
         };
 
         settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "productions", Action = "ProductionsGridViewPartialAddNew" };
@@ -22,34 +23,34 @@
 
 
 
-//settings.AddEditDeleteImportToolbar(tbSettings =>
-//{
+        //settings.AddEditDeleteImportToolbar(tbSettings =>
+        //{
 
-//    tbSettings.SetTemplateContent(col =>
-//    {
-//        Html.DevExpress().Button(btnSettings =>
-//        {
-//            btnSettings.Name = "btnImport";
-//            btnSettings.Text = "Import";
-//            btnSettings.ClientEnabled = User.UserIsInAction("Import Vehicles");
-//            btnSettings.ClientSideEvents.Click = "function(s,e){ShowPopupFilemanagementImport('ImportProductionUploadControlUpload','filemanagementImport')}";
+        //    tbSettings.SetTemplateContent(col =>
+        //    {
+        //        Html.DevExpress().Button(btnSettings =>
+        //        {
+        //            btnSettings.Name = "btnImport";
+        //            btnSettings.Text = "Import";
+        //            btnSettings.ClientEnabled = User.UserIsInAction("Import Vehicles");
+        //            btnSettings.ClientSideEvents.Click = "function(s,e){ShowPopupFilemanagementImport('ImportProductionUploadControlUpload','filemanagementImport')}";
 
-//        }).GetHtml();
-//        Html.DevExpress().HyperLink(lnkSettings =>
-//        {
-//            lnkSettings.Name = "lnkDownload";
+        //        }).GetHtml();
+        //        Html.DevExpress().HyperLink(lnkSettings =>
+        //        {
+        //            lnkSettings.Name = "lnkDownload";
 
-//            lnkSettings.ClientEnabled = User.UserIsInAction("Download Vehicle Template");
-//            lnkSettings.NavigateUrl = Url.Action("DownloadTemplates", "filemanagement", new { template = "production" });
-//            lnkSettings.Properties.Text = "Download Production Template";
-//            lnkSettings.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
-//        }).GetHtml();
-//    });
-//});
+        //            lnkSettings.ClientEnabled = User.UserIsInAction("Download Vehicle Template");
+        //            lnkSettings.NavigateUrl = Url.Action("DownloadTemplates", "filemanagement", new { template = "production" });
+        //            lnkSettings.Properties.Text = "Download Production Template";
+        //            lnkSettings.Style.Add(HtmlTextWriterStyle.MarginLeft, "5px");
+        //        }).GetHtml();
+        //    });
+        //});
 
-#region Batch editing mode
+        #region Batch editing mode
 
-settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "productions", Action = "BatchEditingProductionsGridViewPartial" };
+        settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "productions", Action = "BatchEditingProductionsGridViewPartial" };
         settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
         settings.SettingsPager.Mode = GridViewPagerMode.ShowPager;
         settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Cell;
@@ -57,8 +58,8 @@ settings.SettingsEditing.BatchUpdateRouteValues = new { Controller = "production
 
         settings.SettingsEditing.BatchEditSettings.KeepChangesOnCallbacks = DefaultBoolean.True;
         settings.SettingsBehavior.AllowFocusedRow = true;
-#endregion
-settings.CommandColumn.Visible = true;
+        #endregion
+        settings.CommandColumn.Visible = true;
         settings.CommandColumn.ShowNewButtonInHeader = true;
         settings.CommandColumn.ShowDeleteButton = true;
         settings.CommandColumn.ShowEditButton = true;
@@ -70,9 +71,9 @@ settings.CommandColumn.Visible = true;
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-//settings.AddAddEditDeleteToolbar();
+        //settings.AddAddEditDeleteToolbar();
 
-settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
+        settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
         settings.SettingsAdaptivity.AdaptiveColumnPosition = GridViewAdaptiveColumnPosition.Right;
         settings.SettingsAdaptivity.AdaptiveDetailColumnCount = 1;
         settings.SettingsAdaptivity.AllowOnlyOneAdaptiveDetailExpanded = true;
@@ -93,7 +94,7 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCell
                     Html.DevExpress().ComboBox(cbo =>
                     {
                         cbo.Name = "comboBoxFilterSuppliers";// DataBinder.Eval(filterTemp.DataItem, "Id").ToString();
-                cbo.Properties.TextField = "CompanyName";
+                        cbo.Properties.TextField = "CompanyName";
                         cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
                         cbo.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
                         if (ViewData["filterText"] != null)
@@ -134,6 +135,11 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCell
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             var cbo = c.PropertiesEdit as ComboBoxProperties;
             cbo.DataSource = new UnitOfWork().QuarriesRepo.Get();
+            if (filter != "")
+            {
+                cbo.DataSource = new UnitOfWork().QuarriesRepo.Get().Where(x => x.Permitees.Any(m => m.CompanyName == filter));
+            }
+         
             cbo.ValueField = "Id";
             cbo.TextField = "QuarryName";
 
@@ -208,7 +214,7 @@ settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCell
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             c.EditorProperties().ComboBox(cbo =>
             {
-                cbo.DataSource = new UnitOfWork().ProductionsRepo.Fetch().GroupBy(x=>x.BundleCode).Select(x=>new{BundleCode=x.Key}).ToList();
+                cbo.DataSource = new UnitOfWork().ProductionsRepo.Fetch().GroupBy(x => x.BundleCode).Select(x => new { BundleCode = x.Key }).ToList();
                 cbo.TextField = "BundleCode";
                 cbo.DropDownStyle = DropDownStyle.DropDown;
             });

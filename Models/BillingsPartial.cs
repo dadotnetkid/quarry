@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Models.ViewModels;
 
 namespace Models
 {
@@ -22,5 +23,6 @@ namespace Models
         }
 
         public string AmountInWord { get; set; }
+        public List<BillingStatementViewModel> BillingStatementViewModels { get; set; }
     }
 }

@@ -1,0 +1,12 @@
+﻿@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = nameof(PTOReportParams.PermitteeTypeId);
+        settings.Properties.TextField = "PermiteeTypeName";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.Caption = "Permittee Type Name";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){onPermitteeTypeChange(s,e)}";
+    }).BindList(Model).GetHtml();
+}

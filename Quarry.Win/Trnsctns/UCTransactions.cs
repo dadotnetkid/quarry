@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
+using Helpers;
 using Models;
 using Models.Repository;
+using Models.ViewModels;
 
 namespace Quarry.Win.Trnsctns
 {
@@ -101,7 +103,7 @@ namespace Quarry.Win.Trnsctns
                 {
                     frmAddEditBilling frmAddEditBilling = new frmAddEditBilling(item, MethodType.Add);
                     frmAddEditBilling.ShowDialog();
-                    Init();
+                    Detail(new UnitOfWork().TransactionsRepo.Find(x => x.Id == item.Id));
                 }
             }
             catch (Exception exception)
@@ -132,9 +134,17 @@ namespace Quarry.Win.Trnsctns
             {
                 if (TransactionGridView.GetFocusedRow() is Transactions item)
                 {
+                    BillingStatementViewModel billingStatementViewModel = new BillingStatementViewModel()
+                    {
+                        TransactionId = item.Id
+                    };
+                    var billing = new UnitOfWork().BillingsRepo.Find(x => x.TransactionId == item.Id);
+                    billing.AmountInWord = "**" + StringExtensions.NumberToWords(billing.Amount.ToString("##.##00")) + "**";
+                    billing.BillingStatementViewModels =
+                        new List<BillingStatementViewModel>() { billingStatementViewModel };
                     frmReportViewer frmReportViewer = new frmReportViewer(new rptOfficialReceipt()
                     {
-                        DataSource = new UnitOfWork().BillingsRepo.Get(x => x.TransactionId == item.Id)
+                        DataSource = new List<Billings>() { billing }
                     });
                     frmReportViewer.ShowDialog();
                 }

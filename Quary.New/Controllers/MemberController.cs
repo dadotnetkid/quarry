@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -76,6 +77,11 @@ namespace Quary.New.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var user = UserManager.FindByEmail(model.UserName);
+            if (unitOfWork.UsersRepo.Fetch(x => x.UserName == model.UserName).Any())
+            {
+                user = UserManager.FindByName(model.UserName);
+            }
+             
             if (user == null)
             {
                 ModelState.AddModelError("UserName", "Username not exist");

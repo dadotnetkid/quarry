@@ -1,0 +1,12 @@
+﻿
+@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = "year";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.Caption = "Year";
+        settings.Properties.TextField = "year";
+        settings.Properties.ValueField = "year";
+        settings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){changeYear(s,e)}";
+    }).BindList(Model).GetHtml();
+}

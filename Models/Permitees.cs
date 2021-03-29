@@ -41,6 +41,7 @@ namespace Models
         public string ContactNumber2 { get; set; }
         public string Email { get; set; }
         public string BIRNo { get; set; }
+        public string FullName { get; set; }
     
         public virtual PermiteeTypes PermiteeTypes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

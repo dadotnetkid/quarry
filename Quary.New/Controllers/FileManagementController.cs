@@ -25,13 +25,7 @@ namespace Quary.New.Controllers
             return View();
         }
 
-        [Route("delivery-receipts")]
-        [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "DeliveryReceipts")]
-        public ActionResult DeliveryReceipts()
-        {
-            return View();
-        }
-
+       
         public ActionResult FileManager()
         {
             return View();
@@ -1247,102 +1241,7 @@ namespace Quary.New.Controllers
 
         #endregion
 
-        #region Delivery Receipts
-
-        [ValidateInput(false)]
-
-        public ActionResult DeliveryReceiptGridViewPartial()
-        {
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
-            return PartialView("_DeliveryReceiptGridViewPartial", model);
-        }
-
-        [HttpPost, ValidateInput(false)]
-        [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "Add Delivery Receipts")]
-        public ActionResult DeliveryReceiptGridViewPartialAddNew([ModelBinder(typeof(DevExpressEditorsBinder))] Models.DeliveryReceipts item)
-        {
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var transaction = unitOfWork.TransactionsRepo.Find(m => m.Id == item.TransactionId, includeProperties: "TransactionDetails");
-                    var deliveryQTY = transaction.TransactionDetails
-                        .FirstOrDefault(m => m.Items.ItemName.ToLower().Contains("delivery"))?.Quantity;
-                    deliveryQTY = deliveryQTY - 1;
-                    for (var i = 1; i <= deliveryQTY; i++)
-                    {
-                        var receiptNumber = item.ReceiptNumber.ToInt();
-                        receiptNumber = receiptNumber + i;
-                        unitOfWork.DeliveryReceiptsRepo.Insert(new DeliveryReceipts()
-                        {
-                            ReceiptNumber = receiptNumber.ToString(),
-                            TransactionId = transaction.Id
-                        });
-                    }
-
-                    unitOfWork.Save();
-                    // Insert here a code to insert the new item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
-            return PartialView("_DeliveryReceiptGridViewPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "Edit Delivery Receipts")]
-        public ActionResult DeliveryReceiptGridViewPartialUpdate([ModelBinder(typeof(DevExpressEditorsBinder))] Models.DeliveryReceipts item)
-        {
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    // Insert here a code to update the item in your model
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            else
-                ViewData["EditError"] = "Please, correct all errors.";
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
-            return PartialView("_DeliveryReceiptGridViewPartial", model);
-        }
-        [HttpPost, ValidateInput(false)]
-        [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "Delete Delivery Receipts")]
-        public ActionResult DeliveryReceiptGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]int? Id)
-        {
-            if (Id >= 0)
-            {
-                try
-                {
-                    // Insert here a code to delete the item from your model
-                    unitOfWork.DeliveryReceiptsRepo.Delete(x => x.Id == Id);
-                    unitOfWork.Save();
-                }
-                catch (Exception e)
-                {
-                    ViewData["EditError"] = e.Message;
-                }
-            }
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
-            return PartialView("_DeliveryReceiptGridViewPartial", model);
-        }
-
-        public ActionResult AddEditDeliveryReceiptPartial()
-        {
-            return PartialView();
-        }
-
-
-        #endregion
+        
 
         #region Barangays
 

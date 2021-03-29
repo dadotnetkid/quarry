@@ -1,0 +1,10 @@
+﻿@{
+    Html.DevExpress().TokenBox(settings =>
+    {
+        settings.CallbackRouteValues = new {controller = "DeliveryReceipts", action = "MultipleDeleteDeliveryReceiptsPartial"};
+        settings.Name = "deliveryReceipts";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.TextField = "ReceiptNumber";
+        settings.Properties.ValueField = "ReceiptNumber";
+    }).BindList(new UnitOfWork().DeliveryReceiptsRepo.Get()).GetHtml();
+}

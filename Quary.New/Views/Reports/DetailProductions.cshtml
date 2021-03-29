@@ -13,19 +13,20 @@
     HttpMethod = "POST"
 }))
 {
+   @Html.Hidden("permitteeType", new { })
     <div class="row">
         <div class="col-lg-2">
             @{
                 Html.DevExpress().DropDownEdit(settings =>
                 {
                     settings.Name = "_PermitteeTypeId";
-                        //settings.Properties.TextField = "PermiteeTypeName";
-                        //settings.Properties.ValueField = "Id";
-                        settings.Properties.Caption = "Permittee Type";
+                    //settings.Properties.TextField = "PermiteeTypeName";
+                    //settings.Properties.ValueField = "Id";
+                    settings.Properties.Caption = "Permittee Type";
                     settings.Width = Unit.Percentage(100);
-                        //.BindList(new UnitOfWork().PermiteeTypesRepo.Get())
+                    //.BindList(new UnitOfWork().PermiteeTypesRepo.Get())
 
-                        settings.SetDropDownWindowTemplateContent(c =>
+                    settings.SetDropDownWindowTemplateContent(c =>
                     {
 
                         @Html.DevExpress().ListBox(listBoxSettings =>
@@ -41,8 +42,8 @@
                             listBoxSettings.Properties.SelectionMode = ListEditSelectionMode.CheckColumn;
                             foreach (var i in new UnitOfWork().PermiteeTypesRepo.Get())
                             {
-                                    //listBoxSettings.Properties.Items.Add("Chrome", "0").Selected = true;
-                                    listBoxSettings.Properties.Items.Add(i.PermiteeTypeName, i.Id);
+                            //listBoxSettings.Properties.Items.Add("Chrome", "0").Selected = true;
+                            listBoxSettings.Properties.Items.Add(i.PermiteeTypeName, i.Id);
                             }
 
                             listBoxSettings.Properties.ClientSideEvents.SelectedIndexChanged = "function(s,e){updateText(s,e)}";
@@ -147,11 +148,12 @@
         var res = [];
         for (var i = 0; i < items.length; i++) {
             texts.push(items[i].text);
-            
+
 
         }
         res = getValuesByTexts(texts);
         changePermitteeType(res.join(','));
+        $('#permitteeType').val(res.join(','));
         return texts.join(textSeparator);
     }
     function getValuesByTexts(texts) {

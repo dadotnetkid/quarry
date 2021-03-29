@@ -62,7 +62,7 @@ namespace Models.ViewModels
         public bool? isSubmitted { get; set; }
         public Permitees Permitees { get; set; }
         public string ReportDate { get; set; }
-        public int? Month { get; set; }
+        public int Month { get; set; }
         public int? Year { get; set; }
 
         public Quarries Quarries { get; set; }

@@ -22,5 +22,6 @@ namespace Models.ViewModels
         public int PermitteeId { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public string PermitteeType{ get; set; }
     }
 }

@@ -61,5 +61,6 @@ namespace Models
         public virtual DbSet<Transactions> Transactions { get; set; }
         public virtual DbSet<Billings> Billings { get; set; }
         public virtual DbSet<DeliveryReceipts> DeliveryReceipts { get; set; }
+        public virtual DbSet<DeletedDeliveryReceipts> DeletedDeliveryReceipts { get; set; }
     }
 }

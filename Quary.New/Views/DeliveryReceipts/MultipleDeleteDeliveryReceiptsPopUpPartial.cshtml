@@ -1,0 +1,15 @@
+﻿@{
+    Html.DevExpress().PopupControl(settings =>
+    {
+        settings.Name = "popupMultipleDeletePopup";
+        settings.HeaderText = "Multiple Delete";
+        settings.SetContent(() =>
+        {
+
+            Html.RenderAction("DeleteMultipleDeleteDeliveryReceiptsPartial");
+        });
+        settings.ShowOnPageLoad = true;
+        settings.Width = 600;
+        settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+    }).GetHtml();
+}

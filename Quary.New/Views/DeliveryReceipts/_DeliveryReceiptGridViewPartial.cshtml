@@ -4,11 +4,11 @@
 
         settings.Width = Unit.Percentage(100);
         settings.Name = "DeliveryReceiptGridView";
-        settings.CallbackRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartial" };
+        settings.CallbackRouteValues = new { Controller = "DeliveryReceipts", Action = "DeliveryReceiptGridViewPartial" };
 
-        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialAddNew" };
-        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialUpdate" };
-        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "FileManagement", Action = "DeliveryReceiptGridViewPartialDelete" };
+        settings.SettingsEditing.AddNewRowRouteValues = new { Controller = "DeliveryReceipts", Action = "DeliveryReceiptGridViewPartialAddNew" };
+        settings.SettingsEditing.UpdateRowRouteValues = new { Controller = "DeliveryReceipts", Action = "DeliveryReceiptGridViewPartialUpdate" };
+        settings.SettingsEditing.DeleteRowRouteValues = new { Controller = "DeliveryReceipts", Action = "DeliveryReceiptGridViewPartialDelete" };
         settings.SettingsEditing.Mode = GridViewEditingMode.EditFormAndDisplayRow;
         settings.SettingsBehavior.ConfirmDelete = true;
 
@@ -30,6 +30,18 @@
             tb.Position = GridToolbarPosition.Top;
             tb.Items.Add(GridViewToolbarCommand.New);
             tb.Items.Add(GridViewToolbarCommand.Delete);
+            tb.Items.Add(cmd =>
+            {
+                cmd.SetTemplateContent(content =>
+                {
+                    Html.DevExpress().Button(btnSettings =>
+                    {
+                        btnSettings.Name = "btnDelete";
+                        btnSettings.Text = "Multiple Delete";
+                        btnSettings.ClientSideEvents.Click = "function(s,e){showMultipleDeleteModal();}";
+                    }).GetHtml();
+                });
+            });
         });
 
         settings.SettingsAdaptivity.AdaptivityMode = GridViewAdaptivityMode.HideDataCells;
@@ -55,7 +67,7 @@
                 pop.ShowOnPageLoad = true;
                 pop.CloseOnEscape = false;
                 pop.ShowCloseButton = true;
-       
+
                 pop.ShowMaximizeButton = true;
                 pop.ClientSideEvents.CloseUp = "function(s,e){DeliveryReceiptGridView.CancelEdit()}";
                 pop.CloseAction = CloseAction.CloseButton;

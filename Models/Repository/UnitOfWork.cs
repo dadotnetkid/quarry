@@ -14,7 +14,24 @@ namespace Models.Repository
     {
         private ModelDb context = new ModelDb();
 
-
+        public UnitOfWork()
+        {
+            context.Database.Log = (s) =>
+            {
+                Debug.WriteLine(s);
+            };
+        }
+        private GenericRepository<DeletedDeliveryReceipts> _DeletedDeliveryReceiptsRepo;
+        public GenericRepository<DeletedDeliveryReceipts> DeletedDeliveryReceiptsRepo
+        {
+            get
+            {
+                if (this._DeletedDeliveryReceiptsRepo == null)
+                    this._DeletedDeliveryReceiptsRepo = new GenericRepository<DeletedDeliveryReceipts>(context);
+                return _DeletedDeliveryReceiptsRepo;
+            }
+            set { _DeletedDeliveryReceiptsRepo = value; }
+        }
         private GenericRepository<Billings> _BillingsRepo;
         public GenericRepository<Billings> BillingsRepo
         {
@@ -423,6 +440,7 @@ namespace Models.Repository
         }
 
 
+        
         public void Save()
         {
             context.SaveChanges();

@@ -1,0 +1,11 @@
+﻿
+@{
+    Html.DevExpress().ComboBox(settings =>
+    {
+        settings.Name = nameof(BIRParamsViewModel.Year);
+        settings.Properties.Caption = "Year";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){onYearChanged(s,e)}";
+    }).BindList(Model).GetHtml();
+}

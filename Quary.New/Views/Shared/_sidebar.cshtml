@@ -30,6 +30,9 @@
                     <li class="@(ControllerHelpers.IsMenuBarActive("Index", "DeliveryReceipts")?"active":"")">
                         <a href="@Url.Action("Index", "DeliveryReceipts")"><i class="fa fa-list"></i> <span>Add DR</span></a>
                     </li>
+                    <li class="@(ControllerHelpers.IsMenuBarActive("TransactionsWithBalance", "DeliveryReceipts")?"active":"")">
+                        <a href="@Url.Action("TransactionsWithBalance", "DeliveryReceipts")"><i class="fa fa-list"></i> <span>w/ Bal. Trans.</span></a>
+                    </li>
                     @*<li class="@(ControllerHelpers.IsMenuBarActive("Index", "ProgramOfWorks")?"active":"")">
                         <a href="@Url.Action("Index", "ProgramOfWorks")"><i class="fa fa-list"></i> <span>Program of Works</span></a>
                     </li>*@
@@ -91,7 +94,7 @@
                     <a href="@Url.Action("UnitOfMeasurement", "filemanagement")"><i class="fa fa-map-signs"></i> <span>Unit Measure</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("DeliveryReceipts", "FileManagement")?"active":"")">
-                    <a href="@Url.Action("DeliveryReceipts", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Delivery Receipts</span></a>
+                    <a href="@Url.Action("DeliveryReceipts", "DeliveryReceipts")"><i class="fa fa-circle-o"></i> <span>Delivery Receipts</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("Barangays", "FileManagement")?"active":"")">
                     <a href="@Url.Action("Barangays", "filemanagement")"><i class="fa fa-circle-o"></i> <span>Barangays</span></a>
@@ -114,13 +117,13 @@
                     <a href="@Url.Action("VehicleMasterList", "reports")"><i class="fa fa-list-ol"></i> <span>Vehicle Master List</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("ProductionReport","reports") ? "active" : "")">
-                    <a href="@Url.Action("ProductionReport", "reports")"><i class="fa fa-list-ol"></i> <span>BIR Report</span></a>
+                    <a href="@Url.Action("BIRReport", "reports")"><i class="fa fa-list-ol"></i> <span>BIR Report</span></a>
                 </li>
-                <li class="@(ControllerHelpers.IsMenuBarActive("ProductionLedger","reports") ? "active" : "")">
-                    <a href="@Url.Action("ProductionLedger", "reports")"><i class="fa fa-list-ol"></i> <span>Production Ledger</span></a>
+                <li class="@(ControllerHelpers.IsMenuBarActive("ProductionLedger","ProductionLedger") ? "active" : "")">
+                    <a href="@Url.Action("ProductionLedger", "ProductionLedger")"><i class="fa fa-list-ol"></i> <span>Production Ledger</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("SummaryProductionReportPerPermittee","reports") ? "active" : "")">
-                    <a href="@Url.Action("SummaryProductionReportPerPermittee", "reports")"><i class="fa fa-list-ol"></i> <span>PTO Report</span></a>
+                    <a href="@Url.Action(nameof(ReportsController.PTOReport), "reports")"><i class="fa fa-list-ol"></i> <span>PTO Report</span></a>
                 </li>
                 <li class="@(ControllerHelpers.IsMenuBarActive("Index","Accountingreport") ? "active" : "")">
                     <a href="@Url.Action("Index", "Accountingreport")"><i class="fa fa-list-ol"></i> <span>Accounting Report</span></a>

@@ -3,6 +3,7 @@
 
 @using (Ajax.BeginForm(new AjaxOptions() { Url = Url.Action("AccountingReportPartial"), OnBegin = "showLoading()", OnComplete = "hideLoading()", UpdateTargetId = "container" }))
 {
+    @Html.Hidden("permitteeType", new { });
     <div class="row">
 
 
@@ -103,6 +104,7 @@
         PermitteeTypeId.SelectValues(values);
         updateText(); // for remove non-existing texts
         changePermitteeType();
+        $('#permitteeType').val(res.join(','));
     }
     function getSelectedItemsText(items) {
         var texts = [];
@@ -114,6 +116,7 @@
         }
         res = getValuesByTexts(texts);
         changePermitteeType(res.join(','));
+        $('#permitteeType').val(res.join(','));
         return texts.join(textSeparator);
     }
     function getValuesByTexts(texts) {

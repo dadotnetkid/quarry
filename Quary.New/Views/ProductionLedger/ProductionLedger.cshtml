@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Production Ledger Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Html.EnableClientValidation(false);
+}
+
+
+@using (Ajax.BeginForm(new AjaxOptions() { Url = Url.Action("ProductionLedgerGridViewPartial", new { isSubmitted = true }), OnBegin = "showLoading()", OnComplete = "hideLoading()", UpdateTargetId = "container" }))
+{
+    <div class="row">
+
+
+        <div class="col-lg-2">
+            @{
+                Html.RenderAction("CboPermitteeTypePartial");
+            }
+        </div>
+        <div class="col-lg-2" id="permittee-container">
+            @{
+                Html.RenderAction("CboPermitteePartial");
+            }
+        </div>
+        <div class="col-lg-2">
+            <div id="quarries-in-permittee">
+                @{
+                    Html.RenderAction("CboQuarriesInPermittee", new { item = Model });
+                }
+            </div>
+        </div>
+        <div class="col-lg-2" id="year-container">
+            @{
+                Html.RenderAction("CboYearPartial");
+            }
+        </div>
+        <div class="col-lg-2" id="month-container">
+            @{
+                Html.RenderAction("CboMonthPartial");
+            }
+        </div>
+        <div class="col-lg-2">
+            @{
+                Html.DevExpress().Button(settings =>
+                {
+                    settings.Name = "submit";
+                    settings.UseSubmitBehavior = true;
+                    settings.Text = "Submit";
+                }).GetHtml();
+            }
+        </div>
+    </div>
+}
+<div id="container"></div>
+<script>
+    function selectPermittee(s,e) {
+        var permitteeId = s.GetValue();
+        $.ajax({
+            url: "@Url.Action("CboQuarriesInPermittee")",
+            data: { PermitteeId: permitteeId },
+            success: function (retval) {
+                $('#quarries-in-permittee').html(retval);
+            }
+        });
+    }
+</script>
+<script>
+    function changePermittee(s, e) {
+        $.ajax({
+            url: '@Url.Action("cboYearPartial")',
+            data: { permitteeId: s.GetValue() },
+            success: function (ret) {
+                $('#year-container').html(ret);
+            }
+        })
+    }
+    function changeYear(s, e) {
+        $.ajax({
+            url: '@Url.Action("cboMonthPartial")',
+            data: { permitteeId: permitteeId.GetValue(), year: year.GetValue() },
+            success: function (ret) {
+                $('#month-container').html(ret);
+            }
+        })
+    }
+    function changePermitteeType(actualValues)
+    {
+        $.ajax({
+            url: '@Url.Action("cboPermitteePartial")',
+            data: { permitteeTypeId: actualValues},
+            success: function (ret) {
+                $('#permittee-container').html(ret);
+            }
+        })
+    }
+</script>
+<script type="text/javascript">
+    var textSeparator = ";";
+    function updateText() {
+        var selectedItems = PermitteeTypeId.GetSelectedItems();
+        _PermitteeTypeId.SetText(getSelectedItemsText(selectedItems));
+
+
+    }
+    function synchronizeListBoxValues(dropDown, args) {
+        PermitteeTypeId.UnselectAll();
+        var texts = dropDown.GetText().split(textSeparator);
+        var values = getValuesByTexts(texts);
+        PermitteeTypeId.SelectValues(values);
+        updateText(); // for remove non-existing texts
+        changePermitteeType();
+    }
+    function getSelectedItemsText(items) {
+        var texts = [];
+        var res = [];
+        for (var i = 0; i < items.length; i++) {
+            texts.push(items[i].text);
+
+
+        }
+        res = getValuesByTexts(texts);
+        changePermitteeType(res.join(','));
+        return texts.join(textSeparator);
+    }
+    function getValuesByTexts(texts) {
+        var actualValues = [];
+        var item;
+        for (var i = 0; i < texts.length; i++) {
+            item = PermitteeTypeId.FindItemByText(texts[i]);
+            if (item != null)
+                actualValues.push(item.value);
+        }
+
+        return actualValues;
+    }
+</script>

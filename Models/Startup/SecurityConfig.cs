@@ -81,7 +81,7 @@ namespace Models.Startup
                 var newPasswordHash = this.PasswordHasher.HashPassword(newPassword);
 
                 await store.SetPasswordHashAsync(userId, newPasswordHash);
-                return await Task.FromResult<IdentityResult>(IdentityResult.Success);
+                return await Task.FromResult(IdentityResult.Success);
             }
     }
 

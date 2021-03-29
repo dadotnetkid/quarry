@@ -1,0 +1,102 @@
+﻿
+@using Quary.New.Controllers
+
+@{
+    ViewBag.Title = "BIR Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action(nameof(ReportsController.BIRReportPartial), new { isSubmitted = true }),
+    HttpMethod = "POST",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()",
+    UpdateTargetId = "report-container"
+}))
+{
+<div class="row">
+    <div class="col-lg-3">
+        @{
+            Html.RenderAction("CboQuarryBIRReport");
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-permittee-type">
+        @{
+            Html.RenderAction("CboPermitteeTypeBIRReport");
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-permittees">
+        @{
+            Html.RenderAction("CboPermitteeBIRReport");
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-year">
+        @{
+            Html.RenderAction("CboAvailableYearBIRReport");
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-month">
+        @{
+            Html.RenderAction("CboAvailableMonthByYear");
+        }
+    </div>
+
+    <div class="col-lg-2">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Submit";
+                settings.UseSubmitBehavior = true;
+            }).GetHtml();
+        }
+    </div>
+</div>
+}
+
+<div class="row margin-top-10">
+    <div class="col-lg-12">
+        <div id="report-container"></div>
+    </div>
+</div>
+<script>
+    function onQuarryChange(s, e) {
+        var quarryId = s.GetValue();
+        $.get("@Url.Action("CboPermitteeTypeBIRReport")",
+            { quarryId: quarryId },
+            function(xhr) {
+                $('#cbo-permittee-type').html(xhr);
+            })
+    }
+
+    function onPermitteeTypeChange(s, e) {
+        var permitteeTypeId= s.GetValue();
+        $.get("@Url.Action("CboPermitteeBIRReport")",
+            { permitteeTypeId: permitteeTypeId },
+            function(xhr) {
+                $('#cbo-permittees').html(xhr);
+            })
+    }
+
+    function onPermitteeChange(s, e) {
+        var permitteeId = s.GetValue();
+        $.get("@Url.Action("CboAvailableYearBIRReport")",
+            { permitteeId: permitteeId },
+            function(xhr) {
+                $('#cbo-year').html(xhr);
+            })
+    }
+
+    function onYearChanged(s, e) {
+        var permitteeId = Permittee.GetValue();
+        var year = s.GetValue();
+        var quarryId = QuarriesId.GetValue();
+        $.get("@Url.Action("CboAvailableMonthByYear")",
+            { permitteeId: permitteeId, year: year, quarryId: quarryId },
+            function(xhr) {
+                $('#cbo-month').html(xhr);
+            })
+    }
+</script>

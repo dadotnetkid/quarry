@@ -1,0 +1,12 @@
+﻿@{
+    Html.DevExpress().ComboBox (settings =>
+    {
+        settings.Name = nameof(BIRParamsViewModel.Permittee);
+        settings.Properties.TextField = "FullName";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.Caption = "Permittee Name";
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){onPermitteeChange(s,e)}";
+    }).BindList(Model).GetHtml();
+}

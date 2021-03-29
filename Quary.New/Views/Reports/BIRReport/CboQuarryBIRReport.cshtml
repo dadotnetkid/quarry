@@ -1,0 +1,14 @@
+﻿@{
+    Html.DevExpress().ComboBox( settings =>
+    {
+        settings.Name = nameof(BIRParamsViewModel.QuarriesId);
+        settings.Properties.TextField = "QuarryName";
+        settings.Properties.ValueField = "Id";
+        settings.Properties.Caption = "Quarry Site";
+        settings.Properties.ValueType = typeof(int);
+        settings.Width = Unit.Percentage(100);
+        settings.Properties.CaptionSettings.Position = EditorCaptionPosition.Left;
+
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){onQuarryChange(s,e)}";
+    }).BindList(Model).GetHtml();
+}

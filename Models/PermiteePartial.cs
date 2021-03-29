@@ -14,19 +14,7 @@ namespace Models
     [MetadataType(typeof(PermiteeMeta))]
     public partial class Permitees
     {
-        private string _fullName;
-
-        public string FullName
-        {
-            get
-            {
-                if (_fullName == null)
-                    _fullName = this.FirstName + " " + this.MiddleName + " " + this.LastName;
-                ;
-                return _fullName;
-            }
-            set => _fullName = value;
-        }
+       
 
         public List<int> QuarrySites { get; set; }
         public string _QuarySites => string.Join(", ", this.Quarries.Select(x => x.QuarryName));

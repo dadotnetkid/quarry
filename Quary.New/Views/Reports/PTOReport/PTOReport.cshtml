@@ -1,0 +1,81 @@
+﻿@using Quary.New.Controllers
+
+@{
+    ViewBag.Title = "PTO Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Ajax.BeginForm(new AjaxOptions()
+{
+    Url = Url.Action(nameof(ReportsController.PTOReportPartial), new { isSubmitted = true }),
+    UpdateTargetId = "container",
+    OnBegin = "showLoading()",
+    OnComplete = "hideLoading()"
+}))
+{
+<div class="row">
+    <div class="col-lg-3">
+        @{
+            Html.RenderAction(nameof(ReportsController.CboPermitteeTypePTOReport));
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-permittees">
+        @{
+            Html.RenderAction(nameof(ReportsController.CboPermitteePTOReport));
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-year">
+        @{
+            Html.RenderAction(nameof(ReportsController.CboAvailableYearPTOReport));
+        }
+    </div>
+    <div class="col-lg-3" id="cbo-month">
+        @{
+            Html.RenderAction(nameof(ReportsController.CboAvailableMonthByYearPTOReport));
+        }
+    </div>
+    <div class="col-lg-3">
+        @{
+            Html.DevExpress().Button(settings =>
+            {
+                settings.Name = "btnSubmit";
+                settings.Text = "Submit";
+                settings.UseSubmitBehavior = true;
+            }).GetHtml();
+        }
+    </div>
+</div>
+}
+<div id="container">
+
+</div>
+
+<script>
+ 
+    function onPermitteeTypeChange(s, e) {
+        var permitteeTypeId= s.GetValue();
+        $.get("@Url.Action(nameof(ReportsController.CboPermitteePTOReport))",
+            { permitteeTypeId: permitteeTypeId },
+            function(xhr) {
+                $('#cbo-permittees').html(xhr);
+            })
+    }
+
+    function onPermitteeChange(s, e) {
+        var permitteeId = s.GetValue();
+        $.get("@Url.Action(nameof(ReportsController.CboAvailableYearPTOReport))",
+            { permitteeId: permitteeId },
+            function(xhr) {
+                $('#cbo-year').html(xhr);
+            })
+    }
+
+    function onYearChanged(s, e) {
+        var permitteeId = PermitteeId.GetValue();
+        var year = s.GetValue();
+        $.get("@Url.Action(nameof(ReportsController.CboAvailableMonthByYearPTOReport))",
+            { permitteeId: permitteeId, year: year },
+            function(xhr) {
+                $('#cbo-month').html(xhr);
+            })
+    }
+</script>

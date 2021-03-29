@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -28,48 +29,66 @@ namespace Quary.New.Controllers
         }
         public ActionResult AccountingReportPartial([ModelBinder(typeof(DevExpressEditorsBinder))]AccountingReportViewModel item)
         {
-            item.DateFrom = new DateTime(item.Year, item.Month, 1);
-            item.DateTo = new DateTime(item.Year, item.Month, DateTime.DaysInMonth(item.Year, item.Month)).AddHours(23).AddMinutes(59).AddSeconds(59);
-            var transaction = unitOfWork.TransactionsRepo.Fetch(m =>
-                  m.TransactionDate >= item.DateFrom && m.TransactionDate <= item.DateTo);
-            if (item.PermitteeId != 0)
-            {
-                transaction = transaction.Where(m => m.PermiteeId == item.PermitteeId);
-            }
+
+            var dateFrom = new DateTime(item.Year, item.Month, 1);
+            var dateTo = new DateTime(item.Year, item.Month, DateTime.DaysInMonth(item.Year, item.Month)).AddHours(23).AddMinutes(59).AddSeconds(59);
 
             List<AccountingReportViewModel> accountingReportViewModels = new List<AccountingReportViewModel>();
+            UnitOfWork unitOfWork = new UnitOfWork();
+            var permittees = unitOfWork.PermiteesRepo.Fetch(includeProperties: "Productions");
 
-
-            foreach (var t in transaction.ToList())
+            var res = permittees.Where(x => x.Productions.Any(m => (m.DateCreated >= dateFrom && m.DateCreated <= dateTo)));
+            var type = item.PermitteeType.Split(',')?.Select(x => new { Id = x.ToInt() }).Select(x => x.Id).ToList();
+            res = res.Where(x => type.Contains(x.PermiteeTypeId ?? 0));
+            if (item.PermitteeId != 0)
             {
-                //var dr = t.DeliveryReceipts.Select(x => x.ReceiptNumber).ToList();
-                //var production =unitOfWork.ProductionsRepo.Get(m => (m.ReceiptDate >= item.DateFrom && m.ReceiptDate <= item.DateTo)).Where(m => dr.Contains(m.ReceiptNo.ToInt())).ToList();
-                //
-                var quarries = t.Productions.GroupBy(m => m.QuarriesId);
-                if (item.QuarryId != 0)
+                res = res.Where(x => x.Id == item.PermitteeId);
+            }
+            decimal prodTotal = 0;
+            foreach (var permittee in res.ToList())
+            {
+                permittee.Productions = unitOfWork.ProductionsRepo.Get(m => (m.DateCreated >= dateFrom && m.DateCreated <= dateTo) && m.Transactions.PermiteeId == permittee.Id).ToList();
+                // var totalExtraction = permittee.Productions.Sum(x => (x.Quantity ?? 0) * (x.Sags.UnitCost ?? 0));
+
+
+                //for accounting
+                var transaction = unitOfWork.TransactionsRepo.Fetch(m =>
+                    m.Productions.Any(x => x.DateCreated >= dateFrom && x.DateCreated <= dateTo) && m.PermiteeId == permittee.Id);
+                foreach (var t in transaction.ToList())
                 {
-                    quarries = quarries.Where(x => x.Key == item.QuarryId);
-                }
-                foreach (var i in quarries)
-                {
-                    if (i.Key != null)
+                    var quarry = unitOfWork.ProductionsRepo.Fetch()
+                        .Where(x => (x.DateCreated >= dateFrom && x.DateCreated <= dateTo) &&
+                                    x.Transactions.PermiteeId == permittee.Id && x.TransactionId == t.Id);
+
+
+                    if (item.QuarryId != 0)
                     {
+                        quarry = quarry.Where(x => x.Id == item.QuarryId);
+                    }
+
+                    var _quarry = quarry.GroupBy(x => x.QuarriesId).ToList();
+                    foreach (var q in _quarry)
+                    {
+                        var quarryId = q.Key?.ToInt();
                         var accountingReportViewModel = new AccountingReportViewModel()
                         {
                             Permittee = t.Permitees,
                             OfficialReceipt = t.OfficialReceipt,
                             Amount = t.SagSubTotal.ToDecimal()
                         };
-                        var quarryId = i.Key.ToInt();
-                        accountingReportViewModel.Extraction = t.Productions.Where(m => m.QuarriesId == quarryId)
-                            .Sum(m => m.Quantity * m.Sags.UnitCost).ToDecimal();
+                        var prod = unitOfWork.ProductionsRepo.Fetch()
+                            .Where(x => (x.DateCreated >= dateFrom && x.DateCreated <= dateTo) &&
+                                        x.Transactions.PermiteeId == permittee.Id && x.QuarriesId == quarryId && x.TransactionId == t.Id);
+
+                        accountingReportViewModel.Extraction = prod?.Sum(x => (x.Quantity ?? 0) * (x.Sags.UnitCost ?? 0)) ?? 0;
+
                         accountingReportViewModel.Quarries = unitOfWork.QuarriesRepo.Find(m => m.Id == quarryId);
                         accountingReportViewModels.Add(accountingReportViewModel);
                     }
-
                 }
-            }
+                //x.QuarriesId == quarryId && x.TransactionId == t.Id).ToList();
 
+            }
             rptAccountingReports reports = new rptAccountingReports()
             {
                 DataSource = accountingReportViewModels

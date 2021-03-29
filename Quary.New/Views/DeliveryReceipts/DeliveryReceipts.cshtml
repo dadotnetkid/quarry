@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Delivery Receipts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@Html.Action("DeliveryReceiptGridViewPartial")
+<div id="mulitple-delete-container"></div>
+<script>
+    function showMultipleDeleteModal() {
+        $.ajax({
+            url: "@Url.Action("MultipleDeleteDeliveryReceiptsPopUpPartial")",
+            success: function (html) {
+                $('#mulitple-delete-container').html(html);
+            }
+        });
+    }
+</script>
