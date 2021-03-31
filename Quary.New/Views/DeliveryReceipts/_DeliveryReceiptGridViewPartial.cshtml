@@ -86,4 +86,9 @@
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model).GetHtml()
+@grid.BindToEF("", "DeliveryReceipts", (o,e) =>
+{
+    e.DefaultSorting = "Id asc";
+    e.QueryableSource = Model;
+    e.KeyExpression = "Id";
+}).GetHtml()

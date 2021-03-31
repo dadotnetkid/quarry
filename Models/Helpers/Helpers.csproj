@@ -148,18 +148,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="rptAccountingReports.cs">
+    <Compile Include="Reports\rptAccountingReports.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="rptAccountingReports.Designer.cs">
+    <Compile Include="Reports\rptAccountingReports.Designer.cs">
       <DependentUpon>rptAccountingReports.cs</DependentUpon>
     </Compile>
     <Compile Include="AmountInWordHelper.cs" />
     <Compile Include="Authorization.cs" />
-    <Compile Include="BillingStatementReport.cs">
+    <Compile Include="Reports\BillingStatementReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BillingStatementReport.Designer.cs">
+    <Compile Include="Reports\BillingStatementReport.Designer.cs">
       <DependentUpon>BillingStatementReport.cs</DependentUpon>
     </Compile>
     <Compile Include="ControllerHelpers.cs" />
@@ -186,51 +186,53 @@
     <Compile Include="Reports\BIRQuarriesDeliveryReport.Designer.cs">
       <DependentUpon>BIRQuarriesDeliveryReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="rptDetailProductionPivot.cs">
+    <Compile Include="Reports\rptDetailProductionPivot.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="rptDetailProductionPivot.Designer.cs">
+    <Compile Include="Reports\rptDetailProductionPivot.Designer.cs">
       <DependentUpon>rptDetailProductionPivot.cs</DependentUpon>
     </Compile>
-    <Compile Include="rptProductionLedgerList.cs">
+    <Compile Include="Reports\rptProductionLedgerList.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="rptProductionLedgerList.Designer.cs">
+    <Compile Include="Reports\rptProductionLedgerList.Designer.cs">
       <DependentUpon>rptProductionLedgerList.cs</DependentUpon>
     </Compile>
-    <Compile Include="rptSummaryProgramOfWorks.cs">
+    <Compile Include="Reports\rptSummaryProgramOfWorks.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="rptSummaryProgramOfWorks.Designer.cs">
+    <Compile Include="Reports\rptSummaryProgramOfWorks.Designer.cs">
       <DependentUpon>rptSummaryProgramOfWorks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\BillingMasterListReportService.cs" />
     <Compile Include="Services\BIRReportService.cs" />
+    <Compile Include="Services\IBillingMasterListReportService.cs" />
     <Compile Include="Services\IPTOReportService.cs" />
     <Compile Include="Services\PTOReportService.cs" />
     <Compile Include="StringExtensions.cs" />
-    <Compile Include="SummaryLedgerReportByRange.cs">
+    <Compile Include="Reports\SummaryLedgerReportByRange.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SummaryLedgerReportByRange.Designer.cs">
+    <Compile Include="Reports\SummaryLedgerReportByRange.Designer.cs">
       <DependentUpon>SummaryLedgerReportByRange.cs</DependentUpon>
     </Compile>
-    <Compile Include="SummaryLedgerReport.cs">
+    <Compile Include="Reports\SummaryLedgerReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SummaryLedgerReport.Designer.cs">
+    <Compile Include="Reports\SummaryLedgerReport.Designer.cs">
       <DependentUpon>SummaryLedgerReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="PTOReport.cs">
+    <Compile Include="Reports\PTOReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PTOReport.Designer.cs">
+    <Compile Include="Reports\PTOReport.Designer.cs">
       <DependentUpon>PTOReport.cs</DependentUpon>
     </Compile>
     <Compile Include="TransactionHelper.cs" />
-    <Compile Include="VehicleMasterListReport.cs">
+    <Compile Include="Reports\VehicleMasterListReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="VehicleMasterListReport.Designer.cs">
+    <Compile Include="Reports\VehicleMasterListReport.Designer.cs">
       <DependentUpon>VehicleMasterListReport.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -245,10 +247,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="rptAccountingReports.resx">
+    <EmbeddedResource Include="Reports\rptAccountingReports.resx">
       <DependentUpon>rptAccountingReports.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BillingStatementReport.resx">
+    <EmbeddedResource Include="Reports\BillingStatementReport.resx">
       <DependentUpon>BillingStatementReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -261,25 +263,25 @@
     <EmbeddedResource Include="Reports\BIRQuarriesDeliveryReport.resx">
       <DependentUpon>BIRQuarriesDeliveryReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptDetailProductionPivot.resx">
+    <EmbeddedResource Include="Reports\rptDetailProductionPivot.resx">
       <DependentUpon>rptDetailProductionPivot.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptProductionLedgerList.resx">
+    <EmbeddedResource Include="Reports\rptProductionLedgerList.resx">
       <DependentUpon>rptProductionLedgerList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptSummaryProgramOfWorks.resx">
+    <EmbeddedResource Include="Reports\rptSummaryProgramOfWorks.resx">
       <DependentUpon>rptSummaryProgramOfWorks.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SummaryLedgerReportByRange.resx">
+    <EmbeddedResource Include="Reports\SummaryLedgerReportByRange.resx">
       <DependentUpon>SummaryLedgerReportByRange.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SummaryLedgerReport.resx">
+    <EmbeddedResource Include="Reports\SummaryLedgerReport.resx">
       <DependentUpon>SummaryLedgerReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PTOReport.resx">
+    <EmbeddedResource Include="Reports\PTOReport.resx">
       <DependentUpon>PTOReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="VehicleMasterListReport.resx">
+    <EmbeddedResource Include="Reports\VehicleMasterListReport.resx">
       <DependentUpon>VehicleMasterListReport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

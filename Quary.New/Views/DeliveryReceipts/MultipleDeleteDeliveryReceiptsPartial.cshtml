@@ -1,10 +1,18 @@
 ﻿@{
     Html.DevExpress().TokenBox(settings =>
     {
-        settings.CallbackRouteValues = new {controller = "DeliveryReceipts", action = "MultipleDeleteDeliveryReceiptsPartial"};
+        settings.CallbackRouteValues = new { controller = "DeliveryReceipts", action = "MultipleDeleteDeliveryReceiptsPartial" };
         settings.Name = "deliveryReceipts";
         settings.Width = Unit.Percentage(100);
         settings.Properties.TextField = "ReceiptNumber";
         settings.Properties.ValueField = "ReceiptNumber";
-    }).BindList(new UnitOfWork().DeliveryReceiptsRepo.Get()).GetHtml();
+        settings.Properties.CallbackPageSize = 10;
+
+    }).BindToEF("", nameof(DeliveryReceipts), (s, e) =>
+    {
+        e.DefaultSorting = "Id asc";
+        e.QueryableSource = UnitOfWork.Db().DeliveryReceiptsRepo.Fetch();
+        e.KeyExpression = "Id";
+    }).GetHtml();
 }
+@*new UnitOfWork().DeliveryReceiptsRepo.Get()*@

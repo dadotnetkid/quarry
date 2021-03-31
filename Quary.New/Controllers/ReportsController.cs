@@ -159,6 +159,12 @@ namespace Quary.New.Controllers
                     item.DateFrom = date;
                     item.DateTo = date.AddMonths(1).AddDays(-1);
                 }
+                else
+                {
+                    var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                    item.DateFrom = date;
+                    item.DateTo = date.AddMonths(1).AddDays(-1);
+                }
            
             }
 

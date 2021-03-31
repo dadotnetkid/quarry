@@ -641,6 +641,7 @@
     <Content Include="Views\Reports\PTOReport\CboPermitteePTOReport.cshtml" />
     <Content Include="Views\Reports\PTOReport\CboPermitteeTypePTOReport.cshtml" />
     <Content Include="Views\Reports\PTOReport\CboQuarryPTOReport.cshtml" />
+    <Content Include="Views\Productions\CboPermittee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\excel\" />

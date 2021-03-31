@@ -7,6 +7,11 @@
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "productions", Action = "CboQuarryPartial", PermitteeId = ViewBag.PermitteeId };
         settings.Properties.ClientSideEvents.KeyDown = "function(s,e){cboQuarryId(s,e)}";
-    }).Bind(ViewBag.ReceiptNo).BindList(Model).GetHtml();
+    }).BindToEF("", nameof(Quarries), (s, e) =>
+    {
+        e.DefaultSorting = $"{nameof(Quarries.Id)} asc";
+        e.KeyExpression = nameof(Quarries.Id);
+        e.QueryableSource = Model;
+    }).Bind(ViewBag.ReceiptNo).GetHtml();
 }
 

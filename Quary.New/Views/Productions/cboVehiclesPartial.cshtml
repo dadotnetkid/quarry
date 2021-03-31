@@ -7,5 +7,10 @@
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "productions", Action = "cboVehiclesPartial",PermitteeId = ViewBag.PermitteeId  };
         settings.Properties.ClientSideEvents.KeyDown = "function(s,e){cboVehicleId(s,e)}";
-    }).Bind(ViewBag.VehicleId).BindList(Model).GetHtml();
+    }).BindToEF("",nameof(Vehicles), (s, e) =>
+    {
+        e.DefaultSorting=$"{nameof(Vehicles.Id)} asc";
+        e.KeyExpression = nameof(Vehicles.Id);
+        e.QueryableSource = Model;
+    }).Bind(ViewBag.VehicleId).GetHtml();
 }

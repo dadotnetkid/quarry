@@ -1,0 +1,20 @@
+﻿@{
+    Html.DevExpress().ComboBox(cbo =>
+    {
+        cbo.Name = "comboBoxFilterSuppliers";// DataBinder.Eval(filterTemp.DataItem, "Id").ToString();
+cbo.Properties.TextField = nameof(Permitees.CompanyName);
+        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
+        if (ViewData["filterText"] != null)
+            cbo.PreRender = (s, e) =>
+            {
+                var combo = s as MVCxComboBox;
+                combo.Text = ViewData["filterText"].ToString();
+            };
+    }).BindToEF("", nameof(Productions), (s, e) =>
+{
+        e.DefaultSorting = $"{nameof(Permitees.Id)} asc";
+        e.KeyExpression = nameof(Permitees.Id);
+        e.QueryableSource = UnitOfWork.Db().PermiteesRepo.Fetch();
+    }).GetHtml();
+}

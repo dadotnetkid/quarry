@@ -7,6 +7,11 @@
         settings.Width = Unit.Percentage(100);
         settings.CallbackRouteValues = new { Controller = "productions", Action = "cboDeliveryReceiptPartial", PermitteeId = ViewBag.PermitteeId };
         settings.Properties.ClientSideEvents.KeyDown = "function(s,e){cboDeliveryReceipt(s,e)}";
-    }).Bind(ViewBag.ReceiptNo).BindList(Model).GetHtml();
+    }).BindToEF("",nameof(DeliveryReceipts), (s, e) =>
+    {
+        e.QueryableSource = Model;
+        e.KeyExpression = "Id";
+        e.DefaultSorting = "Id asc";
+    }).Bind(ViewBag.ReceiptNo).GetHtml();
 }
 

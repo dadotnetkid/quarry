@@ -29,11 +29,19 @@ namespace Quary.New.Controllers
             return View();
         }
 
+        public ActionResult CboProductions()
+        {
+            return PartialView();
+        }
+        public ActionResult CboPermittee()
+        {
+            return PartialView();
+        }
         public ActionResult CboQuarryPartial([ModelBinder(typeof(DevExpressEditorsBinder))]
             int? permitteeId, [ModelBinder(typeof(DevExpressEditorsBinder))]
             int? quarryId)
         {
-            var model = unitOfWork.QuarriesRepo.Get(m => m.Permitees.Any(x => x.Id == permitteeId));
+            var model = unitOfWork.QuarriesRepo.Fetch(m => m.Permitees.Any(x => x.Id == permitteeId));
             ViewBag.QuarryId = quarryId;
             ViewBag.PermitteeId = permitteeId;
             return PartialView(model);
@@ -42,7 +50,7 @@ namespace Quary.New.Controllers
         public ActionResult CboDeliveryReceiptPartial([ModelBinder(typeof(DevExpressEditorsBinder))]
             int? permitteeId, [ModelBinder(typeof(DevExpressEditorsBinder))]int? deliveryReceiptNo)
         {
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(m => m.Transactions.PermiteeId == permitteeId);
+            var model = unitOfWork.DeliveryReceiptsRepo.Fetch(m => m.Transactions.PermiteeId == permitteeId);
             ViewBag.deliveryReceiptNo = deliveryReceiptNo;
             ViewBag.PermitteeId = permitteeId;
             return PartialView(model);
@@ -51,7 +59,7 @@ namespace Quary.New.Controllers
         public ActionResult CboVehiclesPartial([ModelBinder(typeof(DevExpressEditorsBinder))]
             int? permitteeId, [ModelBinder(typeof(DevExpressEditorsBinder))]int? vehicleId)
         {
-            var model = unitOfWork.VehiclesRepo.Get(m => m.PermiteeId == permitteeId);
+            var model = UnitOfWork.Db().VehiclesRepo.Fetch().Where(x => x.PermiteeId == permitteeId);
             ViewBag.VehicleId = vehicleId;
             ViewBag.PermitteeId = permitteeId;
             return PartialView(model);
@@ -61,9 +69,9 @@ namespace Quary.New.Controllers
         {
             ViewBag.filterText = filterText;
 
-            var model = unitOfWork.ProductionsRepo.Get(includeProperties: "Permitees,Vehicles,Sags");
+            var model = unitOfWork.ProductionsRepo.Fetch(includeProperties: "Permitees,Vehicles,Sags");
             if (!string.IsNullOrEmpty(filterText))
-                model = model.Where(x => x.Permitees != null).Where(x => x.Permitees.CompanyName.Contains(filterText)).ToList();
+                model = model.Where(x => x.Permitees != null).Where(x => x.Permitees.CompanyName.Contains(filterText));
             if (item.ReceiptNo != null)
             {
                 var permittee = unitOfWork.DeliveryReceiptsRepo.Find(m => m.ReceiptNumber == item.ReceiptNo)
@@ -77,8 +85,8 @@ namespace Quary.New.Controllers
 
             }
             ViewData["Model"] = item;
-            var receipts = unitOfWork.ProductionsRepo.Get().Select(x => x.ReceiptNo);
-            ViewBag.ReceiptNo = unitOfWork.DeliveryReceiptsRepo.Get().Where(m => !receipts.Contains(m.ReceiptNumber));
+            var receipts = unitOfWork.ProductionsRepo.Fetch().Select(x => x.ReceiptNo);
+            ViewBag.ReceiptNo = unitOfWork.DeliveryReceiptsRepo.Fetch().Where(m => !receipts.Contains(m.ReceiptNumber));
             return PartialView("_ProductionGridViewPartial", model);
         }
 
@@ -213,7 +221,7 @@ namespace Quary.New.Controllers
             }
 
             unitOfWork.Save();
-            return PartialView("_ProductionGridViewPartial", unitOfWork.ProductionsRepo.Get(includeProperties: "Permitees,Vehicles,Sags"));
+            return PartialView("_ProductionGridViewPartial", unitOfWork.ProductionsRepo.Fetch(includeProperties: "Permitees,Vehicles,Sags"));
         }
         #endregion
 

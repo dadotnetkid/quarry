@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DevExpress.Web.Mvc;
+using Helpers.Services;
 using Models;
 using Models.Repository;
 using Models.ViewModels;
@@ -12,6 +13,12 @@ namespace Quary.New.Controllers
 {
     public class PermitteeBillingMasterlistController : Controller
     {
+        private readonly IBillingMasterListReportService _billingMasterListReportService;
+
+        public PermitteeBillingMasterlistController()
+        {
+            _billingMasterListReportService = BillingMasterListReportService.Create();
+        }
         // GET: PermitteeBillingMasterlist
         public ActionResult Index()
         {
@@ -22,7 +29,12 @@ namespace Quary.New.Controllers
             return View(list);
         }
 
-        public ActionResult PermitteeBillingMasterlistPartial([ModelBinder(typeof(DevExpressEditorsBinder))]string transactionId = "")
+        public ActionResult CboPermitteeType()
+        {
+            return PartialView(_billingMasterListReportService.GetPermitteeType());
+        }
+
+                public ActionResult PermitteeBillingMasterlistPartial([ModelBinder(typeof(DevExpressEditorsBinder))] string transactionId = "")
         {
             rptPermitteeBillingMasterlist rpt = new rptPermitteeBillingMasterlist();
             rpt.DataSource = new List<PermitteeBillingMasterlistViewModel>()

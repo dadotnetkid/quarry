@@ -11,10 +11,12 @@
 <div id="mulitple-delete-container"></div>
 <script>
     function showMultipleDeleteModal() {
+        showLoading();
         $.ajax({
             url: "@Url.Action("MultipleDeleteDeliveryReceiptsPopUpPartial")",
             success: function (html) {
                 $('#mulitple-delete-container').html(html);
+                hideLoading();
             }
         });
     }

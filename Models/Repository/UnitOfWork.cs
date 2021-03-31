@@ -13,7 +13,13 @@ namespace Models.Repository
     public partial class UnitOfWork : IDisposable
     {
         private ModelDb context = new ModelDb();
-
+        public static UnitOfWork unitOfWork;
+        public static UnitOfWork Db()
+        {
+            if (unitOfWork == null)
+                unitOfWork = new UnitOfWork();
+            return unitOfWork;
+        }
         public UnitOfWork()
         {
             context.Database.Log = (s) =>

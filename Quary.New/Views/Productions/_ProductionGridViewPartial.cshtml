@@ -88,22 +88,10 @@
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             if (Model is IEnumerable<Productions> item)
             {
-                var model = item.GroupBy(x => x.Permitees?.CompanyName).Select(x => new { CompanyName = x.Key }).ToList();
+             
                 c.SetFilterTemplateContent(filterTemp =>
                 {
-                    Html.DevExpress().ComboBox(cbo =>
-                    {
-                        cbo.Name = "comboBoxFilterSuppliers";// DataBinder.Eval(filterTemp.DataItem, "Id").ToString();
-                        cbo.Properties.TextField = "CompanyName";
-                        cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
-                        cbo.Properties.ClientSideEvents.SelectedIndexChanged = "OnSelectedIndexChanged";
-                        if (ViewData["filterText"] != null)
-                            cbo.PreRender = (s, e) =>
-                            {
-                                var combo = s as MVCxComboBox;
-                                combo.Text = ViewData["filterText"].ToString();
-                            };
-                    }).BindList(model).GetHtml();
+                    Html.RenderPartial("CboPermittee");
                 });
             }
 
@@ -137,7 +125,7 @@
             cbo.DataSource = new UnitOfWork().QuarriesRepo.Get();
             if (filter != "")
             {
-                cbo.DataSource = new UnitOfWork().QuarriesRepo.Get().Where(x => x.Permitees.Any(m => m.CompanyName == filter));
+                cbo.DataSource = new UnitOfWork().QuarriesRepo.Fetch().Where(x => x.Permitees.Any(m => m.CompanyName == filter)).ToList();
             }
          
             cbo.ValueField = "Id";
@@ -181,7 +169,7 @@
             c.Caption = "Receipt No";
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             var cbo = c.PropertiesEdit as ComboBoxProperties;
-            cbo.DataSource = new UnitOfWork().DeliveryReceiptsRepo.Get();
+            /*cbo.DataSource = new UnitOfWork().DeliveryReceiptsRepo.Get();*/
             cbo.ValueField = "ReceiptNumber";
             cbo.TextField = "ReceiptNumber";
 
@@ -214,9 +202,11 @@
             c.ColumnType = MVCxGridViewColumnType.ComboBox;
             c.EditorProperties().ComboBox(cbo =>
             {
+                
                 cbo.DataSource = new UnitOfWork().ProductionsRepo.Fetch().GroupBy(x => x.BundleCode).Select(x => new { BundleCode = x.Key }).ToList();
                 cbo.TextField = "BundleCode";
                 cbo.DropDownStyle = DropDownStyle.DropDown;
+                cbo.ClientSideEvents.ValueChanged = $"function(){{autoUpdate('','','')}}";
             });
         });
         settings.Columns.Add(c =>
@@ -258,4 +248,9 @@
         grid.SetEditErrorText((string)ViewData["EditError"]);
     }
 }
-@grid.Bind(Model).GetHtml()
+@grid.BindToEF("",nameof(Productions), (s, e) =>
+{
+    e.KeyExpression = "Id";
+    e.QueryableSource = Model;
+    e.DefaultSorting = "Id desc";
+}).GetHtml()

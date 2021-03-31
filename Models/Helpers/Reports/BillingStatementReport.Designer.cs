@@ -52,6 +52,7 @@ namespace Helpers
             this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
             this.footerGovBusinessTotal = new DevExpress.XtraReports.UI.GroupFooterBand();
             this.xrLabel2 = new DevExpress.XtraReports.UI.XRLabel();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.groupGovAccreeditationFees = new DevExpress.XtraReports.UI.DetailReportBand();
             this.detailAccre = new DevExpress.XtraReports.UI.DetailBand();
             this.xrTable2 = new DevExpress.XtraReports.UI.XRTable();
@@ -186,15 +187,14 @@ namespace Helpers
             this.xrLabel73 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel74 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel75 = new DevExpress.XtraReports.UI.XRLabel();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
             // TopMargin
@@ -342,6 +342,11 @@ namespace Helpers
             this.xrLabel2.Text = "xrLabel2";
             this.xrLabel2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.BottomRight;
             this.xrLabel2.TextFormatString = "{0:#,#.00 Php}";
+            // 
+            // objectDataSource1
+            // 
+            this.objectDataSource1.DataSource = typeof(Models.ViewModels.BillingStatementViewModel);
+            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // groupGovAccreeditationFees
             // 
@@ -1749,7 +1754,7 @@ namespace Helpers
             this.xrLabel39.SizeF = new System.Drawing.SizeF(243.1357F, 14.95805F);
             this.xrLabel39.StylePriority.UseFont = false;
             this.xrLabel39.StylePriority.UseTextAlignment = false;
-            this.xrLabel39.Text = "PENARO Officer";
+            this.xrLabel39.Text = "ENR Officer";
             this.xrLabel39.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             // 
             // xrLine2
@@ -2003,7 +2008,7 @@ namespace Helpers
             this.xrLabel74.SizeF = new System.Drawing.SizeF(243.1357F, 14.95805F);
             this.xrLabel74.StylePriority.UseFont = false;
             this.xrLabel74.StylePriority.UseTextAlignment = false;
-            this.xrLabel74.Text = "PENARO Officer";
+            this.xrLabel74.Text = "ENR Officer";
             this.xrLabel74.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
             // 
             // xrLabel75
@@ -2019,11 +2024,6 @@ namespace Helpers
             this.xrLabel75.Text = "For and in behalf of the Governor by virtue of Memoramdum Order No. 17 Dated Febr" +
     "uary 17, 2020";
             this.xrLabel75.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSource = typeof(Models.ViewModels.BillingStatementViewModel);
-            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // BillingStatementReport
             // 
@@ -2051,15 +2051,15 @@ namespace Helpers
             this.Margins = new System.Drawing.Printing.Margins(31, 51, 27, 25);
             this.PageHeight = 1400;
             this.PaperKind = System.Drawing.Printing.PaperKind.Legal;
-            this.Version = "18.2";
+            this.Version = "20.2";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }

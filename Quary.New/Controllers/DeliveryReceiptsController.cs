@@ -152,7 +152,7 @@ namespace Quary.New.Controllers
 
         public ActionResult DeliveryReceiptGridViewPartial()
         {
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
+            var model = unitOfWork.DeliveryReceiptsRepo.Fetch(includeProperties: "Transactions.Permitees");
             return PartialView("_DeliveryReceiptGridViewPartial", model);
         }
 
@@ -169,9 +169,10 @@ namespace Quary.New.Controllers
                     var deliveryQTY = transaction.TransactionDetails
                         .FirstOrDefault(m => m.Items.ItemName.ToLower().Contains("delivery"))?.Quantity;
                     deliveryQTY = deliveryQTY - 1;
+                    var receiptNo = item.ReceiptNumber.ToInt() - 1;
                     for (var i = 1; i <= deliveryQTY; i++)
                     {
-                        var receiptNumber = item.ReceiptNumber.ToInt();
+                        var receiptNumber = receiptNo;
                         receiptNumber = receiptNumber + i;
                         unitOfWork.DeliveryReceiptsRepo.Insert(new DeliveryReceipts()
                         {
@@ -190,13 +191,13 @@ namespace Quary.New.Controllers
             }
             else
                 ViewData["EditError"] = "Please, correct all errors.";
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
+            var model = unitOfWork.DeliveryReceiptsRepo.Fetch(includeProperties: "Transactions.Permitees");
             return PartialView("_DeliveryReceiptGridViewPartial", model);
         }
 
         [HttpPost, ValidateInput(false)]
         [OnUserAuthorization(ControllerName = "FileManagement", ActionName = "Delete Delivery Receipts")]
-        public ActionResult DeliveryReceiptGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]int? Id)
+        public ActionResult DeliveryReceiptGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))] int? Id)
         {
             if (Id >= 0)
             {
@@ -211,7 +212,7 @@ namespace Quary.New.Controllers
                     ViewData["EditError"] = e.Message;
                 }
             }
-            var model = unitOfWork.DeliveryReceiptsRepo.Get(includeProperties: "Transactions.Permitees");
+            var model = unitOfWork.DeliveryReceiptsRepo.Fetch(includeProperties: "Transactions.Permitees");
             return PartialView("_DeliveryReceiptGridViewPartial", model);
         }
 
@@ -235,7 +236,7 @@ namespace Quary.New.Controllers
         }
 
         [HttpPost]
-        public PartialViewResult DeleteMultipleDeleteDeliveryReceiptsPartial([ModelBinder(typeof(DevExpressEditorsBinder))]string[] deliveryReceipts)
+        public PartialViewResult DeleteMultipleDeleteDeliveryReceiptsPartial([ModelBinder(typeof(DevExpressEditorsBinder))] string[] deliveryReceipts)
         {
             if (deliveryReceipts.Any())
                 foreach (var i in deliveryReceipts)
