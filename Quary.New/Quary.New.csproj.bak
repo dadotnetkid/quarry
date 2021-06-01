@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Quary.New</RootNamespace>
     <AssemblyName>Quary.New</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -51,29 +51,30 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\..\..\Development Cache\.nuget\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="DevExpress.Charts.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.CodeParser.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Data.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.DataAccess.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Office.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Pdf.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.PivotGrid.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v18.2.Export, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Printing.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.RichEdit.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Sparkline.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxPivotGrid.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.ASPxThemes.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Mvc5.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.Resources.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Web.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpo.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraCharts.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraGauges.v18.2.Core, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraReports.v18.2, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraReports.v18.2.Web.WebForms, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraReports.v18.2.Web, Version=18.2.9.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Charts.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.CodeParser.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Office.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.PivotGrid.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v20.2.Export, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Sparkline.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Data.Desktop.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.ASPxThemes.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Mvc5.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.Resources.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Web.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v20.2.Core, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Web.WebForms, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraReports.v20.2.Web, Version=20.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\..\Development Cache\.nuget\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -522,8 +523,8 @@
     <Content Include="Views\Productions\Productions.cshtml" />
     <Content Include="Views\Productions\_ProductionGridViewPartial.cshtml" />
     <Content Include="Views\Productions\AddEditProductionPartial.cshtml" />
-    <Content Include="Views\Reports\ProductionReport.cshtml" />
-    <Content Include="Views\Reports\ProductionReportPartial.cshtml" />
+    <Content Include="Views\Reports\BIRReport\BIRReport.cshtml" />
+    <Content Include="Views\Reports\BIRReport\BIRReportPartial.cshtml" />
     <Content Include="Views\Transactions\_ImportOutpostGridViewPartial.cshtml" />
     <Content Include="Views\ProductionLedger\ProductionLedger.cshtml" />
     <Content Include="Views\ProductionLedger\_ProductionLedgerGridViewPartial.cshtml" />
@@ -548,8 +549,8 @@
     <Content Include="Views\Reports\_PivotGridPartial.cshtml" />
     <Content Include="Views\Maintenance\Logs.cshtml" />
     <Content Include="Views\Maintenance\_LogsGridViewPartial.cshtml" />
-    <Content Include="Views\Reports\SummaryProductionReportPerPermittee.cshtml" />
-    <Content Include="Views\Reports\SummaryProductionReportPerPermitteePartial.cshtml" />
+    <Content Include="Views\Reports\PTOReport\PTOReport.cshtml" />
+    <Content Include="Views\Reports\PTOReport\PTOReportPartial.cshtml" />
     <Content Include="Views\Transactions\_PenaltiesGridViewPartial.cshtml" />
     <Content Include="Views\Transactions\AddEditTransactionPenalties.cshtml" />
     <Content Include="Views\FilemanagementImport\ImportProductionUploadControlUpload.cshtml" />
@@ -630,6 +631,17 @@
     <Content Include="Views\AccountingReport\cboYearPartial.cshtml" />
     <Content Include="Views\DeliveryReceipts\TransactionsWithBalance.cshtml" />
     <Content Include="Views\DeliveryReceipts\_TransactionWithBalanceGridViewPartial.cshtml" />
+    <Content Include="Views\Reports\BIRReport\CboQuarryBIRReport.cshtml" />
+    <Content Include="Views\Reports\BIRReport\CboPermitteeTypeBIRReport.cshtml" />
+    <Content Include="Views\Reports\BIRReport\CboPermitteeBIRReport.cshtml" />
+    <Content Include="Views\Reports\BIRReport\CboAvailableYearBIRReport.cshtml" />
+    <Content Include="Views\Reports\BIRReport\CboAvailableMonthByYear.cshtml" />
+    <Content Include="Views\Reports\PTOReport\CboAvailableMonthByYearPTOReport.cshtml" />
+    <Content Include="Views\Reports\PTOReport\CboAvailableYearPTOReport.cshtml" />
+    <Content Include="Views\Reports\PTOReport\CboPermitteePTOReport.cshtml" />
+    <Content Include="Views\Reports\PTOReport\CboPermitteeTypePTOReport.cshtml" />
+    <Content Include="Views\Reports\PTOReport\CboQuarryPTOReport.cshtml" />
+    <Content Include="Views\Productions\CboPermittee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\excel\" />
@@ -672,9 +684,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53523</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52324/</IISUrl>
+          <IISUrl>http://localhost:52330</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://localhost:52324/</IISAppRootUrl>
+          <IISAppRootUrl>http://localhost:52330</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

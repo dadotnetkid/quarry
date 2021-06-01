@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using DevExpress.Web.Mvc;
 using System.Web.Mvc;
+using FluentMigrator.Runner;
 using Helpers;
 using Models.Repository;
 
@@ -12,7 +13,13 @@ namespace Quary.New.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        private readonly IMigrationRunner _migrationRunner;
         private UnitOfWork unitOfWork = new UnitOfWork();
+
+        public HomeController()
+        {
+           
+        }
         [OnUserAuthorization(ActionName = "dashboard")]
         public ActionResult Index()
         {

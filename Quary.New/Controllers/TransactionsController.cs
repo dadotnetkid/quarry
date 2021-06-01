@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Models.Repository;
 using Helpers.Reports.BillingStatement;
 using Models;
+using Models.Entities;
 using Models.ViewModels;
 
 namespace Quary.New.Controllers
@@ -915,7 +916,15 @@ namespace Quary.New.Controllers
                     }
                     else
                     {
-                        rpt.lblQuarrySites.Text = transaction.Permitees._QuarySites;//[Transactions].[Permitees].[_QuarySites]
+                        var year = DateTime.Now.Year;
+                        var quarrySite = unitOfWork.QuarriesRepo
+                            .Fetch(x => x.Permitees.Any(p => p.Id == transaction.PermiteeId))
+                            .Select(x => new { x.QuarryName, x.Id }).ToList();
+                        var active = new DomainDb().ActiveQuarries.Where(x => x.PermitteeId == transaction.PermiteeId && x.Year == year).Select(x => x.QuarryId).ToList();
+                        rpt.lblQuarrySites.Text =
+                            string.Join(",",quarrySite.Where(x => active.Contains(x.Id)).Select(x => x.QuarryName));
+
+
                     }
 
 
@@ -952,7 +961,7 @@ namespace Quary.New.Controllers
 
         #region Penalties
 
-        public ActionResult AddEditTransactionPenalties([ModelBinder(typeof(DevExpressEditorsBinder))]int? transactionPenaltiesId, [ModelBinder(typeof(DevExpressEditorsBinder))]string transactionId)
+        public ActionResult AddEditTransactionPenalties([ModelBinder(typeof(DevExpressEditorsBinder))] int? transactionPenaltiesId, [ModelBinder(typeof(DevExpressEditorsBinder))] string transactionId)
         {
             ViewBag.TransactionPenaltiesId = transactionPenaltiesId;
             ViewBag.TransactionId = transactionId;
@@ -1023,7 +1032,7 @@ namespace Quary.New.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [OnUserAuthorization(ActionName = "delete penalties")]
-        public ActionResult PenaltiesGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]int? Id, [ModelBinder(typeof(DevExpressEditorsBinder))]
+        public ActionResult PenaltiesGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))] int? Id, [ModelBinder(typeof(DevExpressEditorsBinder))]
             string transactionId)
         {
 
@@ -1051,7 +1060,7 @@ namespace Quary.New.Controllers
 
         #region Quarries
         [ValidateInput(false)]
-        public ActionResult TransactionQuarriesGridViewPartial([ModelBinder(typeof(DevExpressEditorsBinder))]TransactionViewModel viewModel)
+        public ActionResult TransactionQuarriesGridViewPartial([ModelBinder(typeof(DevExpressEditorsBinder))] TransactionViewModel viewModel)
         {
             var model = unitOfWork.QuarriesInTransactionsRepo.Get(m => m.TransactionId == viewModel.TransactionId);
             ViewBag.TransactionId = viewModel.TransactionId;
@@ -1113,7 +1122,7 @@ namespace Quary.New.Controllers
         }
         [HttpPost, ValidateInput(false)]
         [OnUserAuthorization(ActionName = "Delete transaction Quarries")]
-        public ActionResult TransactionQuarriesGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))]System.Int32 Id, [ModelBinder(typeof(DevExpressEditorsBinder))] TransactionViewModel viewModel)
+        public ActionResult TransactionQuarriesGridViewPartialDelete([ModelBinder(typeof(DevExpressEditorsBinder))] System.Int32 Id, [ModelBinder(typeof(DevExpressEditorsBinder))] TransactionViewModel viewModel)
         {
 
             if (Id >= 0)

@@ -142,6 +142,14 @@
 </div>
 <div class="row margin-top-10">
     <div class="col-lg-12">
+        <h4>Active Quarry Site</h4>
+
+        @Html.Action("ActiveQuarryGridViewPartial",new{ permiteeId = ViewBag.PermiteeId })
+
+    </div>
+</div>
+<div class="row margin-top-10">
+    <div class="col-lg-12">
         <h4>Transaction Details</h4>
         @Html.Action("TransactionDetailsGridViewPartial", new { transactionId = transactionId, permiteeId = ViewBag.PermiteeId })
         <table class="dxeRoot_Material pull-right">
