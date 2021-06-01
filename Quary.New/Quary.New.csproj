@@ -331,6 +331,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MaintenanceController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MigrationController.cs" />
     <Compile Include="Controllers\PermiteesController.cs" />
     <Compile Include="Controllers\PermitteeBillingMasterlistController.cs" />
     <Compile Include="Controllers\ProductionLedgerController.cs" />
@@ -757,6 +758,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
     <Content Include="Views\Transactions\_ActiveQuarryGridViewPartial.cshtml" />
+    <Content Include="Views\Migration\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\excel\" />
