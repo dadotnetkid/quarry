@@ -15,7 +15,7 @@ namespace Helpers
             InitializeComponent();
         }
 
-        private void xrLabel1_BeforePrint(object sender, CancelEventArgs e)
+        private void xrLabel1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
         {
             xrLabel1.Text = $"[{HttpContext.Current?.User?.Identity?.GetUserName()}] Quarry Data Management System";
         }

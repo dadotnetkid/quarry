@@ -116,7 +116,7 @@
             this.xrLabel1.Name = "xrLabel1";
             this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
             this.xrLabel1.SizeF = new System.Drawing.SizeF(649.397F, 23F);
-            this.xrLabel1.BeforePrint += new DevExpress.XtraReports.UI.BeforePrintEventHandler(this.xrLabel1_BeforePrint);
+            this.xrLabel1.BeforePrint += new System.Drawing.Printing.PrintEventHandler(this.xrLabel1_BeforePrint);
             // 
             // Detail
             // 
@@ -139,7 +139,7 @@
             // 
             // lblHeader
             // 
-            this.lblHeader.Font = new DevExpress.Drawing.DXFont("Book Antiqua", 14F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.lblHeader.Font = new System.Drawing.Font("Book Antiqua", 14F, System.Drawing.FontStyle.Bold);
             this.lblHeader.LocationFloat = new DevExpress.Utils.PointFloat(0F, 121.1666F);
             this.lblHeader.Multiline = true;
             this.lblHeader.Name = "lblHeader";
@@ -152,7 +152,7 @@
             // 
             // xrLabel32
             // 
-            this.xrLabel32.Font = new DevExpress.Drawing.DXFont("Book Antiqua", 14F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel32.Font = new System.Drawing.Font("Book Antiqua", 14F, System.Drawing.FontStyle.Bold);
             this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(0.9999593F, 81.58334F);
             this.xrLabel32.Multiline = true;
             this.xrLabel32.Name = "xrLabel32";
@@ -183,7 +183,7 @@
             // 
             // xrLabel14
             // 
-            this.xrLabel14.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F, DevExpress.Drawing.DXFontStyle.Italic);
+            this.xrLabel14.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Italic);
             this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
             this.xrLabel14.Multiline = true;
             this.xrLabel14.Name = "xrLabel14";
@@ -196,7 +196,7 @@
             // 
             // xrLabel15
             // 
-            this.xrLabel15.Font = new DevExpress.Drawing.DXFont("Arial", 11F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel15.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
             this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(0F, 12.58335F);
             this.xrLabel15.Multiline = true;
             this.xrLabel15.Name = "xrLabel15";
@@ -209,7 +209,7 @@
             // 
             // xrLabel16
             // 
-            this.xrLabel16.Font = new DevExpress.Drawing.DXFont("Arial", 9F);
+            this.xrLabel16.Font = new System.Drawing.Font("Arial", 9F);
             this.xrLabel16.LocationFloat = new DevExpress.Utils.PointFloat(0F, 35.58331F);
             this.xrLabel16.Multiline = true;
             this.xrLabel16.Name = "xrLabel16";
@@ -222,7 +222,7 @@
             // 
             // xrLabel17
             // 
-            this.xrLabel17.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel17.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
             this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(0F, 58.58332F);
             this.xrLabel17.Multiline = true;
             this.xrLabel17.Name = "xrLabel17";
@@ -481,12 +481,12 @@
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
-            this.Font = new DevExpress.Drawing.DXFont("Calibri", 9.75F);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F);
             this.Landscape = true;
-            this.Margins = new DevExpress.Drawing.DXMargins(25, 25, 25, 50);
+            this.Margins = new System.Drawing.Printing.Margins(25, 25, 25, 50);
             this.PageHeight = 850;
             this.PageWidth = 1300;
-            this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+            this.PaperKind = System.Drawing.Printing.PaperKind.Custom;
             this.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             this.Version = "18.2";
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();

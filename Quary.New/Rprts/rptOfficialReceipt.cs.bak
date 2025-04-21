@@ -61,7 +61,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
 
 
 
-    private void xrLabel4_BeforePrint(object sender, CancelEventArgs e)
+    private void xrLabel4_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
     {
         XRLabel label = (XRLabel)sender;
         if (string.IsNullOrEmpty(label.Text))
@@ -142,7 +142,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
             this.xrLabel2,
             this.xrLabel1});
-            this.Detail.Font = new DevExpress.Drawing.DXFont("Tahoma", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.Detail.Font = new System.Drawing.Font("Tahoma", 8F, System.Drawing.FontStyle.Bold);
             this.Detail.HeightF = 288F;
             this.Detail.Name = "Detail";
             this.Detail.StylePriority.UseFont = false;
@@ -153,7 +153,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrLabel2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "Upper([Transactions].[Permitees].[FullName])")});
-            this.xrLabel2.Font = new DevExpress.Drawing.DXFont("Calibri", 12F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel2.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 249F);
             this.xrLabel2.Multiline = true;
             this.xrLabel2.Name = "xrLabel2";
@@ -168,7 +168,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrLabel1.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[DateCreated]")});
-            this.xrLabel1.Font = new DevExpress.Drawing.DXFont("Calibri", 12F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel1.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(33.00002F, 189F);
             this.xrLabel1.Multiline = true;
             this.xrLabel1.Name = "xrLabel1";
@@ -234,7 +234,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.xrLabel70.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrLabel70.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "IsNull(Sum([TotalCost]),0.0 )")});
-            this.xrLabel70.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel70.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel70.LocationFloat = new DevExpress.Utils.PointFloat(268.0835F, 0F);
             this.xrLabel70.Multiline = true;
             this.xrLabel70.Name = "xrLabel70";
@@ -249,7 +249,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             // xrLabel5
             // 
-            this.xrLabel5.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel5.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(31.70849F, 0F);
             this.xrLabel5.Multiline = true;
             this.xrLabel5.Name = "xrLabel5";
@@ -281,7 +281,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.xrLabel6.Borders = DevExpress.XtraPrinting.BorderSide.None;
             this.xrLabel6.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "IsNull(Sum([TotalCost]),0.0 )")});
-            this.xrLabel6.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel6.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel6.LocationFloat = new DevExpress.Utils.PointFloat(268.0835F, 19F);
             this.xrLabel6.Multiline = true;
             this.xrLabel6.Name = "xrLabel6";
@@ -296,7 +296,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             // xrLabel7
             // 
-            this.xrLabel7.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel7.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel7.LocationFloat = new DevExpress.Utils.PointFloat(33.00002F, 18.99999F);
             this.xrLabel7.Multiline = true;
             this.xrLabel7.Name = "xrLabel7";
@@ -324,7 +324,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             // xrLabel35
             // 
-            this.xrLabel35.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel35.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel35.LocationFloat = new DevExpress.Utils.PointFloat(32.55285F, 18.00012F);
             this.xrLabel35.Multiline = true;
             this.xrLabel35.Name = "xrLabel35";
@@ -339,7 +339,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             // xrLabel34
             // 
-            this.xrLabel34.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel34.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel34.LocationFloat = new DevExpress.Utils.PointFloat(31.70849F, 0F);
             this.xrLabel34.Multiline = true;
             this.xrLabel34.Name = "xrLabel34";
@@ -355,7 +355,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrLabel33.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "IsNull(Sum([[Transactions].[Surcharge]),0.0 )")});
-            this.xrLabel33.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel33.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel33.LocationFloat = new DevExpress.Utils.PointFloat(259.375F, 0F);
             this.xrLabel33.Multiline = true;
             this.xrLabel33.Name = "xrLabel33";
@@ -372,7 +372,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrLabel36.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "IsNull([Transactions].[Interest],0.0)")});
-            this.xrLabel36.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel36.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrLabel36.LocationFloat = new DevExpress.Utils.PointFloat(260.2194F, 18.00004F);
             this.xrLabel36.Multiline = true;
             this.xrLabel36.Name = "xrLabel36";
@@ -403,7 +403,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             // xrTable7
             // 
-            this.xrTable7.Font = new DevExpress.Drawing.DXFont("Calibri", 8F);
+            this.xrTable7.Font = new System.Drawing.Font("Calibri", 8F);
             this.xrTable7.LocationFloat = new DevExpress.Utils.PointFloat(33.00002F, 0F);
             this.xrTable7.Name = "xrTable7";
             this.xrTable7.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
@@ -426,7 +426,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrTableCell19.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Penalty]")});
-            this.xrTableCell19.Font = new DevExpress.Drawing.DXFont("Calibri", 8F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrTableCell19.Font = new System.Drawing.Font("Calibri", 8F, System.Drawing.FontStyle.Bold);
             this.xrTableCell19.Multiline = true;
             this.xrTableCell19.Name = "xrTableCell19";
             this.xrTableCell19.StylePriority.UseFont = false;
@@ -437,7 +437,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             // 
             this.xrTableCell21.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PenaltyAmount]")});
-            this.xrTableCell21.Font = new DevExpress.Drawing.DXFont("Calibri", 8F);
+            this.xrTableCell21.Font = new System.Drawing.Font("Calibri", 8F);
             this.xrTableCell21.Multiline = true;
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.StylePriority.UseFont = false;
@@ -461,7 +461,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.xrLabel3.BorderWidth = 2F;
             this.xrLabel3.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Amount]")});
-            this.xrLabel3.Font = new DevExpress.Drawing.DXFont("Calibri", 12F, DevExpress.Drawing.DXFontStyle.Bold);
+            this.xrLabel3.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold);
             this.xrLabel3.LocationFloat = new DevExpress.Utils.PointFloat(246.875F, 35.97107F);
             this.xrLabel3.Multiline = true;
             this.xrLabel3.Name = "xrLabel3";
@@ -482,7 +482,7 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.xrLabel4.BorderWidth = 2F;
             this.xrLabel4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[AmountInWord]")});
-            this.xrLabel4.Font = new DevExpress.Drawing.DXFont("Times New Roman", 9F);
+            this.xrLabel4.Font = new System.Drawing.Font("Times New Roman", 9F);
             this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(31.70849F, 148.2726F);
             this.xrLabel4.Multiline = true;
             this.xrLabel4.Name = "xrLabel4";
@@ -513,10 +513,10 @@ public class rptOfficialReceipt : DevExpress.XtraReports.UI.XtraReport
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
-            this.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F);
-            this.Margins = new DevExpress.Drawing.DXMargins(15, 20, 10, 30);
+            this.Font = new System.Drawing.Font("Arial", 9.75F);
+            this.Margins = new System.Drawing.Printing.Margins(15, 20, 10, 30);
             this.PageWidth = 410;
-            this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+            this.PaperKind = System.Drawing.Printing.PaperKind.Custom;
             this.ScriptsSource = "\r\n";
             this.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             this.Version = "18.2";

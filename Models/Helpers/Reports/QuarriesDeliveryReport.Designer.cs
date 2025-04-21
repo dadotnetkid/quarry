@@ -109,7 +109,7 @@
             this.xrTableCell10,
             this.xrTableCell11,
             this.xrTableCell24});
-            this.xrTableRow1.Font = new System.Drawing.Font("Verdana", 9.75F);
+            this.xrTableRow1.Font = new DevExpress.Drawing.DXFont("Verdana", 9.75F);
             this.xrTableRow1.Name = "xrTableRow1";
             this.xrTableRow1.StylePriority.UseFont = false;
             this.xrTableRow1.Weight = 1D;
@@ -240,7 +240,7 @@
             this.xrTable2.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
             | DevExpress.XtraPrinting.BorderSide.Right) 
             | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.xrTable2.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
+            this.xrTable2.Font = new DevExpress.Drawing.DXFont("Verdana", 10F, DevExpress.Drawing.DXFontStyle.Bold);
             this.xrTable2.LocationFloat = new DevExpress.Utils.PointFloat(1.589457E-05F, 10.00001F);
             this.xrTable2.Name = "xrTable2";
             this.xrTable2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
@@ -380,12 +380,12 @@
             this.ComponentStorage.AddRange(new System.ComponentModel.IComponent[] {
             this.objectDataSource1});
             this.DataSource = this.objectDataSource1;
-            this.Font = new System.Drawing.Font("Verdana", 10F);
+            this.Font = new DevExpress.Drawing.DXFont("Verdana", 10F);
             this.Landscape = true;
-            this.Margins = new System.Drawing.Printing.Margins(34, 100, 32, 11);
+            this.Margins = new DevExpress.Drawing.DXMargins(34, 100, 32, 11);
             this.PageHeight = 850;
             this.PageWidth = 1400;
-            this.PaperKind = System.Drawing.Printing.PaperKind.Legal;
+            this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Legal;
             this.Version = "18.2";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
